@@ -3,6 +3,8 @@
 }
 
 .leaflet-container {
-    width: 50wh;
+    width: 75%;
     height: 50vh;
+    margin: auto;
+    border-radius: 20px;
 }
