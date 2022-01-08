@@ -10,7 +10,7 @@ function App() {
   let [latLng, setLatLng] = useState({
     lat: "", lng: "", address: ""
   });
-  let [nearby, setNearby] = useState([{}]);
+  let [nearby, setNearby] = useState([]);
 
   const key = "AIzaSyC3pbLs1mweo2wuMBSv6cqNjQiC0kEpHoI";
 
@@ -52,11 +52,12 @@ function App() {
         }
       });
       
-      const result2 = await res2.json();
-
-    console.log("Second results", result2);
-    setNearby(result2.results);      
-      // for (let i = 1; i <= 20; i++) {
+    const result2 = await res2.json();
+    
+    const nearbyPlace = result2.results;
+    nearbyPlace.shift();
+    setNearby(nearbyPlace);      
+      // for (let i = 1; i < 20; i++) {
       //   setNearby(nearby => [
       //     ...nearby,
       //     {
@@ -71,8 +72,6 @@ function App() {
       // console.log(nearby);
     };
 
-  console.log(nearby);
-
   return (  
     <div className="container">
       <h1>Meet in the Middle</h1>
@@ -85,9 +84,6 @@ function App() {
       </div>
       
       <MapContainer latLng={latLng} />
-      {/* {nearby && nearby.map((place) => (
-        <div>{place}</div>
-      ))} */}
       <NearbySearch nearby={nearby} />
 
     </div>
