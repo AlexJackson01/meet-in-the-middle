@@ -1,51 +1,86 @@
-import React, { useEffect, useState } from "react";
-import axios from 'axios';
+import React, { useEffect, useState, useRef } from "react";
+import { MapContainer, TileLayer } from 'react-leaflet';
 import './App.css';
-import MapContainer from "./components/MapContainer";
+import 'leaflet/dist/leaflet.css';
+import Map from "./components/Map";
 import NearbySearch from "./components/NearbySearch";
 
 function App() {
   let [loading, setLoading] = useState(false);
-  let [location, setLocation] = useState("");
-  let [latLng, setLatLng] = useState({
-    lat: "", lng: "", address: ""
+  let [locationOne, setLocationOne] = useState("");
+  let [locationTwo, setLocationTwo] = useState("");
+  let [coordinates, setCoordinates] = useState({
+    latOne: "", latTwo: "", lngOne: "", lngTwo: ""
+  })
+  let [midpoint, setMidpoint] = useState({
+    lat: "", lng: ""
   });
   let [nearby, setNearby] = useState([]);
 
   const key = "AIzaSyC3pbLs1mweo2wuMBSv6cqNjQiC0kEpHoI";
 
-  const handleChange = e => {
-    setLocation(e.target.value);
+  const handleChangeOne = e => {
+    setLocationOne(e.target.value);
   }
+
+  const handleChangeTwo = e => {
+  setLocationTwo(e.target.value);
+}
 
   const handleSubmit = e => {
   // handle form submit
-  e.preventDefault();
+    e.preventDefault();
     setLoading(true);
-    getDetails();
-  setLoading(false);
+    getCoordinates();
+    // getMidpoint();
+    // getDetails();
+    setLoading(false);
   };
+
+  // const flyTo = () => {
+  //   const { current = {} } = mapRef;
+  //   const { leafletElement: map } = current;
+
+  //   map.flyTo([midpoint.lat, midpoint.lng], 14, {
+  //     duration: 2
+  //   });
+  // }
 
   useEffect(() => {
     getCoordinates();
-  }, [location]);
+  }, [midpoint]);
 
   const getCoordinates = async () => {
-    await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${key}`, {
+    const res1 = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${locationOne}&key=${key}`, {
         "method": "GET",
     })
-      .then(response => response.json())
-      .then(res => setLatLng({
-        lat: res.results[0].geometry.location.lat,
-        lng: res.results[0].geometry.location.lng,
-        address: res.results[0].formatted_address
-    }))
+      
+    const result1 = await res1.json();
+
+    // console.log(coordinates);
+    
+    const res2 = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${locationTwo}&key=${key}`, {
+    "method": "GET",
+    })
+    const result2 = await res2.json();
+    setCoordinates({
+      latOne: result1.results[0].geometry.location.lat,
+      lngOne: result1.results[0].geometry.location.lng,
+      latTwo: result2.results[0].geometry.location.lat,
+      lngTwo: result2.results[0].geometry.location.lng
+    })
+    let midLat = ((coordinates.latOne + coordinates.latTwo) / 2).toFixed(8);
+    let midLng = ((coordinates.lngOne + coordinates.lngTwo) / 2).toFixed(8);
+    setMidpoint({ lat: midLat, lng: midLng });
+    // setMarkerPoint([midpoint.lat, midpoint.lng]);
+    // flyTo();
+    getDetails();
   }
 
-  // console.log(latLng);
+  // // console.log(latLng);
 
   async function getDetails() {        
-      const res2 = await fetch(`https://cors.bridged.cc/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latLng.lat},${latLng.lng}&radius=100&key=${key}`, {
+      const res2 = await fetch(`https://cors.bridged.cc/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${midpoint.lat},${midpoint.lng}&radius=1000&key=${key}`, {
         "method": "GET",
         "headers": {
           "x-cors-grida-api-key": "f73e0aad-aaf2-4494-8d33-b63bb254d2d3",
@@ -55,21 +90,9 @@ function App() {
     const result2 = await res2.json();
     
     const nearbyPlace = result2.results;
+    // console.log(nearbyPlace);
     nearbyPlace.shift();
-    setNearby(nearbyPlace);      
-      // for (let i = 1; i < 20; i++) {
-      //   setNearby(nearby => [
-      //     ...nearby,
-      //     {
-      //       name: result2.results[i].name,
-      //       address: result2.results[i].vicinity,
-      //       photo: result2.results[i].photos[0].html_attributions[0],
-      //       rating: result2.results[i].rating
-      //     }
-      //   ]);
-      // }
-      
-      // console.log(nearby);
+    setNearby(nearbyPlace);
     };
 
   return (  
@@ -77,13 +100,18 @@ function App() {
       <h1>Meet in the Middle</h1>
       <div className="form-group">
       <form onSubmit={(e) => handleSubmit(e)}>
-        <label>Location:</label>
-        <input type="text" className="form-control" name="location" value={location} onChange={(e) => handleChange(e)}></input>
+        <label>Location One:</label>
+        <input type="text" className="form-control" name="location" value={locationOne} onChange={(e) => handleChangeOne(e)}></input>
+        <label>Location Two:</label>
+        <input type="text" className="form-control" name="location" value={locationTwo} onChange={(e) => handleChangeTwo(e)}></input>
         <button type="submit">Search</button>
         </form>
       </div>
+
+ 
+      <Map midpoint={midpoint} />
+      {loading && <p>Loading...</p>}
       
-      <MapContainer latLng={latLng} />
       <NearbySearch nearby={nearby} />
 
     </div>
