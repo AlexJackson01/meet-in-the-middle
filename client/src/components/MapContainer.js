@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 
-export default function MapContainer({ latLng, infoBox }) {
+export default function MapContainer({ latLng }) {
   const mapStyles = {        
     height: "50vh",
       width: "75%",
@@ -14,7 +14,7 @@ export default function MapContainer({ latLng, infoBox }) {
     // console.log(latLng);
     return (
         <div>
-            {selected && (<p>Your location is: {infoBox}</p>)}
+            {selected && (<p>Your location is: {latLng.address}</p>)}
         <LoadScript
        googleMapsApiKey='AIzaSyC3pbLs1mweo2wuMBSv6cqNjQiC0kEpHoI'>
         <GoogleMap
@@ -25,8 +25,8 @@ export default function MapContainer({ latLng, infoBox }) {
                 >
                 
         {<Marker
-                        position={latLng}
-                        onClick={() => setSelected(!false)} />}
+            position={latLng}
+            onClick={() => setSelected(!false)} />}
 
         </GoogleMap>
      </LoadScript>

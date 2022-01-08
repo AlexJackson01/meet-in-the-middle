@@ -8,6 +8,7 @@
     "dependencies": {
         "@base-sdk/base": "^0.1.0-5",
         "@react-google-maps/api": "^2.7.0",
+        "axios": "^0.24.0",
         "cookie-parser": "~1.4.4",
         "debug": "~2.6.9",
         "express": "~4.16.1",

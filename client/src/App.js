@@ -1,84 +1,95 @@
 import React, { useEffect, useState } from "react";
+import axios from 'axios';
 import './App.css';
 import MapContainer from "./components/MapContainer";
 import NearbySearch from "./components/NearbySearch";
 
 function App() {
+  let [loading, setLoading] = useState(false);
   let [location, setLocation] = useState("");
-  let [latLng, setLatLon] = useState([{ lat: "", lng: ""}])
-  let [infoBox, setInfoBox] = useState("");
-  let [nearby, setNearby] = useState("");
+  let [latLng, setLatLng] = useState({
+    lat: "", lng: "", address: ""
+  });
+  let [nearby, setNearby] = useState([{}]);
 
   const key = "AIzaSyC3pbLs1mweo2wuMBSv6cqNjQiC0kEpHoI";
-  
-  latLng.lat = Number(latLng.lat);
-  latLng.lng = Number(latLng.lng);
 
-
-  const getCoordinates = (e) => {
-    e.preventDefault();
-
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${key}`, {
-      "method": "GET",
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Not 2xx response");
-        }
-      })
-      .then(response => {
-        console.log(response);
-        setLatLon({ lat: response.results[0].geometry.location.lat, lng: response.results[0].geometry.location.lng });
-        setInfoBox(response.results[0].formatted_address);
-        console.log(infoBox);
-        getNearby();
-      })
-      .catch(err => console.log(err))
+  const handleChange = e => {
+    setLocation(e.target.value);
   }
 
-  const getNearby = (e) => {
-    // e.preventDefault();
+  const handleSubmit = e => {
+  // handle form submit
+  e.preventDefault();
+    setLoading(true);
+    getDetails();
+  setLoading(false);
+  };
 
-    fetch(`https://cors.bridged.cc/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latLng.lat},${latLng.lng}&radius=1500&key=${key}`, {
-      "method": "GET",
-      "mode": "no-cors",
-      "headers": {
-        "Access-Control-Allow-Origin": "*",
-      }
-      // "mode": "same-origin",
+  useEffect(() => {
+    getCoordinates();
+  }, [location]);
+
+  const getCoordinates = async () => {
+    await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${key}`, {
+        "method": "GET",
     })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Not 2xx response");
-        }
-      })
-      .then(response => {
-        console.log(response);
-        setNearby(response.results[0]);
-        console.log(nearby);
-      })
-      .catch(err => console.log(err))
-}
+      .then(response => response.json())
+      .then(res => setLatLng({
+        lat: res.results[0].geometry.location.lat,
+        lng: res.results[0].geometry.location.lng,
+        address: res.results[0].formatted_address
+    }))
+  }
 
+  // console.log(latLng);
+
+  async function getDetails() {        
+      const res2 = await fetch(`https://cors.bridged.cc/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latLng.lat},${latLng.lng}&radius=100&key=${key}`, {
+        "method": "GET",
+        "headers": {
+          "x-cors-grida-api-key": "f73e0aad-aaf2-4494-8d33-b63bb254d2d3",
+        }
+      });
+      
+      const result2 = await res2.json();
+
+    console.log("Second results", result2);
+    setNearby(result2.results);      
+      // for (let i = 1; i <= 20; i++) {
+      //   setNearby(nearby => [
+      //     ...nearby,
+      //     {
+      //       name: result2.results[i].name,
+      //       address: result2.results[i].vicinity,
+      //       photo: result2.results[i].photos[0].html_attributions[0],
+      //       rating: result2.results[i].rating
+      //     }
+      //   ]);
+      // }
+      
+      // console.log(nearby);
+    };
+
+  console.log(nearby);
 
   return (  
     <div className="container">
       <h1>Meet in the Middle</h1>
       <div className="form-group">
-      <form onSubmit={(e) => getCoordinates(e)}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <label>Location:</label>
-        <input type="text" className="form-control" name="location" value={location} onChange={(e) => setLocation(e.target.value) }></input>
+        <input type="text" className="form-control" name="location" value={location} onChange={(e) => handleChange(e)}></input>
         <button type="submit">Search</button>
         </form>
-        <button onClick={(latLng) => getNearby(latLng)}>Find Nearby</button>
       </div>
       
-      <MapContainer latLng={latLng} infoBox={infoBox} />
+      <MapContainer latLng={latLng} />
+      {/* {nearby && nearby.map((place) => (
+        <div>{place}</div>
+      ))} */}
       <NearbySearch nearby={nearby} />
+
     </div>
   );
 }
