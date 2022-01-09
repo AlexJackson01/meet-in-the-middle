@@ -1,10 +1,127 @@
-.container {
-    padding: 50px;
+/* body {
+    background-color: #855F35;
+    font-family: 'Montserrat', sans-serif;
 }
 
+label {
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+input {
+    margin-bottom: 10px;
+    text-align: center;
+    border: 1px solid #D3604A;
+}
+
+button {
+    text-align: center;
+    background-color: #F6F3E4;
+    width: 25vh;
+    margin: 5px;
+    padding: 7px 20px;
+    text-transform: uppercase;
+    transition: 0.5s;
+    color: #D3604A;
+    border: 1px solid #D3604A;
+    border-radius: 20px;
+    font-weight: bold;
+} */
+
+
+/* .search-btn {
+    text-align: center;
+    background-color: #F6F3E4;
+    width: 50%;
+    margin: 5px;
+    padding: 7px 20px;
+    text-transform: uppercase;
+    transition: 0.5s;
+    color: #D3604A;
+    border: 1px solid #D3604A;
+    border-radius: 20px;
+    font-weight: bold;
+} */
+
+
+/* button:hover {
+    background-color: #D3604A;
+    color: #F6F3E4;
+}
+
+.container {
+    padding-bottom: 50px;
+}
+
+.logo-container {
+    padding-top: 50px;
+    padding-bottom: 20px;
+} */
+
 .leaflet-container {
-    width: 75%;
+    width: 50%;
     height: 50vh;
     margin: auto;
     border-radius: 20px;
+    margin-bottom: 50px;
 }
+
+
+/* .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    height: 150px;
+}
+
+.input-form {
+    background-color: #F6F3E4;
+    padding: 20px;
+    border-radius: 20px;
+    width: 90%;
+    text-align: center;
+    margin-bottom: 50px;
+    display: block;
+    box-shadow: 6px 6px #D3604A;
+}
+
+.navbar {
+    list-style-type: none;
+    color: #F6F3E4;
+    display: block;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 10px;
+    text-align: center;
+}
+
+.nav-links {
+    padding-bottom: 15px;
+    font-weight: bold;
+    padding-right: 30px;
+}
+
+.places-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.place-card {
+    background-color: #F6F3E4;
+    padding: 20px;
+    border-radius: 20px;
+    width: 200px;
+    height: 70vh;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+    box-shadow: 6px 6px #D3604A;
+}
+
+.star-rating {
+    width: 50%;
+} */

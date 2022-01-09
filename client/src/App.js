@@ -1,14 +1,16 @@
-import React, { useEffect, useState, useRef } from "react";
-import { MapContainer, TileLayer } from 'react-leaflet';
+import React, { useEffect, useState } from "react";
 import './App.css';
 import 'leaflet/dist/leaflet.css';
+// import LogoNav from "./components/LogoNav";
 import Map from "./components/Map";
 import NearbySearch from "./components/NearbySearch";
 
 function App() {
   let [loading, setLoading] = useState(false);
-  let [locationOne, setLocationOne] = useState("");
-  let [locationTwo, setLocationTwo] = useState("");
+  let [location, setLocation] = useState({
+    locationOne: "", locationTwo: ""
+  });
+  // let [locationTwo, setLocationTwo] = useState("");
   let [coordinates, setCoordinates] = useState({
     latOne: "", latTwo: "", lngOne: "", lngTwo: ""
   })
@@ -17,15 +19,18 @@ function App() {
   });
   let [nearby, setNearby] = useState([]);
 
-  const key = "AIzaSyC3pbLs1mweo2wuMBSv6cqNjQiC0kEpHoI";
+  const key = "AIzaSyBdetXeEWeswh45iwugkadq_FQHitpLnhQ";
 
-  const handleChangeOne = e => {
-    setLocationOne(e.target.value);
+  const handleChange = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setLocation(state => ({
+      ...state,
+      [name]: value
+    }))
   }
 
-  const handleChangeTwo = e => {
-  setLocationTwo(e.target.value);
-}
 
   const handleSubmit = e => {
   // handle form submit
@@ -37,21 +42,16 @@ function App() {
     setLoading(false);
   };
 
-  // const flyTo = () => {
-  //   const { current = {} } = mapRef;
-  //   const { leafletElement: map } = current;
-
-  //   map.flyTo([midpoint.lat, midpoint.lng], 14, {
-  //     duration: 2
-  //   });
-  // }
+  const clearForm = () => {
+    setLocation("");
+  }
 
   useEffect(() => {
     getCoordinates();
-  }, [midpoint]);
+  }, [nearby]);
 
   const getCoordinates = async () => {
-    const res1 = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${locationOne}&key=${key}`, {
+    const res1 = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location.locationOne}&key=${key}`, {
         "method": "GET",
     })
       
@@ -59,7 +59,7 @@ function App() {
 
     // console.log(coordinates);
     
-    const res2 = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${locationTwo}&key=${key}`, {
+    const res2 = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location.locationTwo}&key=${key}`, {
     "method": "GET",
     })
     const result2 = await res2.json();
@@ -72,8 +72,6 @@ function App() {
     let midLat = ((coordinates.latOne + coordinates.latTwo) / 2).toFixed(8);
     let midLng = ((coordinates.lngOne + coordinates.lngTwo) / 2).toFixed(8);
     setMidpoint({ lat: midLat, lng: midLng });
-    // setMarkerPoint([midpoint.lat, midpoint.lng]);
-    // flyTo();
     getDetails();
   }
 
@@ -90,23 +88,39 @@ function App() {
     const result2 = await res2.json();
     
     const nearbyPlace = result2.results;
-    // console.log(nearbyPlace);
     nearbyPlace.shift();
     setNearby(nearbyPlace);
     };
 
   return (  
     <div className="container">
-      <h1>Meet in the Middle</h1>
-      <div className="form-group">
-      <form onSubmit={(e) => handleSubmit(e)}>
+      {/* <LogoNav /> */}
+    <h1>Meet in the Middle</h1>
+
+
+      {/* STYLED FORM */}
+      <form className="container input-form" onSubmit={(e) => handleSubmit(e)}>
+        <div className="row">
+      <div className="row col-lg-4 col-xs-4 col-sm-4">
+        <div className="form-group">
         <label>Location One:</label>
-        <input type="text" className="form-control" name="location" value={locationOne} onChange={(e) => handleChangeOne(e)}></input>
+              <input type="text" className="form-control input-group-lg header" width={150} name="locationOne" value={location.locationOne} onChange={(e) => handleChange(e)}></input>
+            </div>
+          </div>
+      <div className="col-lg-4 col-xs-4 col-sm-4">
+      <div className="form-group">
         <label>Location Two:</label>
-        <input type="text" className="form-control" name="location" value={locationTwo} onChange={(e) => handleChangeTwo(e)}></input>
-        <button type="submit">Search</button>
+              <input type="text" className="form-control input-group-lg header" name="locationTwo" value={location.locationTwo} onChange={(e) => handleChange(e)}></input>
+            </div>
+            </div>
+      <div className="search-btn">
+            <button type="submit">Search</button>
+            <button onClick={(e) => clearForm(e)}>Clear</button>
+          </div>
+        </div>
         </form>
-      </div>
+      
+
 
  
       <Map midpoint={midpoint} />
