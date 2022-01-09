@@ -40,6 +40,7 @@ function App() {
   
   const clearSearch = () => {
     setNearby([]);
+    setMidpoint({lat: "", lng: ""});
   }
 
   // useEffect(() => {

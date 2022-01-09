@@ -26,7 +26,7 @@ const starIcon = new L.Icon({
   
   return (
     <div className='map-container'>
-      <MapContainer
+      {midpoint.lat && (<MapContainer
         center={[51.5168712, -0.1456173]}
         zoom={13}
         whenCreated={setMap}
@@ -36,11 +36,11 @@ const starIcon = new L.Icon({
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {midpoint && (<Marker
+        <Marker
           position={[midpoint.lat, midpoint.lng]}
           icon={starIcon}>
-        </Marker>)}
-      </MapContainer>
+        </Marker>
+      </MapContainer>)}
     </div>
   )
 }
