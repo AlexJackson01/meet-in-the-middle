@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Half from '../images/star-ratings/0.5-star.png';
 import One from '../images/star-ratings/1-star.png';
 import OneHalf from '../images/star-ratings/1.5-star.png';
@@ -13,25 +13,25 @@ import Five from '../images/star-ratings/5-stars.png';
 export default function NearbySearch({ nearby }) {
 
     nearby.forEach(place => {
-        if (place.rating >= 0 && place.rating <= 0.5) {
+        if (place.rating >= 0 && place.rating <= 0.7) {
             place.stars = Half;
-        } else if (place.rating > 0.5 && place.rating <= 1) {
+        } else if (place.rating > 0.8 && place.rating <= 1.2) {
             place.stars = One;
-        } else if (place.rating > 1 && place.rating <= 1.5) {
+        } else if (place.rating >= 1.3 && place.rating <= 1.7) {
             place.stars = OneHalf;
-        } else if (place.rating > 1.5 && place.rating <= 2) {
+        } else if (place.rating >= 1.8 && place.rating <= 2.2) {
             place.stars = Two;
-        } else if (place.rating > 2 && place.rating <= 2.5) {
+        } else if (place.rating >= 2.3 && place.rating <= 2.7) {
             place.stars = TwoHalf;
-        } else if (place.rating > 2.5 && place.rating <= 3) {
+        } else if (place.rating >= 2.8 && place.rating <= 3.2) {
             place.stars = Three;
-        } else if (place.rating > 3 && place.rating <= 3.5) {
+        } else if (place.rating >= 3.3 && place.rating <= 3.7) {
             place.stars = ThreeHalf;
-        } else if (place.rating > 3.5 && place.rating <= 4) {
+        } else if (place.rating >= 3.8 && place.rating <= 4.2) {
             place.stars = Four;
-        } else if (place.rating > 4 && place.rating <= 4.5) {
+        } else if (place.rating >= 4.3 && place.rating <= 4.7) {
             place.stars = FourHalf;
-        } else if (place.rating > 4.5 && place.rating <= 5) {
+        } else if (place.rating >= 4.8 && place.rating <= 5) {
             place.stars = Five;
         } else {
             place.stars = "";

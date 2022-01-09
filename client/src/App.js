@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import './App.css';
 import 'leaflet/dist/leaflet.css';
 // import LogoNav from "./components/LogoNav";
 import Map from "./components/Map";
-import NearbySearch from "./components/NearbySearch";
+import NearbySearch from "./components/NearbySearch"; 
 
 function App() {
   // let [loading, setLoading] = useState(false);
   let [location, setLocation] = useState({
     locationOne: "", locationTwo: ""
   });
-  let [coordinates, setCoordinates] = useState({
-    latOne: "", latTwo: "", lngOne: "", lngTwo: ""
-  })
-  let [midpoint, setMidpoint] = useState({
-    lat: "", lng: ""
-  });
+  let [coordinatesOne, setCoordinatesOne] = useState()
+  let [coordinatesTwo, setCoordinatesTwo] = useState()
+  let [midpoint, setMidpoint] = useState({lat: "", lng: ""});
   let [nearby, setNearby] = useState([]);
 
   const key = "AIzaSyBdetXeEWeswh45iwugkadq_FQHitpLnhQ";
@@ -47,49 +44,57 @@ function App() {
   //   getDetails();
   // }, [nearby]);
 
-  const getCoordinates = async () => {
-    const res1 = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location.locationOne}&key=${key}`, {
+  const getCoordinates = () => {
+    Promise.all([
+      fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location.locationOne}&key=${key}`, {
         "method": "GET",
-    })
-      
-    const result1 = await res1.json();
-
-    // console.log(coordinates);
-    
-    const res2 = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location.locationTwo}&key=${key}`, {
-    "method": "GET",
-    })
-    const result2 = await res2.json();
-    setCoordinates({
-      latOne: result1.results[0].geometry.location.lat,
-      lngOne: result1.results[0].geometry.location.lng,
-      latTwo: result2.results[0].geometry.location.lat,
-      lngTwo: result2.results[0].geometry.location.lng
-    })
-    // currently gets here and doesn't run any further - midpoint state is not changed unless Search button is pressed again. Fix included below
-    document.getElementById('search').click();
-    let midLat = ((coordinates.latOne + coordinates.latTwo) / 2).toFixed(8);
-    let midLng = ((coordinates.lngOne + coordinates.lngTwo) / 2).toFixed(8);
-    setMidpoint({ lat: midLat, lng: midLng });
-    getDetails();
-  }
-
-  // // console.log(latLng);
-
-  async function getDetails() {        
-      const res2 = await fetch(`https://cors.bridged.cc/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${midpoint.lat},${midpoint.lng}&radius=1000&key=${key}`, {
+      }),
+      fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location.locationTwo}&key=${key}`, {
         "method": "GET",
-        "headers": {
-          "x-cors-grida-api-key": "f73e0aad-aaf2-4494-8d33-b63bb254d2d3",
+      })
+    ])
+      .then(responses => {
+        // Get a JSON object from each of the responses
+        return Promise.all(responses.map(response => {
+          return response.json();
+        }));
+      })
+      .then(data => {
+        // console.log(data[0].results[0].geometry.location)
+        setCoordinatesOne(data[0].results[0].geometry.location)
+        setCoordinatesTwo(data[1].results[0].geometry.location)
+        document.getElementById('search').click()
+        let midLat = ((coordinatesOne.lat + coordinatesTwo.lat) / 2).toFixed(8)
+        let midLng = ((coordinatesOne.lng + coordinatesTwo.lng) / 2).toFixed(8)
+        setMidpoint({ lat: midLat, lng: midLng })
+        getNearby()
+      })
+      .catch(error => {
+        // if there's an error, log it
+        console.log(error);
+      })
+  };
+
+  const getNearby = () => {
+    fetch(`https://cors.bridged.cc/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${midpoint.lat},${midpoint.lng}&radius=1000&key=${key}`, {
+      "method": "GET",
+      "headers": {
+        "x-cors-grida-api-key": "f73e0aad-aaf2-4494-8d33-b63bb254d2d3",
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+        } else {
+          throw new Error("Not 2xx response");
         }
-      });
-      
-    const result2 = await res2.json();
-    
-    const nearbyPlace = result2.results;
-    nearbyPlace.shift();
-    setNearby(nearbyPlace);
-    };
+      })
+      .then(response => {
+        const nearbyPlaces = response.results;
+        nearbyPlaces.shift();
+        setNearby(nearbyPlaces);
+      })
+  }
 
   return (  
     <div className="container">
