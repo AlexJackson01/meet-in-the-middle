@@ -66,7 +66,7 @@ function App() {
       latTwo: result2.results[0].geometry.location.lat,
       lngTwo: result2.results[0].geometry.location.lng
     })
-    // currently gets here and doesn't run any further - midpoint state is not changed unless Search button is pressed again
+    // currently gets here and doesn't run any further - midpoint state is not changed unless Search button is pressed again. Fix included below
     document.getElementById('search').click();
     let midLat = ((coordinates.latOne + coordinates.latTwo) / 2).toFixed(8);
     let midLng = ((coordinates.lngOne + coordinates.lngTwo) / 2).toFixed(8);
