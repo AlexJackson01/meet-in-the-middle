@@ -49,10 +49,6 @@ button {
     color: #F6F3E4;
 }
 
-.container {
-    padding-bottom: 50px;
-}
-
 .logo-container {
     padding-top: 50px;
     padding-bottom: 20px;
@@ -64,6 +60,10 @@ button {
     margin: auto;
     border-radius: 20px;
     margin-bottom: 50px;
+}
+
+.container {
+    padding: 50px;
 }
 
 

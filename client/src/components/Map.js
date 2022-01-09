@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 // import GoogleMapReact from 'google-map-react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import Star from '../../src/images/star.png';
@@ -16,7 +16,9 @@ const starIcon = new L.Icon({
   const [map, setMap] = useState(false);
 
   if (map) {
-    map.flyTo(midpoint, 13);
+    map.flyTo(midpoint, 13, {
+      duration: 1
+    });
     // setMarkerPoint(midpoint);
     // console.log(markerPoint);
   }
@@ -26,9 +28,9 @@ const starIcon = new L.Icon({
     <div className='map-container'>
       <MapContainer
         center={[51.5168712, -0.1456173]}
-        zoom={5}
+        zoom={13}
         whenCreated={setMap}
-        scrollWheelZoom={true}>
+        scrollWheelZoom={false}>
         {/* <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={true}> */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
