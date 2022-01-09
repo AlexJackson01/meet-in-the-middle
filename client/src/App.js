@@ -6,11 +6,10 @@ import Map from "./components/Map";
 import NearbySearch from "./components/NearbySearch";
 
 function App() {
-  let [loading, setLoading] = useState(false);
+  // let [loading, setLoading] = useState(false);
   let [location, setLocation] = useState({
     locationOne: "", locationTwo: ""
   });
-  // let [locationTwo, setLocationTwo] = useState("");
   let [coordinates, setCoordinates] = useState({
     latOne: "", latTwo: "", lngOne: "", lngTwo: ""
   })
@@ -35,11 +34,9 @@ function App() {
   const handleSubmit = e => {
   // handle form submit
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
     getCoordinates();
-    // getMidpoint();
-    // getDetails();
-    setLoading(false);
+    // setLoading(false);
   };
 
   const clearForm = () => {
@@ -124,7 +121,7 @@ function App() {
 
  
       <Map midpoint={midpoint} />
-      {loading && <p>Loading...</p>}
+      {/* {loading && <p>Loading...</p>} */}
       
       <NearbySearch nearby={nearby} />
 

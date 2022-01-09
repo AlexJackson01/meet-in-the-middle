@@ -25,7 +25,7 @@ const starIcon = new L.Icon({
   return (
     <div className='map-container'>
       <MapContainer
-        center={[51.5144657, -0.1700381]}
+        center={[51.5168712, -0.1456173]}
         zoom={5}
         whenCreated={setMap}
         scrollWheelZoom={true}>
