@@ -43,9 +43,9 @@ function App() {
     setLocation("");
   }
 
-  useEffect(() => {
-    getCoordinates();
-  }, [nearby]);
+  // useEffect(() => {
+  //   getDetails();
+  // }, [nearby]);
 
   const getCoordinates = async () => {
     const res1 = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${location.locationOne}&key=${key}`, {
@@ -66,6 +66,8 @@ function App() {
       latTwo: result2.results[0].geometry.location.lat,
       lngTwo: result2.results[0].geometry.location.lng
     })
+    // currently gets here and doesn't run any further - midpoint state is not changed unless Search button is pressed again
+    document.getElementById('search').click();
     let midLat = ((coordinates.latOne + coordinates.latTwo) / 2).toFixed(8);
     let midLng = ((coordinates.lngOne + coordinates.lngTwo) / 2).toFixed(8);
     setMidpoint({ lat: midLat, lng: midLng });
@@ -111,7 +113,7 @@ function App() {
             </div>
             </div>
       <div className="search-btn">
-            <button type="submit">Search</button>
+            <button type="submit" id="search">Search</button>
             <button onClick={(e) => clearForm(e)}>Clear</button>
           </div>
         </div>
