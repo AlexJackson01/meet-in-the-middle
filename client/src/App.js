@@ -8,15 +8,19 @@ import NearbySearch from "./components/NearbySearch";
 function App() {
   // let [loading, setLoading] = useState(false);
   let [input, setInput] = useState({inputOne: "", inputTwo: ""});
-  let [points, setPoints] = useState({pointOne: "", pointTwo: ""})
-  let [coordinatesOne, setCoordinatesOne] = useState()
-  let [coordinatesTwo, setCoordinatesTwo] = useState()
+  // let [points, setPoints] = useState({pointOne: "", pointTwo: ""})
+  // let [coordinatesOne, setCoordinatesOne] = useState()
+  // let [coordinatesTwo, setCoordinatesTwo] = useState()
   let [midpoint, setMidpoint] = useState({lat: "", lng: ""});
-  let [nearby, setNearby] = useState([]);
+  let [POI, setPOI] = useState([]);
+  let [extendedID, setExtendedID] = useState([]);
 
-  const key = "AIzaSyBdetXeEWeswh45iwugkadq_FQHitpLnhQ";
+  // const key = "AIzaSyBdetXeEWeswh45iwugkadq_FQHitpLnhQ";
 
-  const handleChange = e => {
+  const geoKey = "5b3ce3597851110001cf6248d8248e64cce24e7bae3637d381b685f1";
+  const poiKey = "LGM32rZnrmDbAgGhjwXpqAbNNZ0HnhqV";
+
+    const handleChange = e => {
     const name = e.target.name;
     const value = e.target.value;
 
@@ -39,69 +43,110 @@ function App() {
   };
   
   const clearSearch = () => {
-    setNearby([]);
+    setPOI([]);
     setMidpoint({lat: "", lng: ""});
   }
 
-  // useEffect(() => {
-  //   getDetails();
-  // }, [nearby]);
-
-  const getCoordinates = async() => {
-    Promise.resolve([
-      await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${input.inputOne}&key=${key}`, {
+  const getCoordinates = async () => {
+    Promise.all([
+      await fetch(`https://api.openrouteservice.org/geocode/search?api_key=${geoKey}&text=${input.inputOne}`, {
         "method": "GET",
       }),
-      await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${input.inputTwo}&key=${key}`, {
+      await fetch(`https://api.openrouteservice.org/geocode/search?api_key=${geoKey}&text=${input.inputTwo}`, {
         "method": "GET",
       })
     ])
       .then(responses => {
-        // Get a JSON object from each of the responses
         return Promise.all(responses.map(response => {
           return response.json();
-        }));
+        }))
       })
       .then(data => {
-        // console.log(data[0].results[0].geometry.location)
-        setCoordinatesOne(data[0].results[0].geometry.location)
-        setCoordinatesTwo(data[1].results[0].geometry.location)
-        setPoints({pointOne: input.inputOne, pointTwo: input.inputTwo})
-        document.getElementById('search').click()
-        let midLat = ((coordinatesOne.lat + coordinatesTwo.lat) / 2).toFixed(8)
-        let midLng = ((coordinatesOne.lng + coordinatesTwo.lng) / 2).toFixed(8)
-        setMidpoint({ lat: midLat, lng: midLng })
-        getNearby()
+        setMidpoint({
+          lat: ((data[0].features[0].geometry.coordinates[1] + data[1].features[0].geometry.coordinates[1]) / 2).toFixed(8),
+          lng: ((data[0].features[0].geometry.coordinates[0] + data[1].features[0].geometry.coordinates[0]) / 2).toFixed((8))
+        })
+        // getPOI();
       })
-      .catch(error => {
-        // if there's an error, log it
-        console.log(error);
-      })
-  };
+    .then(getPOI())
+  }
 
-  const getNearby = () => {
-    fetch(`https://cors.bridged.cc/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${midpoint.lat},${midpoint.lng}&radius=1000&key=${key}`, {
+  const getPOI = async () => {
+    await fetch(`https://api.tomtom.com/search/2/poiSearch/restaurant.json?key=${poiKey}&limit=20&lat=${midpoint.lat}&lon=${midpoint.lng}&radius=10000&language=en-GB`, {
       "method": "GET",
-      "headers": {
-        "x-cors-grida-api-key": "f73e0aad-aaf2-4494-8d33-b63bb254d2d3",
-      }
     })
       .then(response => {
-        if (response.ok) {
-          return response.json()
-        } else {
-          throw new Error("Not 2xx response");
-        }
+        return response.json()
       })
-      .then(response => {
-        const nearbyPlaces = response.results;
-        nearbyPlaces.shift();
-        setNearby(nearbyPlaces);
-        clearForm(); // when form is cleared, it tries to geocode again?? Not sure why
+      .then(data => {
+        setPOI(data.results);
+        // setExtendedID(data.results);
       })
   }
 
-  console.log(nearby);
+  // const getExtended = () => {
+  //   setExtendedID()
+  //   POI.forEach(place => {
+  //     setExtendedID(place.dataSources)
+  //   })
+  // }
+
+
+  // const getCoordinates = async() => {
+  //   Promise.resolve([
+  //     await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${input.inputOne}&key=${key}`, {
+  //       "method": "GET",
+  //     }),
+  //     await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${input.inputTwo}&key=${key}`, {
+  //       "method": "GET",
+  //     })
+  //   ])
+  //     .then(responses => {
+  //       // Get a JSON object from each of the responses
+  //       return Promise.all(responses.map(response => {
+  //         return response.json();
+  //       }));
+  //     })
+  //     .then(data => {
+  //       // console.log(data[0].results[0].geometry.location)
+  //       setCoordinatesOne(data[0].results[0].geometry.location)
+  //       setCoordinatesTwo(data[1].results[0].geometry.location)
+  //       setPoints({pointOne: input.inputOne, pointTwo: input.inputTwo})
+  //       document.getElementById('search').click()
+  //       let midLat = ((coordinatesOne.lat + coordinatesTwo.lat) / 2).toFixed(8)
+  //       let midLng = ((coordinatesOne.lng + coordinatesTwo.lng) / 2).toFixed(8)
+  //       setMidpoint({ lat: midLat, lng: midLng })
+  //       getNearby()
+  //     })
+  //     .catch(error => {
+  //       // if there's an error, log it
+  //       console.log(error);
+  //     })
+  // };
+
+  // const getNearby = () => {
+  //   fetch(`https://cors.bridged.cc/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${midpoint.lat},${midpoint.lng}&radius=1000&key=${key}`, {
+  //     "method": "GET",
+  //     "headers": {
+  //       "x-cors-grida-api-key": "f73e0aad-aaf2-4494-8d33-b63bb254d2d3",
+  //     }
+  //   })
+  //     .then(response => {
+  //       if (response.ok) {
+  //         return response.json()
+  //       } else {
+  //         throw new Error("Not 2xx response");
+  //       }
+  //     })
+  //     .then(response => {
+  //       const nearbyPlaces = response.results;
+  //       nearbyPlaces.shift();
+  //       setNearby(nearbyPlaces);
+  //       clearForm(); // when form is cleared, it tries to geocode again?? Not sure why
+  //     })
+  // }
+
+  // console.log(nearby);
 
   return (  
     <div className="container">
@@ -115,13 +160,13 @@ function App() {
       <div className="row col-lg-4 col-xs-4 col-sm-4">
         <div className="form-group">
         <label>Location One:</label>
-              <input type="text" className="form-control input-group-lg header" width={150} name="inputOne" value={input.inputOne} onChange={(e) => handleChange(e)}></input>
+              <input type="text" className="form-control input-group-lg header" width={150} name="inputOne" placeholder="Please enter an address, location or postal code" value={input.inputOne} onChange={(e) => handleChange(e)}></input>
             </div>
           </div>
       <div className="col-lg-4 col-xs-4 col-sm-4">
       <div className="form-group">
         <label>Location Two:</label>
-              <input type="text" className="form-control input-group-lg header" name="inputTwo" value={input.inputTwo} onChange={(e) => handleChange(e)}></input>
+              <input type="text" className="form-control input-group-lg header" name="inputTwo" placeholder="Please enter an address, location or postal code" value={input.inputTwo} onChange={(e) => handleChange(e)}></input>
             </div>
             </div>
       <div className="search-btn">
@@ -133,12 +178,12 @@ function App() {
       
 
 
-      {nearby[0] && <h5>The midpoint between {points.pointOne.toUpperCase()} and {points.pointTwo.toUpperCase()}:</h5>}
+      {/* {nearby[0] && <h5>The midpoint between {points.pointOne.toUpperCase()} and {points.pointTwo.toUpperCase()}:</h5>} */}
       {/* {points.type && <h5>The {points.type} at your midpoint:</h5>} */}
       <Map midpoint={midpoint} />
       {/* {loading && <p>Loading...</p>} */}
       
-      <NearbySearch nearby={nearby} />
+      <NearbySearch POI={POI} key={poiKey} />
 
     </div>
   );
