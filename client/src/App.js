@@ -7,7 +7,8 @@ import NearbySearch from "./components/NearbySearch";
 
 function App() {
   // let [loading, setLoading] = useState(false);
-  let [input, setInput] = useState({inputOne: "", inputTwo: ""});
+  let [input, setInput] = useState({ inputOne: "", inputTwo: "" });
+  let [type, setType] = useState({placeType: "", typeID: ""})
   // let [points, setPoints] = useState({pointOne: "", pointTwo: ""})
   // let [coordinatesOne, setCoordinatesOne] = useState()
   // let [coordinatesTwo, setCoordinatesTwo] = useState()
@@ -47,6 +48,20 @@ function App() {
     setMidpoint({lat: "", lng: ""});
   }
 
+  if (type.placeType) {
+    if (type.placeType === 'restaurant') {
+      type.typeID = '7315'
+    } else if (type.placeType === 'cafe') {
+      type.typeID = '9376002'
+    } else if (type.placeType === 'pub') {
+      type.typeID = '9376003'
+    } else if (type.placeType === 'cinema') {
+      type.typeID = '7342'
+    } else if (type.placeType === 'nightclub') {
+      type.typeID = '9379'
+    }
+  }
+
   const getCoordinates = async () => {
     Promise.all([
       await fetch(`https://api.openrouteservice.org/geocode/search?api_key=${geoKey}&text=${input.inputOne}`, {
@@ -72,7 +87,7 @@ function App() {
   }
 
   const getPOI = async () => {
-    await fetch(`https://api.tomtom.com/search/2/poiSearch/restaurant.json?key=${poiKey}&limit=20&lat=${midpoint.lat}&lon=${midpoint.lng}&radius=10000&language=en-GB`, {
+    await fetch(`https://api.tomtom.com/search/2/poiSearch/${type.placeType}.json?key=${poiKey}&limit=20&lat=${midpoint.lat}&lon=${midpoint.lng}&radius=100000&language=en-GB&categoryset=${type.typeID}`, {
       "method": "GET",
     })
       .then(response => {
@@ -83,14 +98,6 @@ function App() {
         // setExtendedID(data.results);
       })
   }
-
-  // const getExtended = () => {
-  //   setExtendedID()
-  //   POI.forEach(place => {
-  //     setExtendedID(place.dataSources)
-  //   })
-  // }
-
 
   // const getCoordinates = async() => {
   //   Promise.resolve([
@@ -157,18 +164,38 @@ function App() {
       {/* STYLED FORM */}
       <form className="input-form" onSubmit={(e) => handleSubmit(e)}>
         <div className="row">
+
       <div className="row col-lg-4 col-xs-4 col-sm-4">
         <div className="form-group">
         <label>Location One:</label>
               <input type="text" className="form-control input-group-lg header" width={150} name="inputOne" placeholder="Please enter an address, location or postal code" value={input.inputOne} onChange={(e) => handleChange(e)}></input>
             </div>
           </div>
+
       <div className="col-lg-4 col-xs-4 col-sm-4">
       <div className="form-group">
         <label>Location Two:</label>
               <input type="text" className="form-control input-group-lg header" name="inputTwo" placeholder="Please enter an address, location or postal code" value={input.inputTwo} onChange={(e) => handleChange(e)}></input>
             </div>
-            </div>
+          </div>
+          
+      <div className="col-lg-4 col-md-4 col-sm-4">
+          <div className="form-group">
+              <label>Type:</label>
+              <select className="form-select" aria-label="Default select example" onChange={(e) => {
+                const selectedType = e.target.value;
+                setType({placeType: selectedType})
+              }}>
+  <option selected>Select a place type</option>
+  <option value="restaurant">Restaurant</option>
+  <option value="pub">Pub</option>
+  <option value="cafe">Cafe</option>
+  <option value="cinema">Cinema</option>
+  <option value="nightclub">Nightclub/Bar</option>
+              </select>
+              </div></div>
+      
+          
       <div className="search-btn">
             <button type="submit" id="search">Search</button>
           </div>
