@@ -10,34 +10,36 @@ import React, {useState} from 'react';
 // import FourHalf from '../images/star-ratings/4.5-star.png';
 // import Five from '../images/star-ratings/5-stars.png';
 
-export default function NearbySearch({ POI }) {
+export default function NearbySearch({ nearby }) {
 
-    let [extended, setExtended] = useState();
-    let poiKey = "LGM32rZnrmDbAgGhjwXpqAbNNZ0HnhqV";
+    // let [ratings, setRatings] = useState()
+    let [extended, setExtended] = useState("");
+    let nearbyKey = "MpOfnHZhRSBv9wbqjqhYWvYAMWkaFeup";
     let ids = [];
 
-    if (POI) {
-        let extendedID = POI.filter(function (place) {
-            return place.dataSources !== undefined
-        })
+    if (nearby) {
+        let extendedID = nearby.filter(place => place.dataSources !== undefined)
+
+        console.log(extendedID);
         
-        for (let i = 0; i < extendedID.length; i++) {
+        
+        for (let i = 0; i < 5; i++) {
             ids.push(extendedID[i].dataSources.poiDetails[0].id.slice(0, -1));
-            // console.log(ids);
-            // for (let id of ids) {
-            //     fetch(`https://api.tomtom.com/search/2/poiDetails.json?key=${poiKey}&id=${id}`, {
-            //         "method": "GET"
-            //     })
-            // .then(response => { setExtended(response.json()) })
-            //         // .then(responses => {
-            //         //     responses.map(response => {
-            //         //         return response.json()
-            //         //     })
-            //         // })
-            // }
+            console.log(ids);
+        }
+
+        // console.log(ids);
+        for (let id of ids) {
+            fetch(`https://api.tomtom.com/search/2/poiDetails.json?key=${nearbyKey}&id=${id}`, {
+                "method": "GET"
+            })
+                .then(response => { return response.json() })
+                .then(response => {
+                    // setExtended(response);
+                })
+                .catch(err => console.log(err))
         }
     }
-    
 
 
 
@@ -74,17 +76,22 @@ export default function NearbySearch({ POI }) {
 
     return (
         <div className='container'>
-        <div className="places-list col-md-12 col-sm-10 col-xs-10">
-          {POI && (POI.map((place, i) => (
-              <div key={i}>
-            <ul>
-              <li className="place-card">
-                          <h5>{place.poi.name}</h5>
-                          <p>{place.address.freeformAddress}</p>
-              </li>
-                </ul>
-            </div>
-          )))}
+            <div className="places-list col-md-12 col-sm-10 col-xs-10">
+
+                {nearby && nearby.map((place, i) => (
+                    <div key={i}>
+                        <h4>{place.poi.name}</h4>
+                        <p>{place.address.freeformAddress}</p>
+                        <p>{place.poi.url}</p>
+                    </div>
+                ))
+                }
+
+                {/* {nearby.map((place, i) => (
+
+                    <div key={i}>{place.name}</div>
+                ))} */}
+
                         {/* <img src={place.stars} className='star-rating' alt="" /> */}
                           {/* <b>{place.rating}</b> */}
             </div>

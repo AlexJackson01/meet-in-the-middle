@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 // import GoogleMapReact from 'google-map-react';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import Star from '../../src/images/star.png';
@@ -39,6 +39,9 @@ const starIcon = new L.Icon({
         <Marker
           position={[midpoint.lat, midpoint.lng]}
           icon={starIcon}>
+        <Popup>
+          This is your midpoint.
+        </Popup>
         </Marker>
       </MapContainer>)}
     </div>
