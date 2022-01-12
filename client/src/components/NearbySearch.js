@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-export default function NearbySearch({ nearby }) {
+export default function NearbySearch({ nearby, errorMsg }) {
 
     useEffect(() => {
         renderNearby()
@@ -8,18 +8,24 @@ export default function NearbySearch({ nearby }) {
 
     const renderNearby = () => {
         console.log(nearby);
+        if (nearby.length === 0) {
+            return (<h5>No results found... please try an alternative radius or category.</h5>)
+        } else {
             return nearby.length > 1 ? nearby.map((place) => (
                 <div className="places-list" key={place.id}>
                     <ul className='place-card'>
+                        {errorMsg}
                         <li><h4>{place.name}</h4></li>
-                        <li className='place-url'><a href={place.url}>Visit their website</a></li>
+                        <li><h6>{place.address}</h6></li>
+                        <li className='place-url'>{place.url ? <a href={place.url}>Visit their website</a> : null}</li>
                         <li><img src={place.stars} className='star-rating' alt="" /></li>
-                        <li>{place.rating ? <p><b>{place.rating.value}</b> (Foursquare)</p> : <p><em>{"Rating not available"}</em></p>}</li>
+                        <li>{place.rating ? <p><b>{Math.round(place.rating.value * 10) / 10}</b> (Foursquare)</p> : <p><em>{"Rating not available"}</em></p>}</li>
                         <li> {place.reviews ? <p><em>Others have said: {place.reviews[0].text}</em></p> : <p><em>{"Reviews not available"}</em></p>}</li>
                     </ul>
                 </div>
             ))
-            : "No results found..."
+                : null;
+        }
     }
 
 

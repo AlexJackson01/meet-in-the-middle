@@ -30,16 +30,14 @@ function App() {
   let [loading, setLoading] = useState(false);
   let [input, setInput] = useState({ inputOne: "", inputTwo: "" });
   let [category, setCategory] = useState({ category: "", categoryID: "" });
+  let [radius, setRadius] = useState({ radius: "", metreConversion: "" });
   let [nearby, setNearby] = useState({
     id: "",
     name: "",
     address: "",
     url: ""
   });
-  // let [points, setPoints] = useState()
   let [midpoint, setMidpoint] = useState({lat: "", lng: ""});
-
-  let [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     getNearby()
@@ -95,6 +93,23 @@ function App() {
     }
   }
 
+  if (radius.radius) {
+    if (radius.radius === "quarter") {
+      radius.metreConversion = Math.round(0.25 * 1609.34);
+    } else if (radius.radius === "half") {
+      radius.metreConversion = Math.round(0.5 * 1609.34);
+    } else if (radius.radius === "one") {
+      radius.metreConversion = Math.round(1 * 1609.34);
+    } else if (radius.radius === "three") {
+      radius.metreConversion = Math.round(3 * 1609.34);
+    } else if (radius.radius === "five") {
+      radius.metreConversion = Math.round(5 * 1609.34);
+    } else {
+      radius.metreConversion = 1000;
+    }
+  }
+
+
   const getCoordinates = () => {
     let one = `https://api.openrouteservice.org/geocode/search?api_key=${geoKey}&text=${input.inputOne}`;
     let two = `https://api.openrouteservice.org/geocode/search?api_key=${geoKey}&text=${input.inputTwo}`;
@@ -118,7 +133,7 @@ function App() {
     console.log("i'm here");
     console.log(midpoint);
     if (midpoint.lat !== "") {
-      const res = await axios.get(`https://api.tomtom.com/search/2/nearbySearch/.json?key=${nearbyKey}&lat=${midpoint.lat}&lon=${midpoint.lng}&radius=10000&limit=20&language=en-GB&categorySet=${category.categoryID}`);
+      const res = await axios.get(`https://api.tomtom.com/search/2/nearbySearch/.json?key=${nearbyKey}&lat=${midpoint.lat}&lon=${midpoint.lng}&radius=${radius.metreConversion}&limit=20&language=en-GB&categorySet=${category.categoryID}`);
       const details = res.data.results;
       const searchOne = details.filter(place => place.dataSources !== undefined);
 
@@ -218,21 +233,21 @@ function App() {
       <form className="input-form" onSubmit={(e) => handleSubmit(e)}>
         <div className="row">
 
-      <div className="row col-lg-4 col-xs-4 col-sm-4">
+      <div className="row col-lg-3 col-xs-3 col-sm-3">
         <div className="form-group">
         <label>Location One:</label>
               <input type="text" className="form-control input-group-lg header" width={150} name="inputOne" placeholder="Please enter an address, location or postal code" value={input.inputOne} onChange={(e) => handleChange(e)}></input>
             </div>
           </div>
 
-      <div className="col-lg-4 col-xs-4 col-sm-4">
+      <div className="col-lg-3 col-xs-3 col-sm-3">
       <div className="form-group">
         <label>Location Two:</label>
               <input type="text" className="form-control input-group-lg header" name="inputTwo" placeholder="Please enter an address, location or postal code" value={input.inputTwo} onChange={(e) => handleChange(e)}></input>
             </div>
           </div>
           
-      <div className="col-lg-4 col-md-4 col-sm-4">
+      <div className="col-lg-3 col-xs-3 col-sm-3">
           <div className="form-group">
               <label>Category:</label>
               <select className="form-select" aria-label="Default select example" onChange={(e) => {
@@ -245,6 +260,22 @@ function App() {
   <option value="cafe">Cafe</option>
   <option value="cinema">Cinema</option>
   <option value="nightclub">Nightclub/Bar</option>
+              </select>
+            </div></div>
+          
+               <div className="col-lg-3 col-xs-3 col-sm-3">
+          <div className="form-group">
+              <label>Radius:</label>
+              <select className="form-select" aria-label="Default select example" onChange={(e) => {
+                const selectedRadius = e.target.value;
+                setRadius({radius: selectedRadius})
+              }}>
+  <option defaultValue>Select a radius</option>
+  <option value="quarter">1/4 mile</option>
+  <option value="half">1/2 mile</option>
+  <option value="one">1 mile</option>
+  <option value="three">3 miles</option>
+  <option value="five">5 miles</option>
               </select>
               </div></div>
       
@@ -260,9 +291,8 @@ function App() {
 
       {loading && <p>Finding...</p>}
       {midpoint.lat && <h5>The midpoint between {input.inputOne.toUpperCase()} and {input.inputTwo.toUpperCase()}:</h5>}
-      {/* {points.type && <h5>The {points.type} at your midpoint:</h5>} */}
+
       <Map midpoint={midpoint} />
-      {errorMsg}
       {/* {loading && <p>Loading...</p>} */}
       
       <NearbySearch nearby={nearby} />
