@@ -66,6 +66,42 @@ button {
     padding: 50px;
 }
 
+.star-rating {
+    width: 60%;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.places-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.place-card {
+    background-color: #F6F3E4;
+    padding: 20px;
+    border-radius: 20px;
+    width: 200px;
+    height: 70vh;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+    box-shadow: 6px 6px #D3604A;
+}
+
+.place-url {
+    font-size: 10px;
+}
+
+a {
+    color: #D3604A
+}
+
 
 /* .logo {
     display: flex;
@@ -101,27 +137,4 @@ button {
     font-weight: bold;
     padding-right: 30px;
 }
-
-.places-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 auto;
-}
-
-.place-card {
-    background-color: #F6F3E4;
-    padding: 20px;
-    border-radius: 20px;
-    width: 200px;
-    height: 70vh;
-    text-align: center;
-    margin: 0 auto;
-    display: block;
-    box-shadow: 6px 6px #D3604A;
-}
-
-.star-rating {
-    width: 50%;
-} */
+*/
