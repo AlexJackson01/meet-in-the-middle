@@ -7,28 +7,30 @@ import Map from "./components/Map";
 import NearbySearch from "./components/NearbySearch"; 
 
 function App() {
-  // let [loading, setLoading] = useState(false);
+  let [loading, setLoading] = useState(false);
   let [input, setInput] = useState({ inputOne: "", inputTwo: "" });
   let [category, setCategory] = useState({ category: "", categoryID: "" });
-  let [nearby, setNearby] = useState("");
+  let [nearby, setNearby] = useState({
+    id: "",
+    name: "",
+    address: "",
+    url: ""
+  });
   // let [points, setPoints] = useState()
   let [midpoint, setMidpoint] = useState({lat: "", lng: ""});
-  let [extendedID, setExtendedID] = useState([]);
+
+  let [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     getNearby()
   }, [midpoint])
 
-  // const key = "AIzaSyBdetXeEWeswh45iwugkadq_FQHitpLnhQ";
-
   const geoKey = "5b3ce3597851110001cf6248d8248e64cce24e7bae3637d381b685f1";
   // const nearbyKey = "LGM32rZnrmDbAgGhjwXpqAbNNZ0HnhqV";
   const nearbyKey = "MpOfnHZhRSBv9wbqjqhYWvYAMWkaFeup";
-  const nearbyConfig = {
-    method: "get",
-    url: `https://api.tomtom.com/search/2/nearbySearch/.json?key=${nearbyKey}&lat=${midpoint.lat}&lon=${midpoint.lng}&radius=10000&limit=20&language=en-GB&categorySet=${category.categoryID}`
-  }
-  // let nearby = [];
+
+  let nearbyDetails = [];
+  let extendedID = [];
 
     const handleChange = e => {
     const name = e.target.name;
@@ -43,18 +45,20 @@ function App() {
   const handleSubmit = e => {
   // handle form submit
     e.preventDefault();
-    // setLoading(true);
+    setLoading(true);
     getCoordinates();
-    // setLoading(false);
+    setLoading(false);
   };
 
   const clearForm = (e) => {
-    setInput([]);
+    setInput("");
   };
   
   const clearSearch = () => {
-    nearby = [];
-    setMidpoint([]);
+    setInput({ inputOne: "", inputTwo: "" });
+    setNearby("");
+    // setNearby("");
+    setMidpoint({ lat: "", lng: "" });
   }
 
   if (category.category) {
@@ -90,20 +94,36 @@ function App() {
     })
   }
 
-  const getNearby = () => {
+  const getNearby = async() => {
     console.log("i'm here");
     console.log(midpoint);
     if (midpoint.lat !== "") {
-      axios(nearbyConfig)
-        .then(response => {
-          console.log("XX", response);
-          setNearby(response.data.results);
-          // nearby.push(response.data.results);
-          console.log(nearby);
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      const res = await axios.get(`https://api.tomtom.com/search/2/nearbySearch/.json?key=${nearbyKey}&lat=${midpoint.lat}&lon=${midpoint.lng}&radius=10000&limit=20&language=en-GB&categorySet=${category.categoryID}`);
+      const details = res.data.results;
+      const searchOne = details.filter(place => place.dataSources !== undefined);
+
+      for (let place of searchOne) {
+      nearbyDetails.push({
+        id: place.dataSources.poiDetails[0].id,
+        name: place.poi.name,
+        address: place.address.freeformAddress,
+        url: place.poi.url
+      })
+      }
+      console.log(nearbyDetails);
+
+      for (let place of searchOne) {
+        const res2 = await axios.get(`https://api.tomtom.com/search/2/poiDetails.json?key=${nearbyKey}&id=${place.dataSources.poiDetails[0].id}`);
+          extendedID.push({
+            id: res2.data.id,
+            rating: res2.data.result.rating
+          })
+      }
+
+      let fullDetails = nearbyDetails.map((item, i) => Object.assign({}, item, extendedID[i]));
+      setNearby(fullDetails);
+      
+      console.log("i'm here now");
     }
   }
 
@@ -134,12 +154,12 @@ function App() {
           
       <div className="col-lg-4 col-md-4 col-sm-4">
           <div className="form-group">
-              <label>Type:</label>
+              <label>Category:</label>
               <select className="form-select" aria-label="Default select example" onChange={(e) => {
                 const selectedCategory = e.target.value;
                 setCategory({category: selectedCategory})
               }}>
-  <option defaultValue>Select a place type</option>
+  <option defaultValue>Select a category</option>
   <option value="restaurant">Restaurant</option>
   <option value="pub">Pub</option>
   <option value="cafe">Cafe</option>
@@ -154,13 +174,15 @@ function App() {
           </div>
         </div>
       </form>
+
       <button onClick={(e) => clearSearch(e)}>Clear</button>
       
 
-
-      {/* {nearby && <h5>The midpoint between {input.inputOne.toUpperCase()} and {input.inputTwo.toUpperCase()}:</h5>} */}
+              {loading && <p>Finding...</p>}
+      {nearby && <h5>The midpoint between {input.inputOne.toUpperCase()} and {input.inputTwo.toUpperCase()}:</h5>}
       {/* {points.type && <h5>The {points.type} at your midpoint:</h5>} */}
       <Map midpoint={midpoint} />
+      {errorMsg}
       {/* {loading && <p>Loading...</p>} */}
       
       <NearbySearch nearby={nearby} />

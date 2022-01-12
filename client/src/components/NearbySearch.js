@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 // import Half from '../images/star-ratings/0.5-star.png';
 // import One from '../images/star-ratings/1-star.png';
 // import OneHalf from '../images/star-ratings/1.5-star.png';
@@ -12,34 +12,54 @@ import React, {useState} from 'react';
 
 export default function NearbySearch({ nearby }) {
 
-    // let [ratings, setRatings] = useState()
-    let [extended, setExtended] = useState("");
+    let [fullDetails, setFullDetails] = useState();
+
+        useEffect(() => {
+        renderNearby()
+    }, [nearby])
+
     let nearbyKey = "MpOfnHZhRSBv9wbqjqhYWvYAMWkaFeup";
-    let ids = [];
 
-    if (nearby) {
-        let extendedID = nearby.filter(place => place.dataSources !== undefined)
+    // if (nearby) {
+    //     setFullDetails(nearby);
+    // }
 
-        console.log(extendedID);
-        
-        
-        for (let i = 0; i < 5; i++) {
-            ids.push(extendedID[i].dataSources.poiDetails[0].id.slice(0, -1));
-            console.log(ids);
-        }
+    const renderNearby = () => {
+        console.log(nearby);
+        return nearby.length > 1 ? nearby.map((place) => (
+            <div key={place.id}>
+                <h4>{place.name}</h4>
+                <h6>{place.address}</h6>
+                <p>{place.url}</p>
+                {place.rating ? <p>{place.rating.value}</p> : <p>"Rating not available"</p>}
+                {/* <p>{place.rating.rating.value}</p> */}
+            </div>
+        ))
+            : null;
+
+    }
 
         // console.log(ids);
-        for (let id of ids) {
-            fetch(`https://api.tomtom.com/search/2/poiDetails.json?key=${nearbyKey}&id=${id}`, {
-                "method": "GET"
-            })
-                .then(response => { return response.json() })
-                .then(response => {
-                    // setExtended(response);
-                })
-                .catch(err => console.log(err))
-        }
-    }
+//     const getDetails = () => {
+//         for (let id of ids) {
+//             fetch(`https://api.tomtom.com/search/2/poiDetails.json?key=${nearbyKey}&id=${id}`, {
+//                 "method": "GET"
+//             })
+//                 .then(response => { return response.json() })
+//                 .then(response => {
+//                     extended.push(response);
+// //                     // setExtended(response);
+//                 })
+//                 .then(response =>
+//                     setRatings(extended)
+//                 )
+//                 .catch(err => console.log(err))
+//         }
+//     }
+
+    // if (extended) {
+    //     setRatings(extended);
+    // }
 
 
 
@@ -78,19 +98,18 @@ export default function NearbySearch({ nearby }) {
         <div className='container'>
             <div className="places-list col-md-12 col-sm-10 col-xs-10">
 
-                {nearby && nearby.map((place, i) => (
-                    <div key={i}>
-                        <h4>{place.poi.name}</h4>
-                        <p>{place.address.freeformAddress}</p>
-                        <p>{place.poi.url}</p>
+                {renderNearby()}
+
+                {/* {fullDetails !== undefined && (fullDetails.map((place) => {
+                    <div key={place.id}>
+                        <h4>{place.name}</h4>
+                        <h6>{place.address}</h6>
+                        <p>{place.url}</p>
+                        <p>Show ratings</p>
                     </div>
-                ))
                 }
-
-                {/* {nearby.map((place, i) => (
-
-                    <div key={i}>{place.name}</div>
-                ))} */}
+                )
+                )} */}
 
                         {/* <img src={place.stars} className='star-rating' alt="" /> */}
                           {/* <b>{place.rating}</b> */}
