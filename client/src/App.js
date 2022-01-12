@@ -37,7 +37,8 @@ function App() {
     address: "",
     url: ""
   });
-  let [midpoint, setMidpoint] = useState({lat: "", lng: ""});
+  let [midpoint, setMidpoint] = useState({ lat: "", lng: "" });
+  let [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     getNearby()
@@ -77,6 +78,7 @@ function App() {
     setNearby("");
     // setNearby("");
     setMidpoint({ lat: "", lng: "" });
+    setErrorMsg("");
   }
 
   if (category.category) {
@@ -145,7 +147,10 @@ function App() {
           url: place.poi.url
         })
       }
-      console.log(nearbyDetails);
+      
+      if (nearbyDetails.length === 0) {
+        setErrorMsg("No results found... please try an alternative radius or category.");
+      }
 
       for (let place of searchOne) {
         const res2 = await axios.get(`https://api.tomtom.com/search/2/poiDetails.json?key=${nearbyKey}&id=${place.dataSources.poiDetails[0].id}`);
@@ -295,7 +300,7 @@ function App() {
       <Map midpoint={midpoint} />
       {/* {loading && <p>Loading...</p>} */}
       
-      <NearbySearch nearby={nearby} />
+      <NearbySearch nearby={nearby} errorMsg={errorMsg} />
 
     </div>
   );

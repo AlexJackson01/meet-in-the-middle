@@ -8,13 +8,12 @@ export default function NearbySearch({ nearby, errorMsg }) {
 
     const renderNearby = () => {
         console.log(nearby);
-        if (nearby.length === 0) {
-            return (<h5>No results found... please try an alternative radius or category.</h5>)
+        if (errorMsg) {
+            return (<h5>{errorMsg}</h5>)
         } else {
-            return nearby.length > 1 ? nearby.map((place) => (
+            return nearby.length >= 1 ? nearby.map((place) => (
                 <div className="places-list" key={place.id}>
                     <ul className='place-card'>
-                        {errorMsg}
                         <li><h4>{place.name}</h4></li>
                         <li><h6>{place.address}</h6></li>
                         <li className='place-url'>{place.url ? <a href={place.url}>Visit their website</a> : null}</li>

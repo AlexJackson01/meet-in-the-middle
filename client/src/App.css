@@ -99,7 +99,12 @@ ul {
 }
 
 a {
-    color: #D3604A
+    color: #D3604A;
+}
+
+a:hover {
+    color: #D3604A;
+    font-weight: bold;
 }
 
 
