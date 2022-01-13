@@ -111,7 +111,12 @@ a:hover {
 .loading-star {
     transform: rotateY(0.5turn);
     color: #D3604A;
-    size: 50px;
+}
+
+.favourite-heart,
+.heart {
+    height: 30px;
+    color: #D3604A;
 }
 
 .navbar {
@@ -128,6 +133,15 @@ a:hover {
     padding-bottom: 15px;
     font-weight: bold;
     padding-right: 30px;
+}
+
+.favourites-card {
+    display: flex;
+    justify-content: space-between;
+}
+
+.favourites-info {
+    padding: 20px;
 }
 
 

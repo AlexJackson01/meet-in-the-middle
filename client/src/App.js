@@ -10,6 +10,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import LogoNav from "./components/LogoNav";
 import Map from "./components/Map";
 import NearbySearch from "./components/NearbySearch";
+import Favourites from "./components/Favourites";
 
 
 function App() {
@@ -21,10 +22,13 @@ function App() {
     id: "",
     name: "",
     address: "",
-    url: ""
+    url: "",
+    favourite: false
   });
   let [midpoint, setMidpoint] = useState({ lat: "", lng: "" });
   let [errorMsg, setErrorMsg] = useState("");
+  let [favourites, setFavourites] = useState("");
+  let [liked, setLiked] = useState("");
 
   useEffect(() => {
     getNearby()
@@ -79,7 +83,26 @@ function App() {
     radius.radius === "ten" ? radius.metres = Math.round(10 * 1609.34) : radius.metreConversion = "";
   }
 
+  const pullFavourites = (place) => {
+        console.log("i'm here");
+            setFavourites(previous => [...previous, {
+            id: place.id,
+            name: place.name,
+            address: place.address,
+            favourite: false,
+            rating: place.rating,
+            reviews: place.reviews
+            }]);
 
+    console.log("added to favourites", favourites);
+  }
+  
+  const removeFavourite = (favourite) => {
+    // setFavourites(prevState => {
+    //     const favourites = prevState.filter(place => place.id === favourite.id);
+    //     return { favourites };
+    // });
+}
 
   const getCoordinates = () => {
     let one = `https://api.openrouteservice.org/geocode/search?api_key=${geoKey}&text=${input.inputOne}`;
@@ -216,10 +239,11 @@ function App() {
 
       {loading && (<FontAwesomeIcon icon={faStar} size="2x" pulse className="loading-star" />)}
       
-      <Map midpoint={midpoint} />
+      <Map midpoint={midpoint} />  
+      {liked && (<h1>{liked}</h1>)}
+      <NearbySearch nearby={nearby} errorMsg={errorMsg} images={image_data} pullFavourites={pullFavourites} liked={liked} />
       
-      <NearbySearch nearby={nearby} errorMsg={errorMsg} images={image_data} />
-      
+      <Favourites favourites={favourites} input={input} removeFavourite={removeFavourite} />
 
     </div>
   );

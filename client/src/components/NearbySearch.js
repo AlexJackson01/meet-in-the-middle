@@ -1,15 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { image_data } from './Images/star-images';
+import Heart from '../images/like.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
-export default function NearbySearch({ nearby, errorMsg }) {
+
+export default function NearbySearch({ nearby, errorMsg, pullFavourites }) {
+
+    let [liked, setLiked] = useState(false);
 
     useEffect(() => {
         renderNearby()
     }, [nearby])
 
+    const likePlace = (place) => {
+        place.favourite = true;
+        setLiked(!liked);
+    }
+
+    //     const unlikePlace = (place) => {
+    //     place.favourite = false;
+    //     setLiked(liked);
+    // }
+
 
     const renderNearby = () => {
-        console.log(nearby);
+        console.log(liked);
         if (errorMsg) {
             return (<h5>{errorMsg}</h5>)
         } else {
@@ -41,7 +58,10 @@ export default function NearbySearch({ nearby, errorMsg }) {
                         {place.rating.value > 9.7 && place.rating.value <= 10 ? <li><img src={image_data[19].image} className="star-rating" alt="" /></li> : null}  
                         <li>{place.rating ? <p><b>{Math.round(place.rating.value * 10) / 10}</b> (Foursquare)</p> : <p><em>{"Rating not available"}</em></p>}</li>
                         <li> {place.reviews ? <p><em>Others have said: {place.reviews[0].text}</em></p> : <p><em>{"Reviews not available"}</em></p>}</li>
+                        {place.favourite ? (<FontAwesomeIcon icon={fasHeart} size="2x" className="favourite-heart" />) : (<FontAwesomeIcon icon={farHeart} size="2x" className="favourite-heart" onClick={() => { pullFavourites(place); likePlace(place);}} />)}
+                        {place.favourite && (<p>Added to Favourites!</p>)}
                     </ul>
+                        
                 </div>
             ))
                 : null;
