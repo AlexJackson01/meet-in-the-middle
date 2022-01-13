@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import './App.css';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import "@fortawesome/fontawesome-svg-core/styles.css";
 // import LogoNav from "./components/LogoNav";
 import Map from "./components/Map";
 import NearbySearch from "./components/NearbySearch";
@@ -29,8 +32,8 @@ import Ten from './images/star-ratings/10-stars.png';
 function App() {
   let [loading, setLoading] = useState(false);
   let [input, setInput] = useState({ inputOne: "", inputTwo: "" });
-  let [category, setCategory] = useState({ category: "", categoryID: "" });
-  let [radius, setRadius] = useState({ radius: "", metreConversion: "" });
+  let [category, setCategory] = useState({ category: "" });
+  let [radius, setRadius] = useState({ radius: "" });
   let [nearby, setNearby] = useState({
     id: "",
     name: "",
@@ -66,11 +69,6 @@ function App() {
     e.preventDefault();
     setLoading(true);
     getCoordinates();
-    setLoading(false);
-  };
-
-  const clearForm = (e) => {
-    setInput("");
   };
   
   const clearSearch = () => {
@@ -82,34 +80,22 @@ function App() {
   }
 
   if (category.category) {
-    if (category.category === 'restaurant') {
-      category.categoryID = '7315'
-    } else if (category.category === 'cafe') {
-      category.categoryID = '9376002'
-    } else if (category.category === 'pub') {
-      category.categoryID = '9376003'
-    } else if (category.category === 'cinema') {
-      category.categoryID = '7342'
-    } else if (category.category === 'nightclub') {
-      category.categoryID = '9379'
-    }
+    category.category === "Restaurant" ? category.categoryID = 7315 : category.place = "";
+    category.category === "Cafe" ? category.categoryID = 9376002 : category.place = "";
+    category.category === "Pub" ? category.categoryID = 9376003 : category.place = "";
+    category.category === "Cinema" ? category.categoryID = 7342 : category.place = "";
+    category.category === "Nightclub" ? category.categoryID = 9379 : category.place = "";
   }
 
   if (radius.radius) {
-    if (radius.radius === "quarter") {
-      radius.metreConversion = Math.round(0.25 * 1609.34);
-    } else if (radius.radius === "half") {
-      radius.metreConversion = Math.round(0.5 * 1609.34);
-    } else if (radius.radius === "one") {
-      radius.metreConversion = Math.round(1 * 1609.34);
-    } else if (radius.radius === "three") {
-      radius.metreConversion = Math.round(3 * 1609.34);
-    } else if (radius.radius === "five") {
-      radius.metreConversion = Math.round(5 * 1609.34);
-    } else {
-      radius.metreConversion = 1000;
-    }
+    radius.radius === "quarter" ? radius.metres = Math.round(0.25 * 1609.34) : radius.metreConversion = "";
+    radius.radius === "half" ? radius.metres = Math.round(0.5 * 1609.34) : radius.metreConversion = "";
+    radius.radius === "one" ? radius.metres = Math.round(1 * 1609.34) : radius.metreConversion = "";
+    radius.radius === "three" ? radius.metres = Math.round(3 * 1609.34) : radius.metreConversion = "";
+    radius.radius === "five" ? radius.metres = Math.round(5 * 1609.34) : radius.metreConversion = "";
+    radius.radius === "ten" ? radius.metres = Math.round(10 * 1609.34) : radius.metreConversion = "";
   }
+
 
 
   const getCoordinates = () => {
@@ -222,6 +208,7 @@ function App() {
       console.log(top5);
 
       setNearby(top5);
+      setLoading(false);
       
       console.log("i'm here now");
     }
@@ -260,11 +247,11 @@ function App() {
                 setCategory({category: selectedCategory})
               }}>
   <option defaultValue>Select a category</option>
-  <option value="restaurant">Restaurant</option>
-  <option value="pub">Pub</option>
-  <option value="cafe">Cafe</option>
-  <option value="cinema">Cinema</option>
-  <option value="nightclub">Nightclub/Bar</option>
+  <option value="Restaurant">Restaurant</option>
+  <option value="Pub">Pub</option>
+  <option value="Cafe">Cafe</option>
+  <option value="Cinema">Cinema</option>
+  <option value="Nightclub">Nightclub/Bar</option>
               </select>
             </div></div>
           
@@ -280,7 +267,8 @@ function App() {
   <option value="half">1/2 mile</option>
   <option value="one">1 mile</option>
   <option value="three">3 miles</option>
-  <option value="five">5 miles</option>
+                <option value="five">5 miles</option>
+                <option value="ten">10 miles</option>
               </select>
               </div></div>
       
@@ -297,6 +285,7 @@ function App() {
       {loading && <p>Finding...</p>}
       {midpoint.lat && <h5>The midpoint between {input.inputOne.toUpperCase()} and {input.inputTwo.toUpperCase()}:</h5>}
 
+      {loading && (<FontAwesomeIcon icon={faStar} size="2x" pulse className="loading-star" />)}
       <Map midpoint={midpoint} />
       {/* {loading && <p>Loading...</p>} */}
       

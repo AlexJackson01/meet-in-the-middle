@@ -107,6 +107,12 @@ a:hover {
     font-weight: bold;
 }
 
+.loading-star {
+    transform: rotateY(0.5turn);
+    color: #D3604A;
+    size: 50px;
+}
+
 
 /* .logo {
     display: flex;
