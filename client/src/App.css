@@ -114,6 +114,22 @@ a:hover {
     size: 50px;
 }
 
+.navbar {
+    list-style-type: none;
+    color: #F6F3E4;
+    display: block;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 10px;
+    text-align: center;
+}
+
+.nav-links {
+    padding-bottom: 15px;
+    font-weight: bold;
+    padding-right: 30px;
+}
+
 
 /* .logo {
     display: flex;
@@ -134,19 +150,5 @@ a:hover {
     box-shadow: 6px 6px #D3604A;
 }
 
-.navbar {
-    list-style-type: none;
-    color: #F6F3E4;
-    display: block;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    margin: 10px;
-    text-align: center;
-}
 
-.nav-links {
-    padding-bottom: 15px;
-    font-weight: bold;
-    padding-right: 30px;
-}
 */

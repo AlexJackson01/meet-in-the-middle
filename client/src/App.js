@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import './App.css';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { image_data } from "./components/Images/star-images";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-// import LogoNav from "./components/LogoNav";
+import LogoNav from "./components/LogoNav";
 import Map from "./components/Map";
 import NearbySearch from "./components/NearbySearch";
 
@@ -145,10 +146,9 @@ function App() {
     }
   }
 
-
   return (  
     <div className="container">
-      {/* <LogoNav /> */}
+      <LogoNav />
     <h1>Meet in the Middle</h1>
 
 
@@ -219,6 +219,7 @@ function App() {
       <Map midpoint={midpoint} />
       
       <NearbySearch nearby={nearby} errorMsg={errorMsg} images={image_data} />
+      
 
     </div>
   );
