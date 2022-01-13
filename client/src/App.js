@@ -4,30 +4,12 @@ import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { image_data } from "./components/Images/star-images";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 // import LogoNav from "./components/LogoNav";
 import Map from "./components/Map";
 import NearbySearch from "./components/NearbySearch";
-import Half from './images/star-ratings/0.5-star.png';
-import One from './images/star-ratings/1-star.png';
-import OneHalf from './images/star-ratings/1.5-star.png';
-import Two from './images/star-ratings/2-stars.png';
-import TwoHalf from './images/star-ratings/2.5-star.png';
-import Three from './images/star-ratings/3-stars.png';
-import ThreeHalf from './images/star-ratings/3.5-star.png';
-import Four from './images/star-ratings/4-stars.png';
-import FourHalf from './images/star-ratings/4.5-star.png';
-import Five from './images/star-ratings/5-stars.png';
-import FiveHalf from './images/star-ratings/5.5-stars.png';
-import Six from './images/star-ratings/6-stars.png';
-import SixHalf from './images/star-ratings/6.5-stars.png';
-import Seven from './images/star-ratings/7-stars.png';
-import SevenHalf from './images/star-ratings/7.5-stars.png';
-import Eight from './images/star-ratings/8-stars.png';
-import EightHalf from './images/star-ratings/8.5-stars.png';
-import Nine from './images/star-ratings/9-stars.png';
-import NineHalf from './images/star-ratings/9.5-stars.png';
-import Ten from './images/star-ratings/10-stars.png'; 
+
 
 function App() {
   let [loading, setLoading] = useState(false);
@@ -155,62 +137,11 @@ function App() {
       const searchTwo = fullDetails.filter(place => place.rating !== undefined);
 
       let sorted = searchTwo.sort((a, b) => (b.rating.value) - (a.rating.value));
-      let top5 = sorted.slice(0, 5);
+      let top10 = sorted.slice(0, 10);
 
-      top5.forEach(place => {
-        if (place.rating >= 0 && place.rating <= 0.7) {
-          place.stars = Half;
-        } else if (place.rating > 0.8 && place.rating <= 1.2) {
-          place.stars = One;
-        } else if (place.rating > 1.2 && place.rating <= 1.7) {
-          place.stars = OneHalf;
-        } else if (place.rating > 1.7 && place.rating <= 2.2) {
-          place.stars = Two;
-        } else if (place.rating > 2.2 && place.rating <= 2.7) {
-          place.stars = TwoHalf;
-        } else if (place.rating > 2.7 && place.rating <= 3.2) {
-          place.stars = Three;
-        } else if (place.rating > 3.2 && place.rating <= 3.7) {
-          place.stars = ThreeHalf;
-        } else if (place.rating > 3.7 && place.rating <= 4.2) {
-          place.stars = Four;
-        } else if (place.rating > 4.2 && place.rating <= 4.7) {
-          place.stars = FourHalf;
-        } else if (place.rating > 4.7 && place.rating <= 5) {
-          place.stars = Five;
-        } else if (place.rating.value > 5 && place.rating.value <= 5.7) {
-            place.stars = FiveHalf;
-        } else if (place.rating.value > 5.7 && place.rating.value <= 6.2) {
-            place.stars = Six;
-        } else if (place.rating.value > 6.2 && place.rating.value <= 6.7) {
-            place.stars = SixHalf;
-        } else if (place.rating.value > 6.7 && place.rating.value <= 7.2) {
-            place.stars = Seven;
-        } else if (place.rating.value > 7.2 && place.rating.value <= 7.7) {
-            place.stars = SevenHalf;
-        } else if (place.rating.value > 7.7 && place.rating.value <= 8.2) {
-            place.stars = Eight;
-        } else if (place.rating.value > 8.2 && place.rating.value <= 8.7) {
-            place.stars = EightHalf;
-        } else if (place.rating.value > 8.7 && place.rating.value <= 9.2) {
-            place.stars = Nine;
-        } else if (place.rating.value > 9.2 && place.rating.value <= 9.7) {
-            place.stars = NineHalf;
-        } else if (place.rating.value > 9.7 && place.rating.value <= 10) {
-            place.stars = Ten;
-        } else {
-            place.stars = "";
-        }
-            
-        }
-      )
-      
-      console.log(top5);
-
-      setNearby(top5);
+      setNearby(top10);
       setLoading(false);
-      
-      console.log("i'm here now");
+
     }
   }
 
@@ -281,15 +212,13 @@ function App() {
 
       <button onClick={(e) => clearSearch(e)}>Clear</button>
       
-
-      {loading && <p>Finding...</p>}
       {midpoint.lat && <h5>The midpoint between {input.inputOne.toUpperCase()} and {input.inputTwo.toUpperCase()}:</h5>}
 
       {loading && (<FontAwesomeIcon icon={faStar} size="2x" pulse className="loading-star" />)}
-      <Map midpoint={midpoint} />
-      {/* {loading && <p>Loading...</p>} */}
       
-      <NearbySearch nearby={nearby} errorMsg={errorMsg} />
+      <Map midpoint={midpoint} />
+      
+      <NearbySearch nearby={nearby} errorMsg={errorMsg} images={image_data} />
 
     </div>
   );
