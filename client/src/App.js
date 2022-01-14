@@ -146,7 +146,9 @@ function App() {
           id: place.dataSources.poiDetails[0].id,
           name: place.poi.name,
           address: place.address.freeformAddress,
-          url: place.poi.url
+          url: place.poi.url,
+          pointOne: input.inputOne,
+          pointTwo: input.inputTwo
         })
       }
       
@@ -168,7 +170,7 @@ function App() {
       console.log(fullDetails);
       // setNearby(fullDetails);
       const searchTwo = fullDetails.filter(place => place.rating !== undefined);
-      const fiveRating = searchTwo.forEach(place => {
+      searchTwo.forEach(place => {
         let five = place.rating.value / 2;
         place.rating.value = five;
       });
@@ -256,7 +258,6 @@ function App() {
       {liked && (<h1>{liked}</h1>)}
       <NearbySearch nearby={nearby} errorMsg={errorMsg} images={image_data} pullFavourites={pullFavourites} liked={liked} />
       
-      <Favourites favourites={favourites} points={points} removeFavourite={removeFavourite} />
 
     </div>
   );

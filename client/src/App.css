@@ -144,6 +144,15 @@ a:hover {
     padding: 20px;
 }
 
+.remove-link:hover {
+    color: #D3604A;
+}
+
+.rotate-arrow:hover {
+    transition: transform 0.5s;
+    transform: rotate(180deg);
+}
+
 
 /* .logo {
     display: flex;

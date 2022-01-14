@@ -1,10 +1,52 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import LogoNav from './LogoNav';
+import firebase from '../firebase';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { image_data } from './Images/star-images';
 
 
-export default function Favourites({ favourites, points, removeFavourite }) {
+export default function Favourites() {
 
+    let [loading, setLoading] = useState(false);
+    let [favourites, setFavourites] = useState({});
+    let [showRatings, setShowRatings] = useState(false);
+    let [favourite, setFavourite] = useState("");
+
+    useEffect(() => {
+        getFavourites();
+    }, [])
+
+    const ref = firebase.firestore().collection("favourites");
+    console.log(ref);
+
+    const getFavourites = () => {
+        setLoading(true);
+        ref.onSnapshot((querySnapshot) => {
+            const items = [];
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data());
+            });
+            setFavourites(items);
+            setLoading(false);
+        })
+    }
+
+        const removeFavourite = (favourite) => {
+            ref
+                .doc(favourite.id)
+                .delete()
+                .catch((err) => {
+                    console.log(err);
+            })
+    }
+
+    const toggleRatings = (favourite) => {
+    favourite.favourite = true; 
+        setShowRatings(!showRatings);
+    }
     
     const renderFavourites = () => {
         console.log("passed favourites", favourites);
@@ -12,35 +54,26 @@ export default function Favourites({ favourites, points, removeFavourite }) {
         return favourites.length >= 1 ? favourites.map((favourite) => (
             <div className="favourites-list" key={favourite.id}>
                 <ul className='favourites-card'>
-                    <li className='favourites-info'><h5>Between {points.pointOne.toUpperCase()} and {points.pointTwo.toUpperCase()}</h5></li>
-                    <li className='favourites-info'><h4>{favourite.name}</h4></li>
+                    <li className='favourites-info'><p>Between {favourite.pointOne.toUpperCase()} and {favourite.pointTwo.toUpperCase()}</p></li>
+                    <li className='favourites-info'><h5>{favourite.name}</h5></li>
                     <li className='favourites-info'><h6>{favourite.address}</h6></li>
-                    <li className='places-url favourites-info'>{favourite.url ? <a href={favourite.url}>Visit their website</a> : null}</li>
-                    {favourite.rating.value >= 0 && favourite.rating.value < 0.75 ? <li><img src={image_data[0].image} className="star-rating favourites-info" alt="" /></li> : null}
-                    {favourite.rating.value > 0.75 && favourite.rating.value < 1.25 ? <li><img src={image_data[1].image} className="star-rating favourites-info" alt="" /></li> : null}
-                    {favourite.rating.value > 1.25 && favourite.rating.value <= 1.75 ? <li><img src={image_data[2].image} className="star-rating favourites-info" alt="" /></li> : null}
-                    {favourite.rating.value > 1.75 && favourite.rating.value <= 2.25 ? <li><img src={image_data[3].image} className="star-rating favourites-info" alt="" /></li> : null}
-                    {favourite.rating.value > 2.25 && favourite.rating.value <= 2.75 ? <li><img src={image_data[4].image} className="star-rating favourites-info" alt="" /></li> : null}
-                    {favourite.rating.value > 2.75 && favourite.rating.value <= 3.25 ? <li><img src={image_data[5].image} className="star-rating favourites-info" alt="" /></li> : null}
-                    {favourite.rating.value > 3.25 && favourite.rating.value <= 3.85 ? <li><img src={image_data[6].image} className="star-rating favourites-info" alt="" /></li> : null}
-                    {favourite.rating.value > 3.75 && favourite.rating.value <= 4.25 ? <li><img src={image_data[7].image} className="star-rating favourites-info" alt="" /></li> : null}
-                    {favourite.rating.value > 4.25 && favourite.rating.value <= 4.75 ? <li><img src={image_data[8].image} className="star-rating favourites-info" alt="" /></li> : null}
-                    {favourite.rating.value > 4.75 && favourite.rating.value <= 5 ? <li><img src={image_data[9].image} className="star-rating favourites-info" alt="" /></li> : null}
-                    <li className='favourites-info'>{favourite.rating ? <p><b>{Math.round(favourite.rating.value * 10) / 10}</b> (Foursquare)</p> : <p><em>{"Rating not available"}</em></p>}</li>
-                    {/* <li>{favourite.reviews}</li> */}
-                    {/* {favourites.favourite ? (<FontAwesomeIcon icon={fasHeart} size="2x" className="favourite-heart" onClick={(e) => removeFavourites(e)} />) : (<FontAwesomeIcon icon={farHeart} size="2x" className="favourite-heart" />) } */}
-                    <li className='favourites-info' onClick={() => removeFavourite(favourite)}>Remove from Favourites</li>
-                    {favourites.favourite && (<p>Added to Favourites!</p>)}
+                    <li className='favourites-info remove-link' onClick={() => removeFavourite(favourite)}>Remove from Favourites</li>
+                    {!favourite.favourite && <li className='favourites-info'>Rate this place<p><FontAwesomeIcon icon={faChevronDown} size='2x' onClick={() => toggleRatings(favourite)} /></p></li>}
+                    {favourite.favourite && <li className='favourites-info'>Rate this place<p><FontAwesomeIcon icon={faChevronUp} size='2x' onClick={() => toggleRatings(favourite)} /></p></li>}
+
                 </ul>
+                <ul className='favourites-card'>
+                    <li className='favourites-info'>{favourite.favourite ? <li><p>Rating system here</p></li> : null}</li>
+                </ul>    
             </div>
         )) : <h3>No favourites added yet!</h3>;
         }
-        
-
-    
+            
     return (
         <div className="container">
             <LogoNav />
+
+    {loading && (<FontAwesomeIcon icon={faStar} size="2x" pulse className="loading-star" />)}
 
             {renderFavourites()}
         </div>
