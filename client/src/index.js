@@ -11,7 +11,7 @@ ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
-      <Route exact path="favourites" element={<Favourites />} render={(favourites) => <Favourites {...favourites} />} />
+      <Route exact path="favourites" element={<Favourites />} />
       <Route path="about" element={<About />} />
       <Route path="contact" element={<Contact />} />
     </Routes>

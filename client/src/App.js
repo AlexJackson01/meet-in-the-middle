@@ -16,6 +16,7 @@ import Favourites from "./components/Favourites";
 function App() {
   let [loading, setLoading] = useState(false);
   let [input, setInput] = useState({ inputOne: "", inputTwo: "" });
+  let [points, setPoints] = useState({pointOne: "", pointTwo: ""});
   let [category, setCategory] = useState({ category: "" });
   let [radius, setRadius] = useState({ radius: "" });
   let [nearby, setNearby] = useState({
@@ -49,12 +50,18 @@ function App() {
       ...state,
       [name]: value
     }))
+      
+      setPoints(state => ({
+      ...state,
+      [name]: value
+    }))
   }
 
   const handleSubmit = e => {
   // handle form submit
     e.preventDefault();
     setLoading(true);
+    setPoints({pointOne: input.inputOne, pointTwo: input.inputTwo});
     getCoordinates();
   };
   
@@ -64,6 +71,7 @@ function App() {
     // setNearby("");
     setMidpoint({ lat: "", lng: "" });
     setErrorMsg("");
+    // setPoints({ pointOne: "", pointTwo: "" });
   }
 
   if (category.category) {
@@ -85,10 +93,12 @@ function App() {
 
   const pullFavourites = (place) => {
         console.log("i'm here");
-            setFavourites(previous => [...previous, {
+    setFavourites(previous => [...previous, {
             id: place.id,
             name: place.name,
-            address: place.address,
+          address: place.address,
+              pointOne: points.pointOne,
+            pointTwo: points.pointTwo,
             favourite: false,
             rating: place.rating,
             reviews: place.reviews
@@ -157,8 +167,11 @@ function App() {
       let fullDetails = nearbyDetails.map((item, i) => Object.assign({}, item, extendedID[i]));
       console.log(fullDetails);
       // setNearby(fullDetails);
-
       const searchTwo = fullDetails.filter(place => place.rating !== undefined);
+      const fiveRating = searchTwo.forEach(place => {
+        let five = place.rating.value / 2;
+        place.rating.value = five;
+      });
 
       let sorted = searchTwo.sort((a, b) => (b.rating.value) - (a.rating.value));
       let top10 = sorted.slice(0, 10);
@@ -243,7 +256,7 @@ function App() {
       {liked && (<h1>{liked}</h1>)}
       <NearbySearch nearby={nearby} errorMsg={errorMsg} images={image_data} pullFavourites={pullFavourites} liked={liked} />
       
-      <Favourites favourites={favourites} input={input} removeFavourite={removeFavourite} />
+      <Favourites favourites={favourites} points={points} removeFavourite={removeFavourite} />
 
     </div>
   );
