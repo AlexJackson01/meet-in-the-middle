@@ -148,9 +148,27 @@ a:hover {
     color: #D3604A;
 }
 
-.rotate-arrow:hover {
-    transition: transform 0.5s;
-    transform: rotate(180deg);
+.rating-arrow {
+    color: #D3604A;
+}
+
+.ratings {
+    display: flex;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.on {
+    color: #D3604A;
+}
+
+.off {
+    color: #CDC3C1;
 }
 
 
