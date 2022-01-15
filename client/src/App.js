@@ -89,6 +89,8 @@ function App() {
     category.category === "Cinema" ? category.categoryID = 7342 : category.place = "";
     category.category === "Nightclub" ? category.categoryID = 9379 : category.place = "";
     category.category === "Museum" ? category.categoryID = 7317 : category.place = "";
+    category.category === "Theatre" ? category.categoryID = 7318 : category.place = "";
+
   }
 
   if (radius.radius) {
@@ -242,6 +244,7 @@ function App() {
   <option value="Cinema">Cinema</option>
   <option value="Nightclub">Nightclub/Bar</option>
   <option value="Museum">Museum/Art Gallery</option>
+  <option value="Theatre">Theatre</option>
               </select>
             </div></div>
           
