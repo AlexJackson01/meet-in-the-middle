@@ -79,6 +79,7 @@ function App() {
     // setNearby("");
     setMidpoint({ lat: "", lng: "" });
     setErrorMsg("");
+    setMarkers("");
     // setPoints({ pointOne: "", pointTwo: "" });
   }
 
@@ -100,6 +101,7 @@ function App() {
     radius.radius === "three" ? radius.metres = Math.round(3 * 1609.34) : radius.metreConversion = "";
     radius.radius === "five" ? radius.metres = Math.round(5 * 1609.34) : radius.metreConversion = "";
     radius.radius === "ten" ? radius.metres = Math.round(10 * 1609.34) : radius.metreConversion = "";
+    radius.radius === "twenty" ? radius.metres = Math.round(20 * 1609.34) : radius.metreConversion = "";
   }
 
   const pullFavourites = (place) => {
@@ -164,19 +166,7 @@ function App() {
           lng: place.position.lon
         })
       }
-
-      for (let place of nearbyDetails) {
-        nearbyLatLng.push(
-          { name: place.name, position: [place.lat, place.lng], address: place.address }
-        );
-        setMarkers(nearbyLatLng);
-      }
-
-
-      
-      if (nearbyDetails.length === 0) {
-        setErrorMsg("No results found... please try an alternative radius or category.");
-      }
+    
 
       for (let place of searchOne) {
         const res2 = await axios.get(`https://api.tomtom.com/search/2/poiDetails.json?key=${nearbyKey}&id=${place.dataSources.poiDetails[0].id}`);
@@ -197,11 +187,31 @@ function App() {
         place.rating.value = five;
       });
 
+      if (searchTwo.length === 0) {
+        setErrorMsg("No results found... please try an alternative radius or category.");
+      }
+
+
       let sorted = searchTwo.sort((a, b) => (b.rating.value) - (a.rating.value));
       let top10 = sorted.slice(0, 10);
 
+      for (let place of top10) {
+        nearbyLatLng.push(
+          { name: place.name, position: [place.lat, place.lng], address: place.address }
+        );
+        setMarkers(nearbyLatLng);
+      }
+
       setNearby(top10);
       setLoading(false);
+
+      
+      for (let place of nearby) {
+        nearbyLatLng.push(
+          { name: place.name, position: [place.lat, place.lng], address: place.address }
+        );
+        setMarkers(nearbyLatLng);
+      }
 
     }
   }
@@ -262,6 +272,7 @@ function App() {
   <option value="three">3 miles</option>
                 <option value="five">5 miles</option>
                 <option value="ten">10 miles</option>
+                <option value="twenty">20 miles</option>
               </select>
               </div></div>
       
