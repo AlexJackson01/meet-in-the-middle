@@ -1,17 +1,44 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 // import GoogleMapReact from 'google-map-react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import Star from '../../src/images/star.png';
+import Star from '../../src/star.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-export default function Map({ midpoint }) {
+export default function Map({ midpoint, markers }) {
 
-const starIcon = new L.Icon({
-  iconUrl: Star,
-  iconSize: [40, 40],
-  className: 'leaflet-star-icon'
-});
+useEffect(() => {
+  getMarkerPoints()
+}, [midpoint])
+  
+  const starMidIcon = new L.Icon({
+    iconUrl: Star,
+    iconSize: [40, 40],
+    className: 'leaflet-star-icon'
+  });
+
+  const starNearbyIcon = new L.Icon({
+    iconUrl: Star,
+    iconSize: [20, 20],
+    className: 'leaflet-star-icon'
+  });
+
+    let markerPoints = [
+      { "name": "This is your midpoint.", "position": [midpoint.lat, midpoint.lng]}
+    ];
+
+
+  const getMarkerPoints = () => {
+    if (markers) {
+      markers.forEach(marker => markerPoints.push({ "name": marker[2], "position": [marker[0], marker[1]] }))
+      console.log(markerPoints);
+    }
+  }
+  
+  
+
 
   const [map, setMap] = useState(false);
 
@@ -22,6 +49,8 @@ const starIcon = new L.Icon({
     // setMarkerPoint(midpoint);
     // console.log(markerPoint);
   }
+
+  // L.marker([midpoint.lat, midpoint.lng], {icon: starMidIcon}).addTo(TileLayer).bindPopup("This is your midpoint.");
 
   
   return (
@@ -36,13 +65,19 @@ const starIcon = new L.Icon({
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        { markers && markers.map((item, index) => (
         <Marker
-          position={[midpoint.lat, midpoint.lng]}
-          icon={starIcon}>
+            key={index}
+            index={index}
+            position={item.position}
+            icon={item.name === "This is your midpoint." ? starMidIcon : starNearbyIcon}
+        >
         <Popup>
-          This is your midpoint.
+              <p className='map-popup'><b>{item.name}</b> {item.address}</p>
         </Popup>
         </Marker>
+        ))}
+
       </MapContainer>)}
     </div>
   )

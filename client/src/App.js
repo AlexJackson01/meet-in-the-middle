@@ -5,6 +5,8 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import L from 'leaflet';
+import Star from '../src/star.png';
 import { image_data } from "./components/Images/star-images";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import LogoNav from "./components/LogoNav";
@@ -27,6 +29,7 @@ function App() {
     favourite: false
   });
   let [midpoint, setMidpoint] = useState({ lat: "", lng: "" });
+  let [markers, setMarkers] = useState("");
   let [errorMsg, setErrorMsg] = useState("");
   let [favourites, setFavourites] = useState("");
   let [liked, setLiked] = useState("");
@@ -41,6 +44,11 @@ function App() {
 
   let nearbyDetails = [];
   let extendedID = [];
+  let nearbyLatLng = [
+    { name: "This is your midpoint.", position: [midpoint.lat, midpoint.lng], address: "" }
+  ];
+
+
 
     const handleChange = e => {
     const name = e.target.name;
@@ -80,6 +88,7 @@ function App() {
     category.category === "Pub" ? category.categoryID = 9376003 : category.place = "";
     category.category === "Cinema" ? category.categoryID = 7342 : category.place = "";
     category.category === "Nightclub" ? category.categoryID = 9379 : category.place = "";
+    category.category === "Museum" ? category.categoryID = 7317 : category.place = "";
   }
 
   if (radius.radius) {
@@ -148,9 +157,20 @@ function App() {
           address: place.address.freeformAddress,
           url: place.poi.url,
           pointOne: input.inputOne,
-          pointTwo: input.inputTwo
+          pointTwo: input.inputTwo,
+          lat: place.position.lat,
+          lng: place.position.lon
         })
       }
+
+      for (let place of nearbyDetails) {
+        nearbyLatLng.push(
+          { name: place.name, position: [place.lat, place.lng], address: place.address }
+        );
+        setMarkers(nearbyLatLng);
+      }
+
+
       
       if (nearbyDetails.length === 0) {
         setErrorMsg("No results found... please try an alternative radius or category.");
@@ -221,6 +241,7 @@ function App() {
   <option value="Cafe">Cafe</option>
   <option value="Cinema">Cinema</option>
   <option value="Nightclub">Nightclub/Bar</option>
+  <option value="Museum">Museum/Art Gallery</option>
               </select>
             </div></div>
           
@@ -254,7 +275,7 @@ function App() {
 
       {loading && (<FontAwesomeIcon icon={faStar} size="2x" pulse className="loading-star" />)}
       
-      <Map midpoint={midpoint} />  
+      <Map midpoint={midpoint} markers={markers} />  
       {liked && (<h1>{liked}</h1>)}
       <NearbySearch nearby={nearby} errorMsg={errorMsg} images={image_data} pullFavourites={pullFavourites} liked={liked} />
       

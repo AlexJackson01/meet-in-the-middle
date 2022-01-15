@@ -62,6 +62,12 @@ button {
     margin-bottom: 50px;
 }
 
+.map-popup {
+    color: #D3604A;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+}
+
 .container {
     padding: 50px;
 }

@@ -55,13 +55,13 @@ export default function Favourites() {
             setFavourites(items);
         })
 
-        // ref2.onSnapshot((querySnapshot) => {
-        //     const items = [];
-        //     querySnapshot.forEach((doc) => {
-        //         items.push(doc.data());
-        //     });
-        //     setDbRatings(items);
-        // })
+        ref2.onSnapshot((querySnapshot) => {
+            const items = [];
+            querySnapshot.forEach((doc) => {
+                items.push(doc.data());
+            });
+            setDbRatings(items);
+        })
         setLoading(false);
     }
 
@@ -150,7 +150,7 @@ export default function Favourites() {
                         [...Array(5)].map((star, i) => {
                         i += 1;
                         return (
-                            <button type="button" key={i} className={i <= favourite.stars ? "on" : "off"} onClick={(e) => {setRatingValue({place_id: favourite.id, name: favourite.name, rating: i}); ratePlace(favourite);}} >
+                            <button type="button" key={i} className={favourite.stars && i <= ratingValue.rating ? "on" : "off"} onClick={(e) => {setRatingValue({place_id: favourite.id, name: favourite.name, rating: i}); ratePlace(favourite);}} >
                                 <div><FontAwesomeIcon icon={faStar} className='rating-stars' size="2x" /></div>
                             </button>
                         )
