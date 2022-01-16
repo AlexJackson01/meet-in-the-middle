@@ -67,7 +67,7 @@ export default function Login() {
     {/* <div className="row"> */}
       <div className="col-lg-6 col-xs-6 col-sm-6">
       <div className="form-group">
-                    <input onChange={(e) => { setRegisterPassword(e.target.value) }} className="form-control input-group-lg header" placeholder="Password" autoComplete="current-password" />
+                    <input type="password" onChange={(e) => { setRegisterPassword(e.target.value) }} className="form-control input-group-lg header" placeholder="Password" autoComplete="current-password" />
             </div>
                         </div>
             <div className="row">
@@ -78,7 +78,7 @@ export default function Login() {
           </div>
                 </div>
 
-                <div>Already have an account? <p className='remove-link' onClick={() => setShowLogin(true)}>Login here</p></div>
+                <div className='remove-link' onClick={() => setShowLogin(true)}>Already have an account?</div>
       </form>              
                 
                 

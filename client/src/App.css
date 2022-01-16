@@ -109,12 +109,33 @@ ul {
 }
 
 .places-list {
+    display: block;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+.ratings-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
     padding-bottom: 20px;
+}
+
+.ratings-card {
+    background-color: #F6F3E4;
+    padding: 20px;
+    border-radius: 20px;
+    width: 200px;
+    height: 70vh;
+    text-align: center;
+    margin: 0 auto;
+    display: flex;
+    box-shadow: 6px 6px #D3604A;
 }
 
 .place-card {
@@ -174,8 +195,14 @@ a:hover {
     justify-content: space-between;
 }
 
+.ratings-card {
+    display: inline;
+    justify-content: space-between;
+}
+
 .favourites-info {
     padding: 20px;
+    list-style-type: none;
 }
 
 .remove-link:hover {
