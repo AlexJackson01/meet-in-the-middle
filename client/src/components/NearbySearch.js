@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '../firebase';
+import { getAuth } from "firebase/auth";
+import {onAuthStateChanged} from "firebase/auth";
 import { image_data } from './Images/star-images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
@@ -9,9 +11,11 @@ import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 export default function NearbySearch({ nearby, errorMsg }) {
 
     let [liked, setLiked] = useState(false);
+    let [user, setUser] = useState({});
     let [favourite, setFavourite] = useState({
         address: null,
         id: null,
+        user: null,
         name: null,
         pointOne: null,
         pointTwo: null,
@@ -23,6 +27,11 @@ export default function NearbySearch({ nearby, errorMsg }) {
     }, [nearby, favourite])
 
     const ref = firebase.firestore().collection("favourites");
+    const auth = getAuth();
+
+    onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser);
+    })
 
     // console.log(favourite);
 
@@ -36,6 +45,7 @@ export default function NearbySearch({ nearby, errorMsg }) {
         setFavourite(
     {   address: place.address,
         id: place.id,
+        user_id: user.uid,
         name: place.name,
         pointOne: place.pointOne,
         pointTwo: place.pointTwo,

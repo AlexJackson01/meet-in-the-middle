@@ -6,12 +6,14 @@ import App from './App';
 import Favourites from '../src/components/Favourites';
 import About from '../src/components/About';
 import Contact from '../src/components/Contact';
+import Login from '../src/components/Login';
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />} />
-      <Route exact path="favourites" element={<Favourites />} />
+      <Route path="/" element={<Login />} />
+      <Route path="home" element={<App />} />
+      <Route path="favourites" element={<Favourites />} />
       <Route path="about" element={<About />} />
       <Route path="contact" element={<Contact />} />
     </Routes>

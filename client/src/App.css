@@ -62,6 +62,33 @@ button {
     margin-bottom: 50px;
 }
 
+input {
+    margin-bottom: 10px;
+    text-align: center;
+    border: 1px solid #D3604A;
+}
+
+.login-form {
+    background-color: #F6F3E4;
+    padding: 20px;
+    border-radius: 20px;
+    width: 40%;
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 50px;
+    display: block;
+    box-shadow: 6px 6px #D3604A;
+}
+
+.user-greeting {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-right: 50px;
+    padding-top: 50px;
+    font-size: 20px;
+}
+
 .map-popup {
     color: #D3604A;
     font-family: 'Montserrat', sans-serif;
@@ -70,6 +97,7 @@ button {
 
 .container {
     padding: 50px;
+    text-align: center;
 }
 
 .star-rating {
@@ -175,6 +203,11 @@ button {
 
 .off {
     color: #CDC3C1;
+}
+
+.login-error {
+    color: #D3604A;
+    font-weight: bold;
 }
 
 

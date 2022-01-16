@@ -5,17 +5,23 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import L from 'leaflet';
-import Star from '../src/star.png';
 import { image_data } from "./components/Images/star-images";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import LogoNav from "./components/LogoNav";
 import Map from "./components/Map";
 import NearbySearch from "./components/NearbySearch";
 import Favourites from "./components/Favourites";
+import {decode, encode} from 'base-64';
+
 
 
 function App() {
+  if (!global.btoa) {
+global.btoa = encode;
+}
+if (!global.atob) {
+global.atob = decode;
+}
   let [loading, setLoading] = useState(false);
   let [input, setInput] = useState({ inputOne: "", inputTwo: "" });
   let [points, setPoints] = useState({pointOne: "", pointTwo: ""});

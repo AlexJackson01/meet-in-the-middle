@@ -1,16 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import LogoNav from './LogoNav';
 import firebase from '../firebase';
+import { onAuthStateChanged } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
-import { image_data } from './Images/star-images';
 
 export default function Favourites() {
 
     let [loading, setLoading] = useState(false);
-    let [favourites, setFavourites] = useState({});
+    let [user, setUser] = useState({});
+    let [favourites, setFavourites] = useState([]);
     let [showRatings, setShowRatings] = useState(false);
     let [starRating, setStarRating] = useState(false);
     let [ratingValue, setRatingValue] = useState([{place_id: 0, name: "", rating: ""}]);
@@ -33,37 +35,50 @@ export default function Favourites() {
     });
     let [userRating, setUserRating] = useState({});
     let [ratingPosted, setRatingPosted] = useState(false);
-    let [dbRatings, setDbRatings] = useState("");
 
     useEffect(() => {
         getFavourites();
-    }, [])
+    }, [user])
 
     const ref = firebase.firestore().collection("favourites");
     const ref2 = firebase.firestore().collection("ratings");
+    const auth = getAuth();
+
+    onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser);
+    })
     
     console.log(ref);
     console.log(ref2);
 
-    const getFavourites = () => {
+    const getFavourites = async () => {
         setLoading(true);
-        ref.onSnapshot((querySnapshot) => {
-            const items = [];
-            querySnapshot.forEach((doc) => {
-                items.push(doc.data());
-            });
-            setFavourites(items);
-        })
+        // location.reload();  
+        try {
+            ref.where("user_id", "==", user.uid).onSnapshot((querySnapshot) => {
+                const items = [];
+                querySnapshot.forEach((doc) => {
+                    items.push(doc.data());
+                })
+                setFavourites(items);
+                setLoading(false);
+            })
 
-        ref2.onSnapshot((querySnapshot) => {
-            const items = [];
-            querySnapshot.forEach((doc) => {
-                items.push(doc.data());
-            });
-            setDbRatings(items);
-        })
-        setLoading(false);
-    }
+            if (favourites.empty) {
+                    console.log("no matches");
+                    setLoading(false);
+                }
+         } catch (error) {
+                console.log(error.message)
+            }
+        }
+        // ref.where("user_id", "==", user.uid).get().onSnapshot((querySnapshot) => {
+        //     const items = [];
+        //     querySnapshot.forEach((doc) => {
+        //         items.push(doc.data());
+        //     });
+        //     setFavourites(items);
+        // })
 
     const removeFavourite = (favourite) => {
             ref
@@ -102,7 +117,7 @@ export default function Favourites() {
     const handleOnSubmit = (e) => {
         e.preventDefault();
         // console.log(ratingValue, priceRange, recommendations);
-        setUserRating({ place_id: ratingValue.place_id, name: ratingValue.name, rating: ratingValue.rating, timeDate: new Date().toLocaleString(), priceRange: priceRange.selectedPrice, recommendations: recommendations });
+        setUserRating({ place_id: ratingValue.place_id, user_id: user.uid, name: ratingValue.name, rating: ratingValue.rating, timeDate: new Date().toLocaleString(), priceRange: priceRange.selectedPrice, recommendations: recommendations });
         console.log(userRating);
         setRatingPosted(true);
     }
@@ -122,14 +137,14 @@ export default function Favourites() {
 
     
     const renderFavourites = () => {
-        if (ratingPosted) {
-            ref2
-                .doc(userRating.place_id)
-                .set(userRating)
-                .catch((err) => {
-                    console.log(err);
-                })
-        }
+        // if (ratingPosted) {
+        //     ref2
+        //         .doc(userRating.place_id)
+        //         .set(userRating)
+        //         .catch((err) => {
+        //             console.log(err);
+        //         })
+        // }
         // if (userRating.place_id !== null) {
         //     setRatingPosted(true);
         // }
@@ -188,10 +203,7 @@ export default function Favourites() {
                                     {ratingPosted ? <p className='remove-link' onClick={() => removeRating(favourite)}>Undo?</p> : null}
                                 </div>
                             )}
-                        {favourite.id === dbRatings.place_id && (<h1>Hello!</h1>)}
-
                         </form>
-                        {dbRatings.place_id === favourite.id ? (<p>You rated this place on XXX. You rated them {dbRatings.rating} / 5 and recommended them on {dbRatings.recommendations}</p>) : null}
                     </div>    
                 </ul>
                 <ul className='ratings'>
@@ -199,9 +211,9 @@ export default function Favourites() {
                 </ul>
                 <ul>
                     {/* {rating > 0 && <p>You have given {favourite.name} a rating of {rating} / 5!</p>} */}
-                </ul>
+                </ul>   
             </div>
-        )) : <h3>No favourites added yet!</h3>;
+        )) : <h5>No favourites added!</h5>;
         }
             
     return (
