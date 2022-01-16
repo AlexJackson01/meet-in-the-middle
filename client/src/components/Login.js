@@ -6,7 +6,7 @@ import {
     onAuthStateChanged,
     signOut
 } from "firebase/auth";
-import { getAuth } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import Logo from '../images/Meet-in-Middle.png';
 
 
@@ -22,6 +22,19 @@ export default function Login() {
 
     const navigate = useNavigate();
     const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+
+    const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            routeChange();
+            console.log(result);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+    
+
 
     const routeChange = () => {
         navigate('/home');
@@ -60,7 +73,7 @@ export default function Login() {
         <div className="row">
       <div className="col-lg-6 col-xs-6 col-sm-6">
         <div className="form-group">
-                            <input onChange={(e) => { setRegisterEmail(e.target.value) }} className="form-control input-group-lg header" placeholder="Email" autoComplete="username" />
+        <input onChange={(e) => { setRegisterEmail(e.target.value) }} className="form-control input-group-lg header" placeholder="Email" autoComplete="username" />
                         </div>
           </div>
 
@@ -71,7 +84,7 @@ export default function Login() {
             </div>
                         </div>
             <div className="row">
-                            <div className="login-error">{errorRegMsg}</div>
+        <div className="login-error">{errorRegMsg}</div>
                         </div>          
       <div className="search-btn">
             <button onClick={register}>Register</button>
@@ -85,7 +98,13 @@ export default function Login() {
             {showLogin ? (
                 <div>
                     <h1>Login</h1>
-                <form className="login-form">
+                    <form className="login-form">
+                        <div className="row">
+                                  <div className="col-lg-12 col-xs-12 col-sm-12">
+                                <button type="button" className="login-with-google-btn" onClick={() => signInWithGoogle()}>Sign in with Google</button>
+                                <button type="button" className="loginBtn loginBtn--facebook">Sign in with Facebook</button>
+
+</div></div>
         <div className="row">
       <div className="col-lg-6 col-xs-6 col-sm-6">
         <div className="form-group">
