@@ -21,7 +21,7 @@ export default function Favourites() {
         food_quality: 0,
         customer_service: 0,
         cleanliness: 0,
-        access_facilities: 0,
+        access_and_facilities: 0,
         pet_friendly: 0,
         vibe: 0,
         capacity: 0,
@@ -30,8 +30,8 @@ export default function Favourites() {
         noise_level: 0,
         drinks_menu: 0,
         coffee: 0,
-        seating: 0,
-        vegan_veggie: 0
+        comfortable_seating: 0,
+        vegan_and_veggie_options: 0
     });
     let [userRating, setUserRating] = useState({});
     let [ratingPosted, setRatingPosted] = useState(false);
@@ -253,6 +253,12 @@ export default function Favourites() {
                             <h5>{rating.name}</h5>
                             <h6>{rating.rating}/5</h6>
                             <h6>{rating.priceRange}</h6></li>
+                        {rating.recommendations && <p>You recommended this place for:{Object.entries(rating.recommendations).map(([key, value]) => {
+                            return (
+                                <div>
+                                    <b>{value === 1 && key.split('_').join(' ')}</b>
+                                </div>)
+                        })}</p>}
                         <p className='remove-link' onClick={() => removeDBRating(rating)}>Remove review</p>
 
                     </ul>
