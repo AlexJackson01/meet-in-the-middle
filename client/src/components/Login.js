@@ -102,12 +102,8 @@ export default function Login() {
                         <div className="row">
                                   <div className="col-lg-12 col-xs-6 col-sm-6">
                                 <button type="button" className="login-with-google-btn" onClick={() => signInWithGoogle()}>Sign in with Google</button>
-                            </div>
-                                <div className="row">
-                                <div className="col-lg-12 col-xs-6 col-sm-6">
-                                <button type="button" className="loginBtn loginBtn--facebook">Sign in with Facebook</button>
 
-</div></div></div>
+</div></div>
         <div className="row">
       <div className="col-lg-6 col-xs-6 col-sm-6">
         <div className="form-group">
