@@ -184,7 +184,7 @@ export default function Favourites() {
         return favourites.length >= 1 ? favourites.map((favourite) => (
             <div className="favourites-list" key={favourite.id}>
                 <ul className='favourites-card'>
-                    <li className='favourites-info'><p>Between {favourite.pointOne} and {favourite.pointTwo}</p></li>
+                    <li className='favourites-info'><p>Between {favourite.pointOne.toUpperCase()} and {favourite.pointTwo.toUpperCase()}</p></li>
                     <li className='favourites-info'><h5>{favourite.name}</h5></li>
                     <li className='favourites-info'><h6>{favourite.address}</h6></li>
                     <li className='favourites-info remove-link' onClick={() => removeFavourite(favourite)}>Remove from Favourites</li>
@@ -241,22 +241,24 @@ export default function Favourites() {
         )) : <h5>No favourites added!</h5>;
     }
     
-        const renderRatings = () => {
-        console.log("passed favourites", favourites);
-        // favourites.map((favourites) => (
+    const renderRatings = () => {
+        if (!user) {
+            return (<h5>To view more information, please <a href="/">login</a>.</h5>)
+        } else {
             return DBRatings.length >= 1 ? DBRatings.map((rating) => (
                 <div className="ratings-list" key={rating.place_id}>
                     <ul className='ratings-card'>
                         <li className='favourites-info'><h5>{rating.timeDate}</h5>
-                        <h5>{rating.name}</h5>
-                        <h6>{rating.rating}/5</h6>
-                        <h6>{rating.priceRange}</h6></li>
+                            <h5>{rating.name}</h5>
+                            <h6>{rating.rating}/5</h6>
+                            <h6>{rating.priceRange}</h6></li>
                         <p className='remove-link' onClick={() => removeDBRating(rating)}>Remove review</p>
 
-                    </ul>                        
+                    </ul>
                 </div>
-        )) : <h5>No ratings added yet!</h5>;
+            )) : <h5>No ratings added yet!</h5>;
         }
+    }
             
     return (
         <div className="container">

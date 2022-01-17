@@ -27,9 +27,7 @@ export default function LogoNav() {
     return (
         <div className='logo-container'>
             {/* <img src={Logo} className="logo" alt="Meet in the Middle logo" /> */}
-            <div className='user-greeting'>Hello, {user?.email}!<div><button className='search-btn' onClick={logOut}>Log out</button></div>
-            {localStorage.getItem("name")}
-</div>
+            {user && <div><p className='user-greeting'>Hello, {user?.email}!</p><button className='search-btn' onClick={logOut}>Logout</button></div>}
             <ul className='navbar justify-content-center'>
                 <Link to="/home"><li className="nav-links">HOME</li></Link>
                 <Link to="/favourites"><li className="nav-links">FAVOURITES</li></Link>

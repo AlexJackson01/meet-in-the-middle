@@ -109,7 +109,7 @@ ul {
 }
 
 .places-list {
-    display: block;
+    display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
@@ -307,6 +307,7 @@ button {
     padding-bottom: 5px;
     padding-right: 23px;
     margin-left: 25px;
+    margin-bottom: 10px;
     border: none;
     text-align: left;
     line-height: 34px;

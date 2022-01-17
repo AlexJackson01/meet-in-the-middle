@@ -91,7 +91,7 @@ export default function Login() {
           </div>
                 </div>
 
-                <div className='remove-link' onClick={() => setShowLogin(true)}>Already have an account?</div>
+                <div className='remove-link place-url' onClick={() => setShowLogin(true)}>Already have an account? Click here to login.</div>
       </form>              
                 
                 
@@ -100,11 +100,14 @@ export default function Login() {
                     <h1>Login</h1>
                     <form className="login-form">
                         <div className="row">
-                                  <div className="col-lg-12 col-xs-12 col-sm-12">
+                                  <div className="col-lg-12 col-xs-6 col-sm-6">
                                 <button type="button" className="login-with-google-btn" onClick={() => signInWithGoogle()}>Sign in with Google</button>
+                            </div>
+                                <div className="row">
+                                <div className="col-lg-12 col-xs-6 col-sm-6">
                                 <button type="button" className="loginBtn loginBtn--facebook">Sign in with Facebook</button>
 
-</div></div>
+</div></div></div>
         <div className="row">
       <div className="col-lg-6 col-xs-6 col-sm-6">
         <div className="form-group">

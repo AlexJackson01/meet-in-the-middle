@@ -2,26 +2,15 @@ import React, { useState, useEffect } from "react";
 import './App.css';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faLaptopCode, faStar } from '@fortawesome/free-solid-svg-icons';
 import { image_data } from "./components/Images/star-images";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import LogoNav from "./components/LogoNav";
 import Map from "./components/Map";
 import NearbySearch from "./components/NearbySearch";
-import Favourites from "./components/Favourites";
-import {decode, encode} from 'base-64';
-
-
 
 function App() {
-  if (!global.btoa) {
-global.btoa = encode;
-}
-if (!global.atob) {
-global.atob = decode;
-}
   let [loading, setLoading] = useState(false);
   let [input, setInput] = useState({ inputOne: "", inputTwo: "" });
   let [points, setPoints] = useState({pointOne: "", pointTwo: ""});
@@ -86,6 +75,7 @@ global.atob = decode;
     setMidpoint({ lat: "", lng: "" });
     setErrorMsg("");
     setMarkers("");
+    setLoading(false);
     // setPoints({ pointOne: "", pointTwo: "" });
   }
 
@@ -125,13 +115,6 @@ global.atob = decode;
 
     console.log("added to favourites", favourites);
   }
-  
-  const removeFavourite = (favourite) => {
-    // setFavourites(prevState => {
-    //     const favourites = prevState.filter(place => place.id === favourite.id);
-    //     return { favourites };
-    // });
-}
 
   const getCoordinates = () => {
     let one = `https://api.openrouteservice.org/geocode/search?api_key=${geoKey}&text=${input.inputOne}`;
@@ -184,13 +167,17 @@ global.atob = decode;
         })
       }
 
-      let fullDetails = nearbyDetails.map((item, i) => Object.assign({}, item, extendedID[i]));
-      console.log(fullDetails);
+      let searchTwo = nearbyDetails.map((item, i) => Object.assign({}, item, extendedID[i]));
+      console.log(searchTwo);
       // setNearby(fullDetails);
-      const searchTwo = fullDetails.filter(place => place.rating !== undefined);
+
       searchTwo.forEach(place => {
+        if (place.rating) {
+        searchTwo.filter(place => place.rating !== undefined);
         let five = place.rating.value / 2;
         place.rating.value = five;
+        }
+
       });
 
       if (searchTwo.length === 0) {
@@ -198,8 +185,8 @@ global.atob = decode;
       }
 
 
-      let sorted = searchTwo.sort((a, b) => (b.rating.value) - (a.rating.value));
-      let top10 = sorted.slice(0, 10);
+      // let sorted = fullDetails.sort((a, b) => (b.rating.value) - (a.rating.value));
+      let top10 = searchTwo.slice(0, 10);
 
       for (let place of top10) {
         nearbyLatLng.push(
