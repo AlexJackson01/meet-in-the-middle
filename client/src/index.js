@@ -13,7 +13,7 @@ ReactDOM.render(
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="home" element={<App />} />
-      <Route path="favourites" element={<Favourites />} />
+      <Route path="favourites" element={<Favourites user={true}/>} />
       <Route path="about" element={<About />} />
       <Route path="contact" element={<Contact />} />
     </Routes>

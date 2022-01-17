@@ -1,5 +1,5 @@
 /* body {
-    background-color: #855F35;
+    background-color: #693017;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -54,6 +54,12 @@ button {
     padding-bottom: 20px;
 } */
 
+
+/* body {
+    background-color: #693017;
+    font-family: 'Montserrat', sans-serif;
+} */
+
 .leaflet-container {
     width: 50%;
     height: 50vh;
@@ -77,8 +83,26 @@ input {
     margin: 0 auto;
     margin-bottom: 50px;
     display: block;
-    box-shadow: 6px 6px #D3604A;
+    box-shadow: 6px 6px #D3604A, 12px 12px #953e2a;
 }
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    height: 150px;
+}
+
+.logo-container {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+
+/* h4 {
+    color: #F6F3E4;
+} */
 
 .user-greeting {
     position: absolute;
@@ -98,6 +122,7 @@ input {
 .container {
     padding: 50px;
     text-align: center;
+    margin-bottom: 50px;
 }
 
 .star-rating {

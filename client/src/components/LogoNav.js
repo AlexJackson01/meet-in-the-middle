@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Logo from "../images/Meet-in-Middle.png";
+import Logo from "../images/meet-logo.png";
 import { Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import {

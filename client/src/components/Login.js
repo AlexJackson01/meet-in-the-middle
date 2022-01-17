@@ -7,7 +7,7 @@ import {
     signOut
 } from "firebase/auth";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import Logo from '../images/Meet-in-Middle.png';
+import Logo from '../images/meet-logo.png';
 
 
 export default function Login() {
@@ -67,8 +67,8 @@ export default function Login() {
 
     return (
     <div className="container">
-            {/* <img src={Logo} alt="" /> */}
-            <h1>Register</h1>
+            {/* <img src={Logo} className="logo" alt="" /> */}
+            <h4>Register</h4>
       <form className="login-form">
         <div className="row">
       <div className="col-lg-6 col-xs-6 col-sm-6">
@@ -97,7 +97,7 @@ export default function Login() {
                 
             {showLogin ? (
                 <div>
-                    <h1>Login</h1>
+                    <h4>Login</h4>
                     <form className="login-form">
                         <div className="row">
                                   <div className="col-lg-12 col-xs-6 col-sm-6">

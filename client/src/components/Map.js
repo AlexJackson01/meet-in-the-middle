@@ -7,11 +7,12 @@ import Star from '../../src/star.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-export default function Map({ midpoint, markers }) {
+export default function Map({ midpoint, markers, user }) {
 
 useEffect(() => {
   getMarkerPoints()
 }, [midpoint])
+  
   
   const starMidIcon = new L.Icon({
     iconUrl: Star,
@@ -55,7 +56,8 @@ useEffect(() => {
   
   return (
     <div className='map-container'>
-      {midpoint.lat && (<MapContainer
+      {!user && <h5>To view more information, please <a href="/">login</a>.</h5>}
+      {user && midpoint.lat && (<MapContainer
         center={[51.5168712, -0.1456173]}
         zoom={13}
         whenCreated={setMap}

@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import './App.css';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLaptopCode, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { image_data } from "./components/Images/star-images";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import LogoNav from "./components/LogoNav";
@@ -12,6 +13,7 @@ import NearbySearch from "./components/NearbySearch";
 
 function App() {
   let [loading, setLoading] = useState(false);
+  let [user, setUser] = useState({});
   let [input, setInput] = useState({ inputOne: "", inputTwo: "" });
   let [points, setPoints] = useState({pointOne: "", pointTwo: ""});
   let [category, setCategory] = useState({ category: "" });
@@ -32,6 +34,13 @@ function App() {
   useEffect(() => {
     getNearby()
   }, [midpoint])
+
+  const auth = getAuth();
+  
+
+  onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser);
+    })
 
   const geoKey = "5b3ce3597851110001cf6248d8248e64cce24e7bae3637d381b685f1";
   // const nearbyKey = "LGM32rZnrmDbAgGhjwXpqAbNNZ0HnhqV";
@@ -100,22 +109,6 @@ function App() {
     radius.radius === "twenty" ? radius.metres = Math.round(20 * 1609.34) : radius.metreConversion = "";
   }
 
-  const pullFavourites = (place) => {
-        console.log("i'm here");
-    setFavourites(previous => [...previous, {
-            id: place.id,
-            name: place.name,
-          address: place.address,
-              pointOne: points.pointOne,
-            pointTwo: points.pointTwo,
-            favourite: false,
-            rating: place.rating,
-            reviews: place.reviews
-            }]);
-
-    console.log("added to favourites", favourites);
-  }
-
   const getCoordinates = () => {
     let one = `https://api.openrouteservice.org/geocode/search?api_key=${geoKey}&text=${input.inputOne}`;
     let two = `https://api.openrouteservice.org/geocode/search?api_key=${geoKey}&text=${input.inputTwo}`;
@@ -168,7 +161,6 @@ function App() {
       }
 
       let searchTwo = nearbyDetails.map((item, i) => Object.assign({}, item, extendedID[i]));
-      console.log(searchTwo);
       // setNearby(fullDetails);
 
       searchTwo.forEach(place => {
@@ -195,16 +187,13 @@ function App() {
         setMarkers(nearbyLatLng);
       }
 
+      if (user) {
       setNearby(top10);
       setLoading(false);
-
-      
-      for (let place of nearby) {
-        nearbyLatLng.push(
-          { name: place.name, position: [place.lat, place.lng], address: place.address }
-        );
-        setMarkers(nearbyLatLng);
       }
+
+
+    
 
     }
   }
@@ -278,13 +267,13 @@ function App() {
 
       <button onClick={(e) => clearSearch(e)}>Clear</button>
       
-      {midpoint.lat && <h5>The midpoint between {input.inputOne.toUpperCase()} and {input.inputTwo.toUpperCase()}:</h5>}
+      {user && midpoint.lat && <h5>The midpoint between {input.inputOne.toUpperCase()} and {input.inputTwo.toUpperCase()}:</h5>}
 
       {loading && (<FontAwesomeIcon icon={faStar} size="2x" pulse className="loading-star" />)}
       
-      <Map midpoint={midpoint} markers={markers} />  
+      <Map midpoint={midpoint} markers={markers} user={user} />  
       {liked && (<h1>{liked}</h1>)}
-      <NearbySearch nearby={nearby} errorMsg={errorMsg} images={image_data} pullFavourites={pullFavourites} liked={liked} />
+      <NearbySearch nearby={nearby} errorMsg={errorMsg} images={image_data} user={user} liked={liked} />
       
 
     </div>

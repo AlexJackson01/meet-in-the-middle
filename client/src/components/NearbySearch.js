@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '../firebase';
-import { getAuth } from "firebase/auth";
-import {onAuthStateChanged} from "firebase/auth";
 import { image_data } from './Images/star-images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
 
-export default function NearbySearch({ nearby, errorMsg }) {
+export default function NearbySearch({ nearby, errorMsg, user }) {
 
     let [liked, setLiked] = useState(false);
-    let [loginMsg, setLoginMsg] = useState("");
-    let [user, setUser] = useState({});
     let [favourite, setFavourite] = useState({
         address: null,
         id: null,
@@ -28,11 +24,7 @@ export default function NearbySearch({ nearby, errorMsg }) {
     }, [nearby, favourite])
 
     const ref = firebase.firestore().collection("favourites");
-    const auth = getAuth();
 
-    onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
-    })
 
     // if (user === null) {
     //     setLoginMsg("To view places and save them to your Favourites, please login");
@@ -47,15 +39,28 @@ export default function NearbySearch({ nearby, errorMsg }) {
     }
 
     const addFavourite = (place) => {
-        setFavourite(
-    {   address: place.address,
-        id: place.id,
-        user_id: user.uid,
-        name: place.name,
-        pointOne: place.pointOne,
-        pointTwo: place.pointTwo,
-        rating: place.rating.value
-            })
+        if (place.rating) {
+            setFavourite(
+                {
+                    address: place.address,
+                    id: place.id,
+                    user_id: user.uid,
+                    name: place.name,
+                    pointOne: place.pointOne,
+                    pointTwo: place.pointTwo,
+                    rating: place.rating.value
+                })
+        } else {
+                        setFavourite(
+                {
+                    address: place.address,
+                    id: place.id,
+                    user_id: user.uid,
+                    name: place.name,
+                    pointOne: place.pointOne,
+                    pointTwo: place.pointTwo,
+                })
+        }
     }
 
     //     const unlikePlace = (place) => {
@@ -77,7 +82,7 @@ export default function NearbySearch({ nearby, errorMsg }) {
         if (errorMsg) {
             return (<h5>{errorMsg}</h5>)
         } else if (!user) {
-            return (<h5>To view more information, please <a href="/">login</a>.</h5>)
+            return null;
         } else
             {
             return nearby.length >= 1 ? nearby.map((place) => (
