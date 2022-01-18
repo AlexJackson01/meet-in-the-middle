@@ -27,6 +27,8 @@ export default function Login() {
     const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
         .then((result) => {
+            const name = result.user.displayName;
+            localStorage.setItem("greetingName", name);
             routeChange();
             console.log(result);
         }).catch((err) => {

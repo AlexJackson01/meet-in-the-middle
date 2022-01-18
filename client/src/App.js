@@ -164,10 +164,14 @@ function App() {
       // setNearby(fullDetails);
 
       searchTwo.forEach(place => {
-        if (place.rating) {
-        searchTwo.filter(place => place.rating !== undefined);
-        let five = place.rating.value / 2;
-        place.rating.value = five;
+        if (place.rating !== undefined) {
+        // searchTwo.filter(place => place.rating !== undefined);
+          let five = (place.rating.value) / 2;
+          // console.log(place[2].rating.value);
+          place.rating.value = five;
+          // console.log(place[2].rating.value);
+          // searchTwo.sort((a, b) => (b.rating.value) - (a.rating.value));
+          
         }
 
       });
@@ -211,25 +215,25 @@ function App() {
       <div className="row col-lg-3 col-xs-3 col-sm-3">
         <div className="form-group">
         <label>Location One:</label>
-              <input type="text" className="form-control input-group-lg header" width={150} name="inputOne" placeholder="Please enter an address, location or postal code" value={input.inputOne} onChange={(e) => handleChange(e)}></input>
+              <input type="text" className="form-control input-group-lg header" width={150} name="inputOne" placeholder="Please enter an address, location or postal code" value={input.inputOne} onChange={(e) => handleChange(e)} required></input>
             </div>
           </div>
 
       <div className="col-lg-3 col-xs-3 col-sm-3">
       <div className="form-group">
         <label>Location Two:</label>
-              <input type="text" className="form-control input-group-lg header" name="inputTwo" placeholder="Please enter an address, location or postal code" value={input.inputTwo} onChange={(e) => handleChange(e)}></input>
+              <input type="text" className="form-control input-group-lg header" name="inputTwo" placeholder="Please enter an address, location or postal code" value={input.inputTwo} onChange={(e) => handleChange(e)} required></input>
             </div>
           </div>
           
       <div className="col-lg-3 col-xs-3 col-sm-3">
           <div className="form-group">
               <label>Category:</label>
-              <select className="form-select" aria-label="Default select example" onChange={(e) => {
+              <select className="form-select" onChange={(e) => {
                 const selectedCategory = e.target.value;
                 setCategory({category: selectedCategory})
-              }}>
-  <option defaultValue>Select a category</option>
+              }} name="" required>
+  <option value="">Select a category</option>
   <option value="Restaurant">Restaurant</option>
   <option value="Pub">Pub</option>
   <option value="Cafe">Cafe</option>
@@ -246,8 +250,8 @@ function App() {
               <select className="form-select" aria-label="Default select example" onChange={(e) => {
                 const selectedRadius = e.target.value;
                 setRadius({radius: selectedRadius})
-              }}>
-  <option defaultValue>Select a radius</option>
+              }} name="" required>
+  <option value="">Select a radius</option>
   <option value="quarter">1/4 mile</option>
   <option value="half">1/2 mile</option>
   <option value="one">1 mile</option>

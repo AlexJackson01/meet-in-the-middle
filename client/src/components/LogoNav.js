@@ -14,7 +14,7 @@ export default function LogoNav() {
     const navigate = useNavigate();
 
     onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
+        setUser(currentUser);        
     })
 
     const logOut = async () => {
@@ -27,7 +27,7 @@ export default function LogoNav() {
     return (
         <div className='logo-container'>
             {/* <img src={Logo} className="logo" alt="Meet in the Middle logo" /> */}
-            {user && <div><p className='user-greeting'>Hello, {user?.email}!</p><button className='search-btn' onClick={logOut}>Logout</button></div>}
+            {user && <div><p className='user-greeting'>Hello, {user.displayName ? user.displayName : user?.email}!</p><button className='search-btn' onClick={logOut}>Logout</button></div>}
             <ul className='navbar justify-content-center'>
                 <Link to="/home"><li className="nav-links">HOME</li></Link>
                 <Link to="/favourites"><li className="nav-links">FAVOURITES</li></Link>

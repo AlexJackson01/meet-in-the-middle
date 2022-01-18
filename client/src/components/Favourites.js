@@ -193,23 +193,25 @@ export default function Favourites() {
                     </ul>
                     <div className='ratings'>
                         <form onSubmit={(e) => handleOnSubmit(e)}>
+                            
                             {favourite.favourite && (
                                 [...Array(5)].map((star, i) => {
                                     i += 1;
                                     return (
-                                        <button type="button" key={i} className={favourite.stars && i <= ratingValue.rating ? "on" : "off"} onClick={(e) => { setRatingValue({ place_id: favourite.id, name: favourite.name, rating: i }); ratePlace(favourite); }} >
-                                            <div><FontAwesomeIcon icon={faStar} className='rating-stars' size="2x" /></div>
+                                        <button type="button" key={i} className={favourite.stars && i <= ratingValue.rating ? "on" : "off"} onClick={(e) => { setRatingValue({ place_id: favourite.id, name: favourite.name, rating: i }); ratePlace(favourite); }} required>
+                                            <div><FontAwesomeIcon icon={faStar} className='rating-stars' size="2x" /></div> 
                                         </button>
+                                        
                                     )
                                 })
-                            )}
+                            )} 
                             {favourite.favourite && (
-                                <div>
-                                    <select className="form-select" aria-label="Default select example" onChange={(e) => {
+                                <div><h6>Please give this place an overall rating</h6> (required)
+                                    <select required className="form-select" onChange={(e) => {
                                         const selectedPrice = e.target.value;
                                         setPriceRange({ selectedPrice });
                                     }}>
-                                        <option defaultValue>Price Range</option>
+                                        <option value="" aria-label="Default select example">Price Range</option>
                                         <option value="£">£</option>
                                         <option value="££">££</option>
                                         <option value="£££">£££</option>
@@ -219,7 +221,7 @@ export default function Favourites() {
                                     <li className='favourites-info'><input type="checkbox" name="recommendations" value="food_quality" onChange={(e) => handleOnChange(e)} /><label htmlFor="recommendation1">Food quality</label></li>
                                     <li className='favourites-info'><input type="checkbox" name="recommendations" value="customer_service" onChange={(e) => handleOnChange(e)} /><label htmlFor="recommendation2">Customer service</label></li>
                                     <li className='favourites-info'><input type="checkbox" name="recommendations" value="cleanliness" onChange={(e) => handleOnChange(e)} /><label htmlFor="recommendation3">Cleanliness</label></li>
-                                    <li className='favourites-info'><input type="checkbox" name="recommendations" value="access_facilities" onChange={(e) => handleOnChange(e)} /><label htmlFor="recommendation4">Access and facilities</label></li>
+                                    <li className='favourites-info'><input type="checkbox" name="recommendations" value="access_and_facilities" onChange={(e) => handleOnChange(e)} /><label htmlFor="recommendation4">Access and facilities</label></li>
                                     <li className='favourites-info'><input type="checkbox" name="recommendations" value="pet_friendly" onChange={(e) => handleOnChange(e)} /><label htmlFor="recommendation5">Pet friendly</label></li>
                                     <li className='favourites-info'><input type="checkbox" name="recommendations" value="vibe" onChange={(e) => handleOnChange(e)} /><label htmlFor="recommendation6">Vibe/atmosphere</label></li>
                                     <li className='favourites-info'><input type="checkbox" name="recommendations" value="capacity" onChange={(e) => handleOnChange(e)} /><label htmlFor="recommendation7">Capacity</label></li>
@@ -228,8 +230,8 @@ export default function Favourites() {
                                     <li className='favourites-info'><input type="checkbox" name="recommendations" value="noise_level" onChange={(e) => handleOnChange(e)} /><label htmlFor="recommendation10">Noise level</label></li>
                                     <li className='favourites-info'><input type="checkbox" name="recommendations" value="drinks_menu" onChange={(e) => handleOnChange(e)} /><label htmlFor="recommendation11">Drinks menu</label></li>
                                     <li className='favourites-info'><input type="checkbox" name="recommendations" value="coffee" onChange={(e) => handleOnChange(e)} /><label htmlFor="recommendation12">Coffee</label></li>
-                                    <li className='favourites-info'><input type="checkbox" name="recommendations" value="seating" onChange={(e) => handleOnChange(e)} /><label htmlFor="recommendation13">Comfortable seating</label></li>
-                                    <li className='favourites-info'><input type="checkbox" name="recommendations" value="vegan_veggie" onChange={(e) => handleOnChange(e)} /><label htmlFor="recommendation14">Vegan/veggie/dietary options</label></li>
+                                    <li className='favourites-info'><input type="checkbox" name="recommendations" value="comfortable_seating" onChange={(e) => handleOnChange(e)} /><label htmlFor="recommendation13">Comfortable seating</label></li>
+                                    <li className='favourites-info'><input type="checkbox" name="recommendations" value="vegan_and_veggie_options" onChange={(e) => handleOnChange(e)} /><label htmlFor="recommendation14">Vegan/veggie/dietary options</label></li>
                                     <button type="submit" value="submit">Submit</button>
                                     {ratingPosted ? <p><em>Rating submitted!</em></p> : null}
                                     {ratingPosted ? <p className='remove-link' onClick={() => removeRating(favourite)}>Undo?</p> : null}
@@ -274,7 +276,7 @@ export default function Favourites() {
     {loading && (<FontAwesomeIcon icon={faStar} size="2x" pulse className="loading-star" />)}
 
             {renderFavourites()}
-            {DBRatings.length >= 1 && <h5>Recent Reviews</h5> }
+            {DBRatings.length >= 1 && user && <h5>Recent Reviews</h5> }
             <div className="ratings-list col-md-12 col-sm-10 col-xs-10">
             
                 {renderRatings()}
