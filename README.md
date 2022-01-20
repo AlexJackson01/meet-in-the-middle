@@ -4,11 +4,9 @@
 <img src="./client/src/images/meet-logo.png" width="250" />
 </p>
 
-### If you’re looking for **somewhere new**, if you’re meeting someone who **lives on the other side of town** or even the country, if you’re a couple going on a **date night**, someone organising a **first date**, colleagues going for a **work lunch**, friends or family having a **catch up**, or if you’re just plain **indecisive** about where to go, why not...
+If you’re looking for **somewhere new**, if you’re meeting someone who **lives on the other side of town** or even the country, if you’re a couple going on a **date night**, someone organising a **first date**, colleagues going for a **work lunch**, friends or family having a **catch up**, or if you’re just plain **indecisive** about where to go, why not... 
+### Meet in the Middle?
 
-<p style="text-align: center; font-size: 30px; font-weight: bold; color: #77C29E" >
-Meet in the Middle?
-</p>
 
 Meet in the Middle is an app that does what it says on the tin… simply type in two locations, select a place category and radius, and hit Search. The app will calculate the midpoint of the two locations by distance and show you the top-rated places near that midpoint. Details of your midpoint and each nearby place will be marked on a map as well as displayed on screen.
 
@@ -34,18 +32,18 @@ The app is also available to view on Heroku - LINK HERE.
 &nbsp;
 # API keys
 
-To run the location searches, you will need to sign up for an account with [Open Route Service](https://openrouteservice.org/) and [TomTom](https://developer.tomtom.com/).
+To run the location searches, you will need to sign up for accounts with [Open Route Service](https://openrouteservice.org/) and [TomTom](https://developer.tomtom.com/). It is quick and easy to generate API keys from both sites.
 
-*Open Route Service* – you can login with your Github account. Under ‘Dashboard’, request a free token and give it a nickname of your choice. Copy this token and copy it to the ```geoKey``` variable on **line 45** of ```App.js```.
+*Open Route Service* – you can login with your Github account. Once logged in, under your ‘Dashboard’, request a free token and give it a nickname of your choice. Copy this token and paste it against the ```geoKey``` variable on **line 45** of ```App.js```.
 
-*TomTom* – register for an account and under your account, add a new key for all APIs. Copy the key to the ```nearbyKey``` variable on **line 47** of ```App.js```.
+*TomTom* – register for an account and on your user dashboard, add a new key for all APIs. Copy the key to the ```nearbyKey``` variable on **line 47** of ```App.js```.
 
 ### The API calls should now work as expected!
 
 &nbsp;
 # Firebase
 
-For the backend to work via the development server, you will need to set up an account with [Firebase](https://firebase.google.com/).
+The backend is built using [Firebase](https://firebase.google.com/). For the backend to work via the development server, you will need to set up an account with them.
 
 1. Once logged in, click **‘Go to console’** in the top-right and add a project. 
 
@@ -53,31 +51,40 @@ For the backend to work via the development server, you will need to set up an a
 
 3. You can **disable Google Analytics** and click **‘Create project’**. 
 
-4. Once loaded, click **‘Continue’** to get started and follow the instructions below to add your config to the project.
+4. Once loaded, click **‘Continue’** to get started. A page will then appear containing the config that needs to be added to the project.
 
-5. **Add a ‘web’ app** to get started
+5. Next, **add a ‘web’ app** to get started, give it a name such as ‘meet-in-the-middle’ and click **‘Register app’**.
 
 <p align="center">
-<img src="./client/src/images/firebase_setup.png" width="500" />
+<img src="./client/src/images/firebase_setup.png" width="900" />
 </p>
 
-6. Give your web app a name such as ‘meet-in-the-middle’ and click **‘Register app’**
+6. Copy the **firebaseConfig** code into the ```firebase.js``` file at **lines 7-15** and save. The code will look something like this:
 
-7. Copy the **firebaseConfig** code into the ```firebase.js``` file at **lines 7-15** and save
+```
+const firebaseConfig = {
+  apiKey: "AIzaSyCLw7i972jHceOCpvKrrBhzYEq1ZJVj4w4",
+  authDomain: "fir-b566d.firebaseapp.com",
+  projectId: "fir-b566d",
+  storageBucket: "fir-b566d.appspot.com",
+  messagingSenderId: "420192848357",
+  appId: "1:420192848357:web:6a0211610fbd899d6ac70c"
+};
+```
 
 &nbsp;
 ## Database Tables
 
-8. Navigate to the **Firestore Database** and click **‘Create database’**
+7. Navigate to the **Firestore Database** and click **‘Create database’**.
 
-9. Click **‘Start in test mode’** and **‘Next’**
+8. Click **‘Start in test mode’** and **‘Next’**.
 
-10. Select a **Firestore location**, e.g. ```‘eur3 (Europe-west)’``` and click **'Enable'**
+9. Select a **Firestore location**, e.g. ```eur3 (Europe-west)``` and click **'Enable'**.
 
-11. Once the database has loaded, you can now create the two required collections as follows:
+10. Once the database has loaded, you can now create the two required collections as follows:
 
 &nbsp;
-## favourites:
+## Collection 1: favourites
 
 | Field      | Type | Example |
 | -------- | ------ | ------------ |
@@ -90,7 +97,7 @@ For the backend to work via the development server, you will need to set up an a
 | user_id   | String        | bvGzUG2yWjZGxKXKwQsAUuyWlkw1
 
 &nbsp;
-## ratings:
+## Collection 2: ratings:
 
 | Field      | Type | Example |
 | -------- | ------ | ------------ |
@@ -105,18 +112,18 @@ For the backend to work via the development server, you will need to set up an a
 &nbsp;
 ## Enabling logins
 
-12. Navigate to the **‘Authentication’** area in the left-hand menu and click **‘Get started’**
+11. Navigate to the **‘Authentication’** area in the left-hand menu and click **‘Get started’**.
 
-13. Under **‘Sign-in method’**, enable **‘Email/Password’** and click **‘Save’**
+12. Under **‘Sign-in method’**, enable **‘Email/Password’** and click **‘Save’**.
 
 <p align="center">
-<img src="./client/src/images/firebase_email.png" width="500" />
+<img src="./client/src/images/firebase_email.png" width="900" />
 </p>
 
-14. Click **‘Add new provider’**, enable **‘Google’**, add a support email and click **‘Save’**
+14. Click **‘Add new provider’**, enable **‘Google’**, add a support email and click **‘Save’**.
 
 <p align="center">
-<img src="./client/src/images/firebase_google.png" width="500" />
+<img src="./client/src/images/firebase_google.png" width="900" />
 </p>
 
 ### Your Firebase backend should now run as expected!
