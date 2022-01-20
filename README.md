@@ -116,7 +116,7 @@ const firebaseConfig = {
 <img src="./client/src/images/firebase_email.png" width="900" />
 </p>
 
-14. Click **‘Add new provider’**, enable **‘Google’**, add a support email and click **‘Save’**.
+13. Click **‘Add new provider’**, enable **‘Google’**, add a support email and click **‘Save’**.
 
 <p align="center">
 <img src="./client/src/images/firebase_google.png" width="900" />
