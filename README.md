@@ -1,5 +1,5 @@
 <p align="center">
-<img src="./client/src/images/meet-logo.png" width="200"/>
+<img src="./client/src/images/meet-logo.png" width="250"/>
 </p>
 
 If you’re looking for **somewhere new**, if you’re meeting someone who **lives on the other side of town**, if you’re a couple going on a **date night**, someone organising a **first date**, colleagues going for a **work lunch**, friends or family having a **catch up**, or if you’re just plain **indecisive** about where to go, why not... **_Meet in the Middle?_**
