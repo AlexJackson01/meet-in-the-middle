@@ -1,13 +1,10 @@
-# meet-in-the-middle
-
 <p align="center">
-<img src="./client/src/images/meet-logo.png" width="250" />
+<img src="./client/src/images/meet-logo.png" width="200"/>
 </p>
 
-If you’re looking for **somewhere new**, if you’re meeting someone who **lives on the other side of town** or even the country, if you’re a couple going on a **date night**, someone organising a **first date**, colleagues going for a **work lunch**, friends or family having a **catch up**, or if you’re just plain **indecisive** about where to go, why not... **_Meet in the Middle?_**
+If you’re looking for **somewhere new**, if you’re meeting someone who **lives on the other side of town**, if you’re a couple going on a **date night**, someone organising a **first date**, colleagues going for a **work lunch**, friends or family having a **catch up**, or if you’re just plain **indecisive** about where to go, why not... **_Meet in the Middle?_**
 
-
-Meet in the Middle is an app that does what it says on the tin… simply type in two locations, select a place category and radius, and hit Search. The app will calculate the midpoint of the two locations by distance and show you the top-rated places near that midpoint. Details of your midpoint and each nearby place will be marked on a map as well as displayed on screen.
+_Meet in the Middle_ is an app that does what it says on the tin… simply type in two locations, select a place category and radius, and hit Search. The app will calculate the midpoint of the two locations by distance and show you the top-rated places near that midpoint. Details of your midpoint and each nearby place will be marked on a map as well as displayed on screen.
 
 [gif of search to go here]
 
@@ -31,13 +28,13 @@ The app is also available to view on Heroku - LINK HERE.
 &nbsp;
 # API keys
 
-To run the location searches, you will need to sign up for accounts with [Open Route Service](https://openrouteservice.org/) and [TomTom](https://developer.tomtom.com/). It is quick and easy to generate API keys from both sites.
+To run the location searches, you will need to sign up for accounts with [Open Route Service](https://openrouteservice.org/) and the [TomTom Developer Portal](https://developer.tomtom.com/). It is quick and easy to register and generate API keys on both sites.
 
-*Open Route Service* – you can login with your Github account. Once logged in, under your ‘Dashboard’, request a free token and give it a nickname of your choice. Copy this token and paste it against the ```geoKey``` variable on **line 45** of ```App.js```.
+_Open Route Service_ – you can login easily with your Github account. Once logged in, under your ‘Dashboard’, request a free token and give it a nickname of your choice. Copy this token and assign it to the ```geoKey``` variable on **line 45** of ```App.js```.
 
-*TomTom* – register for an account and on your user dashboard, add a new key for all APIs. Copy the key to the ```nearbyKey``` variable on **line 47** of ```App.js```.
+_TomTom_ – register for an account and on your user dashboard, add a new key for all APIs. Copy the key to the ```nearbyKey``` variable on **line 47** of ```App.js```.
 
-### The API calls should now work as expected!
+### **The API calls should now work as expected!**
 
 &nbsp;
 # Firebase
@@ -125,7 +122,7 @@ const firebaseConfig = {
 <img src="./client/src/images/firebase_google.png" width="900" />
 </p>
 
-### Your Firebase backend should now run as expected!
+### **Your Firebase backend should now run as expected!**
 &nbsp;
 
  _This is a student project that was created at [CodeOp](http://codeop.tech), a full stack development bootcamp in Barcelona._
