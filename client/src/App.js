@@ -277,7 +277,7 @@ function App() {
       
       <Map midpoint={midpoint} markers={markers} user={user} />  
       {liked && (<h1>{liked}</h1>)}
-      <NearbySearch nearby={nearby} errorMsg={errorMsg} images={image_data} user={user} liked={liked} />
+      <NearbySearch className="slide-in-bottom" nearby={nearby} errorMsg={errorMsg} images={image_data} user={user} liked={liked} />
       
 
     </div>
