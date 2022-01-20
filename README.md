@@ -6,8 +6,8 @@
 
 If you’re looking for **somewhere new**, if you’re meeting someone who **lives on the other side of town** or even the country, if you’re a couple going on a **date night**, someone organising a **first date**, colleagues going for a **work lunch**, friends or family having a **catch up**, or if you’re just plain **indecisive** about where to go, why not...
 
-<p align="center" style="font-weight: bold">
-**Meet in the Middle?**
+<p align="center">
+Meet in the Middle?
 </p>
 
 
