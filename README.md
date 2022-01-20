@@ -4,8 +4,13 @@
 <img src="./client/src/images/meet-logo.png" width="250" />
 </p>
 
-If you’re looking for **somewhere new**, if you’re meeting someone who **lives on the other side of town** or even the country, if you’re a couple going on a **date night**, someone organising a **first date**, colleagues going for a **work lunch**, friends or family having a **catch up**, or if you’re just plain **indecisive** about where to go, why not... 
-### Meet in the Middle?
+If you’re looking for **somewhere new**, if you’re meeting someone who **lives on the other side of town** or even the country, if you’re a couple going on a **date night**, someone organising a **first date**, colleagues going for a **work lunch**, friends or family having a **catch up**, or if you’re just plain **indecisive** about where to go, why not...
+
+<p align="center">
+
+**Meet in the Middle**?
+
+</p>
 
 
 Meet in the Middle is an app that does what it says on the tin… simply type in two locations, select a place category and radius, and hit Search. The app will calculate the midpoint of the two locations by distance and show you the top-rated places near that midpoint. Details of your midpoint and each nearby place will be marked on a map as well as displayed on screen.
