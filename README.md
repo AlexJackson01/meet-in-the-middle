@@ -28,7 +28,7 @@ The app is also available to view on Heroku - LINK HERE.
 &nbsp;
 # API keys
 
-To run the location searches, you will need to sign up for accounts with [Open Route Service](https://openrouteservice.org/) and the [TomTom Developer Portal](https://developer.tomtom.com/). It is quick and easy to register and generate API keys on both sites.
+To run the location searches, you will need to sign up for accounts with [Open Route Service](https://openrouteservice.org/) and the [TomTom Developer Portal](https://developer.tomtom.com/). It is quick and easy to generate API keys on both sites. They offer free plans with a generous allowance of API requests per day.
 
 _Open Route Service_ – you can login easily with your Github account. Once logged in, under your ‘Dashboard’, request a free token and give it a nickname of your choice. Copy this token and assign it to the ```geoKey``` variable on **line 45** of ```App.js```.
 
@@ -39,7 +39,7 @@ _TomTom_ – register for an account and on your user dashboard, add a new key f
 &nbsp;
 # Firebase
 
-The backend is built using [Firebase](https://firebase.google.com/). For the backend to work via the development server, you will need to set up an account with them.
+The backend is built using [Firebase](https://firebase.google.com/). For the backend to work via the development server, you will need to set up an account with them. Your account will be automatically signed up to their free Spark plan, which has a large number of database reads and writes allowed per day/month. It won't allow you to exceed these limits unless you upgrade to their Blaze pay as you go plan - so no worries there!
 
 1. Once logged in, click **‘Go to console’** in the top-right and add a project. 
 
@@ -125,6 +125,6 @@ const firebaseConfig = {
 ### **Your Firebase backend should now run as expected!**
 &nbsp;
 
- _This is a student project that was created at [CodeOp](http://codeop.tech), a full stack development bootcamp in Barcelona._
+_This is a student project that was created at [CodeOp](http://codeop.tech), a full stack development bootcamp in Barcelona._
 
 
