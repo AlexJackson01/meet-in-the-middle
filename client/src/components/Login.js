@@ -68,7 +68,7 @@ export default function Login() {
 
 
     return (
-    <div className="container">
+    <div className="">
             {/* <img src={Logo} className="logo" alt="" /> */}
             <h4>Register</h4>
       <form className="login-form">

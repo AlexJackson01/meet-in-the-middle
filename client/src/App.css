@@ -1,3 +1,105 @@
+body {
+    background-color: #77C29E;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.navbar {
+    background-color: #f7f1d5 !important;
+    height: 100px;
+    position: relative;
+}
+
+.logo-image {
+    width: 120px;
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    margin-left: -50px !important;
+    /* 50% of your logo width */
+    display: block;
+}
+
+.navbar-toggler {
+    position: absolute;
+    top: 25%;
+    right: 5%;
+    background-color: #77C29E !important;
+    color: black !important;
+}
+
+.navbar-toggler-icon {
+    color: #77C29E !important;
+}
+
+.navbar-nav {
+    background-color: #f7f1d5 !important;
+    text-align: left;
+    /* position: absolute; */
+    padding: 25px 0px 5px 30px;
+}
+
+.left-nav-link1 {
+    color: #62371C !important;
+    position: absolute;
+    font-weight: 400;
+    left: 5%;
+    /* right: 150px; */
+}
+
+.left-nav-link2 {
+    color: #62371C !important;
+    position: absolute;
+    font-weight: 400;
+    left: 25%;
+    /* right: 150px; */
+}
+
+.right-nav-link1 {
+    color: #62371C !important;
+    position: absolute;
+    font-weight: 400;
+    right: 25%;
+    /* right: 150px; */
+}
+
+.right-nav-link2 {
+    color: #62371C !important;
+    position: absolute;
+    font-weight: 400;
+    right: 5%;
+    /* right: 150px; */
+}
+
+.nav-link:hover {
+    font-weight: 500;
+    /* font-weight: 700; */
+}
+
+.user-greeting {
+    position: absolute;
+    text-align: center;
+    top: 10%;
+    right: 0%;
+    font-weight: 400;
+    /* padding-right: 50px; */
+    padding-top: 50px;
+    margin-right: 20px;
+    font-size: 14px;
+}
+
+button {
+    margin-left: 10px;
+    background-color: #62371C !important;
+    color: #f7f1d5 !important;
+}
+
+button:hover {
+    margin-left: 10px;
+    background-color: #f7f1d5 !important;
+    color: #62371C !important;
+}
+
+
 /* body {
     background-color: #693017;
     font-family: 'Montserrat', sans-serif;
@@ -103,15 +205,6 @@ input {
 /* h4 {
     color: #F6F3E4;
 } */
-
-.user-greeting {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding-right: 50px;
-    padding-top: 50px;
-    font-size: 20px;
-}
 
 .map-popup {
     color: #D3604A;

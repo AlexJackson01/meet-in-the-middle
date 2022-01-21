@@ -270,7 +270,7 @@ export default function Favourites() {
     }
             
     return (
-        <div className="container">
+        <div className="">
             <LogoNav />
 
     {loading && (<FontAwesomeIcon icon={faStar} size="2x" pulse className="loading-star" />)}

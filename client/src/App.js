@@ -28,66 +28,63 @@ function App() {
   let [midpoint, setMidpoint] = useState({ lat: "", lng: "" });
   let [markers, setMarkers] = useState("");
   let [errorMsg, setErrorMsg] = useState("");
-  let [favourites, setFavourites] = useState("");
   let [liked, setLiked] = useState("");
 
-  useEffect(() => {
+  useEffect(() => { // useEffect calls the nearby search function when the midpoint state updates - this allows the API calls to all run with one button click
     getNearby()
   }, [midpoint])
 
-  const auth = getAuth();
-  
+  const auth = getAuth(); // Firebase authentication
 
   onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
+        setUser(currentUser); // user state is set with details of the current signed in user
     })
 
+  // external API keys
   const geoKey = "5b3ce3597851110001cf6248d8248e64cce24e7bae3637d381b685f1";
-  // const nearbyKey = "LGM32rZnrmDbAgGhjwXpqAbNNZ0HnhqV";
-  const nearbyKey = "MpOfnHZhRSBv9wbqjqhYWvYAMWkaFeup";
+  const nearbyKey = "LGM32rZnrmDbAgGhjwXpqAbNNZ0HnhqV";
 
+  // defining arrays used in API search
   let nearbyDetails = [];
   let extendedID = [];
   let nearbyLatLng = [
     { name: "This is your midpoint.", position: [midpoint.lat, midpoint.lng], address: "" }
   ];
 
+  // setting the input state. the input is also saved to a points state - this is so it's not lost when the input is reset and can be posted to the backend later on
+  const handleChange = e => {
+  const name = e.target.name;
+  const value = e.target.value;
 
+  setInput(state => ({
+    ...state,
+    [name]: value
+}))
+    
+  setPoints(state => ({
+  ...state,
+  [name]: value
+}))
+}
 
-    const handleChange = e => {
-    const name = e.target.name;
-    const value = e.target.value;
-
-    setInput(state => ({
-      ...state,
-      [name]: value
-    }))
-      
-      setPoints(state => ({
-      ...state,
-      [name]: value
-    }))
-  }
-
+  // when the search form is submitted, it sets the loading state to true and calls the first API call
   const handleSubmit = e => {
-  // handle form submit
     e.preventDefault();
     setLoading(true);
-    setPoints({pointOne: input.inputOne, pointTwo: input.inputTwo});
     getCoordinates();
-  };
+};
   
+  // a function to clear the search if the user wants to use an alternative location, category or radius
   const clearSearch = () => {
     setInput({ inputOne: "", inputTwo: "" });
     setNearby("");
-    // setNearby("");
     setMidpoint({ lat: "", lng: "" });
     setErrorMsg("");
     setMarkers("");
     setLoading(false);
-    // setPoints({ pointOne: "", pointTwo: "" });
-  }
+}
 
+  // if statements that take the selected category and radius. and assigns an ID/value - this ID/value feeds into the API calls
   if (category.category) {
     category.category === "Restaurant" ? category.categoryID = 7315 : category.place = "";
     category.category === "Cafe" ? category.categoryID = 9376002 : category.place = "";
@@ -96,8 +93,7 @@ function App() {
     category.category === "Nightclub" ? category.categoryID = 9379 : category.place = "";
     category.category === "Museum" ? category.categoryID = 7317 : category.place = "";
     category.category === "Theatre" ? category.categoryID = 7318 : category.place = "";
-
-  }
+}
 
   if (radius.radius) {
     radius.radius === "quarter" ? radius.metres = Math.round(0.25 * 1609.34) : radius.metreConversion = "";
@@ -107,36 +103,33 @@ function App() {
     radius.radius === "five" ? radius.metres = Math.round(5 * 1609.34) : radius.metreConversion = "";
     radius.radius === "ten" ? radius.metres = Math.round(10 * 1609.34) : radius.metreConversion = "";
     radius.radius === "twenty" ? radius.metres = Math.round(20 * 1609.34) : radius.metreConversion = "";
-  }
+}
 
   const getCoordinates = () => {
-    let one = `https://api.openrouteservice.org/geocode/search?api_key=${geoKey}&text=${input.inputOne}`;
+    let one = `https://api.openrouteservice.org/geocode/search?api_key=${geoKey}&text=${input.inputOne}`; // using the geoKey, these API calls brings back the lat and lng of the two inputted locations
     let two = `https://api.openrouteservice.org/geocode/search?api_key=${geoKey}&text=${input.inputTwo}`;
     const requestOne = axios.get(one);
     const requestTwo = axios.get(two);
     axios.all([requestOne, requestTwo]).then(axios.spread((...responses) => {
       const responseOne = responses[0];
       const responseTwo = responses[1];
-      setMidpoint({
+      setMidpoint({ // with the returned data, the midpoint state is set by calculating the average of the lats and average of the lngs
         lat: ((responseOne.data.features[0].geometry.coordinates[1] + responseTwo.data.features[0].geometry.coordinates[1]) / 2).toFixed(8),
         lng: ((responseOne.data.features[0].geometry.coordinates[0] + responseTwo.data.features[0].geometry.coordinates[0]) / 2).toFixed(8)
       })
     }))
       .catch(errors => {
       console.log(errors);
-      // react on errors.
     })
-  }
-
+}
+  // using the midpoint lat and lng, the selected category and radius, a nearby search API is called 
   const getNearby = async() => {
-    console.log("i'm here");
-    console.log(midpoint);
-    if (midpoint.lat !== "") {
+    if (midpoint.lat !== "") { // when the midpoint.lat is populated, the nearby search call begins
       const res = await axios.get(`https://api.tomtom.com/search/2/nearbySearch/.json?key=${nearbyKey}&lat=${midpoint.lat}&lon=${midpoint.lng}&radius=${radius.metreConversion}&limit=20&language=en-GB&categorySet=${category.categoryID}`);
       const details = res.data.results;
-      const searchOne = details.filter(place => place.dataSources !== undefined);
+      const searchOne = details.filter(place => place.dataSources !== undefined); // the search results of the first call are filtered. Any places that do not have a specific ID in 'dataSources' are filtered out. This is because the IDs are crucial in the next API call.
 
-      for (let place of searchOne) {
+      for (let place of searchOne) { // relevant data from the first nearby search is pushed to an array
         nearbyDetails.push({
           id: place.dataSources.poiDetails[0].id,
           name: place.poi.name,
@@ -146,13 +139,12 @@ function App() {
           pointTwo: input.inputTwo,
           lat: place.position.lat,
           lng: place.position.lon
-        })
-      }
-    
-
+      })
+  }    
+      // This code loops through the aforementioned IDs and calls the extended API search on each one - this brings back data such as ratings, reviews and photos to be used in the NearbySearch component
       for (let place of searchOne) {
         const res2 = await axios.get(`https://api.tomtom.com/search/2/poiDetails.json?key=${nearbyKey}&id=${place.dataSources.poiDetails[0].id}`);
-        extendedID.push({
+        extendedID.push({ // relevant data from the second search is pushed to an array
           id: res2.data.id,
           rating: res2.data.result.rating,
           reviews: res2.data.result.reviews,
@@ -160,53 +152,40 @@ function App() {
         })
       }
 
-      let searchTwo = nearbyDetails.map((item, i) => Object.assign({}, item, extendedID[i]));
-      // setNearby(fullDetails);
+      let searchTwo = nearbyDetails.map((item, i) => Object.assign({}, item, extendedID[i])); // the results from search 1 and 2 are joined together
 
       searchTwo.forEach(place => {
-        if (place.rating !== undefined) {
-        // searchTwo.filter(place => place.rating !== undefined);
+        if (place.rating !== undefined) { // in the joined data, if the place has a rating, it is divided by 2 and reassigned. This is so the ratings are out of 5 stars for consistency
           let five = (place.rating.value) / 2;
-          // console.log(place[2].rating.value);
-          place.rating.value = five;
-          // console.log(place[2].rating.value);
-          // searchTwo.sort((a, b) => (b.rating.value) - (a.rating.value));
-          
-        }
+          place.rating.value = five;  
+      }
+    });
 
-      });
-
-      if (searchTwo.length === 0) {
+      if (searchTwo.length === 0) { // if there are no results found in either search, it will display an error message
         setErrorMsg("No results found... please try an alternative radius or category.");
       }
 
+      let top10 = searchTwo.slice(0, 10); // the joined results are sliced to only include a 'top 10'
 
-      // let sorted = fullDetails.sort((a, b) => (b.rating.value) - (a.rating.value));
-      let top10 = searchTwo.slice(0, 10);
-
-      for (let place of top10) {
+      for (let place of top10) { // for the purpose of marking places on the map, the final places and their details are pushed to an array and assigned to the markers state
         nearbyLatLng.push(
           { name: place.name, position: [place.lat, place.lng], address: place.address }
         );
         setMarkers(nearbyLatLng);
       }
 
-      if (user) {
+      if (user) { // if a user is logged in, the top 10 search results are assigned to the nearby state and displayed on screen (via the NearbySearch component). 
       setNearby(top10);
       setLoading(false);
-      }
-
-
-    
+      }  
 
     }
   }
 
   return (  
-    <div className="container">
+    <div className="">
       <LogoNav />
     <h1>Meet in the Middle</h1>
-
 
       {/* STYLED FORM */}
       <form className="input-form" onSubmit={(e) => handleSubmit(e)}>
