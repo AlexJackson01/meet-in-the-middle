@@ -2,7 +2,7 @@
 <img src="./client/src/images/meet-logo.png" width="250"/>
 </p>
 
-If you’re looking for **somewhere new**, if you’re meeting someone who **lives on the other side of town**, if you’re a couple going on a **date night**, someone organising a **first date**, colleagues going for a **work lunch**, friends or family having a **catch up**, or if you’re just plain **indecisive** about where to go, why not... **_Meet in the Middle?_**
+If you’re looking to go **somewhere new**, if you’re meeting someone who **lives on the other side of town**, if you’re a couple going on a **date night**, someone organising a **first date**, colleagues going for a **work lunch**, friends or family having a **catch up**, or if you’re just plain **indecisive** about where to go, why not... **_Meet in the Middle?_**
 
 _Meet in the Middle_ is an app that does what it says on the tin… simply type in two locations, select a place category and radius, and hit Search. The app will calculate the midpoint of the two locations by distance and show you the top-rated places near that midpoint. Details of your midpoint and each nearby place will be marked on a map as well as displayed on screen.
 
@@ -125,6 +125,20 @@ const firebaseConfig = {
 ### **Your Firebase backend should now run as expected!**
 &nbsp;
 
-_This is a student project that was created at [CodeOp](http://codeop.tech), a full stack development bootcamp in Barcelona._
+## Next steps
+
+_This is a student project that was created at [CodeOp](http://codeop.tech), a full stack development bootcamp in Barcelona._ I'd love to hear any feedback or suggestions on how to take the app further - please get in touch if you have any. I'm a beginner so please be kind :D
+
+Ideas for how I'd like to develop the project include:
+
+- Adding search filters by user recommendations
+- Adding route planning within the app itself to prevent users being taken away by external Google Maps links
+- Adding an option to find the midpoint by time as well as distance - currently it uses latitudes and longitudes, but this doesn't always guarantee an equal journey from both points to the middle
+- A 'Decide For Me' button which suggests the single place that is: in the middle, high rated and the most convenient to get to from both ends
+- A share function - the ability to share a place from the search results with someone via email, Whatsapp, Facebook, Instagram, etc.
+- Calendar invitations - to organise a meetup time and date at a desired place in the middle
+- Table bookings within the app - something to investigate further via OpenTable etc.
+- Creating a mobile app that incorporates the full experience above!
+
 
 
