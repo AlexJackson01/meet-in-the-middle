@@ -36,6 +36,22 @@ _TomTom_ – register for an account and on your user dashboard, add a new key f
 
 ### **The API calls should now work as expected!**
 
+
+**Remember**: before pushing to a public Github repo, make sure your API keys are securely added to an ```.env``` file in your root folder.
+
+For example, store the ```geoKey``` as so in the ```.env```:
+
+```
+REACT_APP_GEO_API_KEY=INSERTYOURKEY
+```
+In ```App.js```, change the corresponding API variable to read:
+
+```
+const geoKey = process.env.REACT_APP_GEO_API_KEY;
+```
+
+The same goes for the sensitive Firebase config described below. Ensure your ```.env``` file is included in the ```.gitignore``` list!
+
 &nbsp;
 # Firebase
 
