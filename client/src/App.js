@@ -10,6 +10,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import LogoNav from "./components/LogoNav";
 import Map from "./components/Map";
 import NearbySearch from "./components/NearbySearch";
+import Footer from "./components/Footer";
 
 function App() {
   let [loading, setLoading] = useState(false);
@@ -140,7 +141,8 @@ function App() {
           lat: place.position.lat,
           lng: place.position.lon
       })
-  }    
+  }
+      
       // This code loops through the aforementioned IDs and calls the extended API search on each one - this brings back data such as ratings, reviews and photos to be used in the NearbySearch component
       for (let place of searchOne) {
         const res2 = await axios.get(`https://api.tomtom.com/search/2/poiDetails.json?key=${nearbyKey}&id=${place.dataSources.poiDetails[0].id}`);
@@ -256,6 +258,8 @@ function App() {
       <Map midpoint={midpoint} markers={markers} user={user} />  
       {liked && (<h1>{liked}</h1>)}
       <NearbySearch className="slide-in-bottom" nearby={nearby} errorMsg={errorMsg} images={image_data} user={user} liked={liked} />
+        
+      <Footer />
       
 </div>
     </div>

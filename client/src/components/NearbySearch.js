@@ -74,7 +74,7 @@ export default function NearbySearch({ nearby, errorMsg, user }) {
             return nearby.length >= 1 ? nearby.map((place) => ( // where the nearby search contains at least 1 result, it will display information on the place in a card
                 <div className="places-list" key={place.id}>
                     <ul className='place-card'>
-                        <li><h4>{place.name}</h4></li>
+                        <li><h5>{place.name}</h5></li>
                         <li><h6>{place.address}</h6></li>
                         <li className='place-url'>{place.url ? <a href={place.url}>Visit their website</a> : null}</li>
                         
@@ -90,14 +90,14 @@ export default function NearbySearch({ nearby, errorMsg, user }) {
                         {place.rating && place.rating.value > 4.25 && place.rating.value <= 4.75 ? <li><img src={image_data[8].image} className="star-rating" alt="" /></li> : null}
                         {place.rating && place.rating.value > 4.75 && place.rating.value <= 5 ? <li><img src={image_data[9].image} className="star-rating" alt="" /></li> : null}
                         {/* If there is no rating available, it will display a message */}
-                        <li>{!place.rating && <em>{"Rating not available"}</em>}
+                        <li className='place-rating'>{!place.rating && <em>{"Rating not available"}</em>}</li>
                             
                         {/* If no written reviews are available, it will also say so  */}
-                            {place.reviews ? <p><em>Others have said: {place.reviews[0].text}</em></p> : <p><em>{"Reviews not available"}</em></p>}</li>
+                            <li>{place.reviews ? <p><em>Others have said: {place.reviews[0].text}</em></p> : <p><em>{"Reviews not available"}</em></p>}</li>
                         
                         {/* Directions links added for each starting location which shows journey on a separate Google Maps tab */}
-                        <li><p className='place-url'><a href={`https://www.google.com/maps/dir/${place.pointOne}/${place.lat},${place.lng}`} target="_blank">Directions from {place.pointOne.toUpperCase()}</a></p></li>
-                        <li><p className='place-url'><a href={`https://www.google.com/maps/dir/${place.pointTwo}/${place.lat},${place.lng}`} target="_blank">Directions from {place.pointTwo.toUpperCase()}</a></p></li>
+                        <li><button className='directions-btn'><a href={`https://www.google.com/maps/dir/${place.pointOne}/${place.lat},${place.lng}`} target="_blank">Directions from {place.pointOne.toUpperCase()}</a></button></li>
+                        <li><button className='directions-btn'><a href={`https://www.google.com/maps/dir/${place.pointTwo}/${place.lat},${place.lng}`} target="_blank">Directions from {place.pointTwo.toUpperCase()}</a></button></li>
                         
                         {/* A heart icon is displayed on each card. When clicked, the heart icon changes to one filled with colour, alongside a confirmation message that it has been added */}
                         {place.favourite ? (<FontAwesomeIcon icon={fasHeart} size="2x" className="favourite-heart" />) : (<FontAwesomeIcon icon={farHeart} size="2x" className="favourite-heart" onClick={() => { addFavourite(place); likePlace(place); }} />)}
@@ -114,7 +114,7 @@ export default function NearbySearch({ nearby, errorMsg, user }) {
 
     return (
         <div className=''>
-            <div className="places-list col-md-12 col-sm-10 col-xs-10">
+            <div className="places-list col-md-10 col-sm-10 col-xs-10">
                 {renderNearby()} 
             </div>
         </div>
