@@ -22,7 +22,7 @@ export default function LogoNav() {
     }
     
     const toggleMenu = () => {
-        setMenu(!menu);
+        setMenu(!menu); // toggles menu on smaller screen sizes as the Bootstrap toggle wasn't working as well
     }
 
     let show = menu ? "show" : "";

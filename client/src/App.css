@@ -1,18 +1,19 @@
 body {
     background-color: #77C29E;
     font-family: 'Montserrat', sans-serif;
+    color: #62371C;
 }
 
 .navbar {
     background-color: #f7f1d5 !important;
-    height: 100px;
+    height: 80px;
     position: relative;
 }
 
 .logo-image {
     width: 120px;
     position: absolute;
-    top: -10%;
+    top: -25%;
     left: 50%;
     margin-left: -50px !important;
     /* 50% of your logo width */
@@ -23,8 +24,9 @@ body {
     position: absolute;
     top: 25%;
     right: 5%;
+    /* height: 1vh; */
     background-color: #77C29E !important;
-    color: black !important;
+    color: #62371C !important;
 }
 
 .navbar-toggler-icon {
@@ -33,8 +35,6 @@ body {
 
 .navbar-nav {
     background-color: #f7f1d5 !important;
-    text-align: left;
-    /* position: absolute; */
     padding: 25px 0px 5px 30px;
 }
 
@@ -42,6 +42,7 @@ body {
     color: #62371C !important;
     position: absolute;
     font-weight: 400;
+    top: 25%;
     left: 5%;
     /* right: 150px; */
 }
@@ -50,6 +51,7 @@ body {
     color: #62371C !important;
     position: absolute;
     font-weight: 400;
+    top: 25%;
     left: 25%;
     /* right: 150px; */
 }
@@ -58,6 +60,7 @@ body {
     color: #62371C !important;
     position: absolute;
     font-weight: 400;
+    top: 25%;
     right: 25%;
     /* right: 150px; */
 }
@@ -66,6 +69,7 @@ body {
     color: #62371C !important;
     position: absolute;
     font-weight: 400;
+    top: 25%;
     right: 5%;
     /* right: 150px; */
 }
@@ -76,13 +80,14 @@ body {
 }
 
 .user-greeting {
-    position: absolute;
-    text-align: center;
-    top: 10%;
+    position: relative;
+    text-align: right;
+    top: 13%;
     right: 0%;
     font-weight: 400;
     /* padding-right: 50px; */
     padding-top: 50px;
+    margin-top: -50px;
     margin-right: 20px;
     font-size: 14px;
 }
@@ -97,6 +102,58 @@ button:hover {
     margin-left: 10px;
     background-color: #f7f1d5 !important;
     color: #62371C !important;
+}
+
+@media (max-width: 1000px) {
+    .logo-image {
+        width: 120px;
+        position: absolute;
+        top: -25%;
+        left: 50%;
+        margin-left: -50px !important;
+        display: block;
+    }
+    .navbar-nav {
+        background-color: #f7f1d5 !important;
+        padding: 25px 0px 80px 100px;
+    }
+    .left-nav-link1 {
+        color: #62371C !important;
+        font-weight: 400;
+        top: 95%;
+        left: 5%;
+        font-size: 11px;
+    }
+    .left-nav-link2 {
+        color: #62371C !important;
+        font-weight: 400;
+        top: 95%;
+        left: 25%;
+        font-size: 11px;
+    }
+    .right-nav-link1 {
+        color: #62371C !important;
+        font-weight: 400;
+        top: 95%;
+        right: 25%;
+        font-size: 11px;
+    }
+    .right-nav-link2 {
+        color: #62371C !important;
+        font-weight: 400;
+        top: 95%;
+        right: 5%;
+        font-size: 11px;
+    }
+    .user-greeting {
+        position: relative;
+        font-weight: 400;
+        font-size: 13px;
+        margin-top: -15px;
+        padding-bottom: 10px;
+        padding-left: 40px;
+        /* margin-top: 20px; */
+    }
 }
 
 
