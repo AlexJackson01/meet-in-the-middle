@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faEarthAmericas } from '@fortawesome/free-solid-svg-icons';
 import { image_data } from "./components/Images/star-images";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import LogoNav from "./components/LogoNav";
@@ -183,47 +183,43 @@ function App() {
   }
 
   return (  
-    <div className="">
+    <div>
       <LogoNav />
-    <h1>Meet in the Middle</h1>
+      <div className="container">
 
       {/* STYLED FORM */}
-      <form className="input-form" onSubmit={(e) => handleSubmit(e)}>
+      <form className="input-form" align="center" onSubmit={(e) => handleSubmit(e)}>
         <div className="row">
-
-      <div className="row col-lg-3 col-xs-3 col-sm-3">
-        <div className="form-group">
-        <label>Location One:</label>
-              <input type="text" className="form-control input-group-lg header" width={150} name="inputOne" placeholder="Please enter an address, location or postal code" value={input.inputOne} onChange={(e) => handleChange(e)} required></input>
-            </div>
-          </div>
-
-      <div className="col-lg-3 col-xs-3 col-sm-3">
-      <div className="form-group">
-        <label>Location Two:</label>
-              <input type="text" className="form-control input-group-lg header" name="inputTwo" placeholder="Please enter an address, location or postal code" value={input.inputTwo} onChange={(e) => handleChange(e)} required></input>
-            </div>
-          </div>
-          
-      <div className="col-lg-3 col-xs-3 col-sm-3">
+        <div className="col-lg-3 col-md-6 col-xs-12 col-sm-6">
           <div className="form-group">
-              <label>Category:</label>
-              <select className="form-select" onChange={(e) => {
-                const selectedCategory = e.target.value;
-                setCategory({category: selectedCategory})
-              }} name="" required>
-  <option value="">Select a category</option>
-  <option value="Restaurant">Restaurant</option>
-  <option value="Pub">Pub</option>
-  <option value="Cafe">Cafe</option>
-  <option value="Cinema">Cinema</option>
-  <option value="Nightclub">Nightclub/Bar</option>
-  <option value="Museum">Museum/Art Gallery</option>
-  <option value="Theatre">Theatre</option>
+            <label>Location One:</label>
+              <input type="text" className="form-control input-group-lg header" width={150} name="inputOne" value={input.inputOne} onChange={(e) => handleChange(e)} required></input>
+            </div>
+          </div>
+
+        <div className="col-lg-3 col-md-6 col-xs-12 col-sm-6">
+        <div className="form-group">
+          <label>Location Two:</label>
+            <input type="text" className="form-control input-group-lg header" name="inputTwo" value={input.inputTwo} onChange={(e) => handleChange(e)} required></input>
+          </div>
+        </div>
+          
+        <div className="col-lg-3 col-md-6 col-xs-12 col-sm-6">
+          <div className="form-group">
+            <label>Category:</label>
+              <select className="form-select" onChange={(e) => {const selectedCategory = e.target.value; setCategory({category: selectedCategory})}} name="" required>
+                <option value="">Select a category</option>
+                <option value="Restaurant">Restaurant</option>
+                <option value="Pub">Pub</option>
+                <option value="Cafe">Cafe</option>
+                <option value="Cinema">Cinema</option>
+                <option value="Nightclub">Nightclub/Bar</option>
+                <option value="Museum">Museum/Art Gallery</option>
+                <option value="Theatre">Theatre</option>
               </select>
             </div></div>
           
-               <div className="col-lg-3 col-xs-3 col-sm-3">
+  <div className="col-lg-3 col-md-6 col-xs-12 col-sm-6">
           <div className="form-group">
               <label>Radius:</label>
               <select className="form-select" aria-label="Default select example" onChange={(e) => {
@@ -239,26 +235,29 @@ function App() {
                 <option value="ten">10 miles</option>
                 <option value="twenty">20 miles</option>
               </select>
-              </div></div>
+              </div></div></div>
       
-          
-      <div className="search-btn">
-            <button type="submit" id="search">Search</button>
-          </div>
-        </div>
-      </form>
+          <div className="row">
+      <div className="col-lg-6 col-md-6 col-xs-12 col-sm-6">
+                <button className="search-btn" type="submit" id="search">Search</button>
+                </div>
+                <div className="col-lg-6 col-md-6 col-xs-12 col-sm-6">
+                <button className="search-btn" onClick={(e) => clearSearch(e)}>Clear</button>
+                </div>
+              </div>
+          </form>
 
-      <button onClick={(e) => clearSearch(e)}>Clear</button>
+      {/* <button onClick={(e) => clearSearch(e)}>Clear</button> */}
       
-      {user && midpoint.lat && <h5>The midpoint between {input.inputOne.toUpperCase()} and {input.inputTwo.toUpperCase()}:</h5>}
+      {user && midpoint.lat && <h5 className="midpoint-msg">The midpoint between {input.inputOne.toUpperCase()} and {input.inputTwo.toUpperCase()}:</h5>}
 
-      {loading && (<FontAwesomeIcon icon={faStar} size="2x" pulse className="loading-star" />)}
+      {loading && (<FontAwesomeIcon icon={faEarthAmericas} size="2x" pulse className="loading-earth" />)}
       
       <Map midpoint={midpoint} markers={markers} user={user} />  
       {liked && (<h1>{liked}</h1>)}
       <NearbySearch className="slide-in-bottom" nearby={nearby} errorMsg={errorMsg} images={image_data} user={user} liked={liked} />
       
-
+</div>
     </div>
   );
 }

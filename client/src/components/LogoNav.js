@@ -36,7 +36,7 @@ export default function LogoNav() {
       </button>
       <div className={"collapse navbar-collapse " + show}>
         <div className="navbar-nav">
-          <a className="nav-item nav-link left-nav-link1 active" href="/">HOME <span class="sr-only">(current)</span></a>
+          <a className="nav-item nav-link left-nav-link1 active" href="/">HOME <span className="sr-only">(current)</span></a>
           <a className="nav-item nav-link left-nav-link2" href="/">FAVOURITES</a>
           <a className="nav-item nav-link right-nav-link1" href="/">HOW IT WORKS</a>
           <a className="nav-item nav-link right-nav-link2" href="/">CONTACT</a>
@@ -45,7 +45,7 @@ export default function LogoNav() {
     </nav>
             
             {/* The user will be greeted either by name (if logged in with Google) or by their email address */}
-            {user && <div className='user-greeting'>Hello, {user.displayName ? user.displayName : user?.email}!<button className='btn-danger' onClick={logOut}>Logout</button></div>}
+            {user && <div className='user-greeting'>Hello, {user.displayName ? user.displayName : user?.email}!<br /><button className='logout-button' onClick={logOut}>LOG OUT</button></div>}
         </div>
     )
 }

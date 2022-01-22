@@ -2,7 +2,9 @@ import React, {useState, useEffect} from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import Star from '../../src/star.png';
+import MidMarker from '../images/location-pin (2).png';
+import Pin from '../images/pin.png';
+
 
 export default function Map({ midpoint, markers, user }) {
     const [map, setMap] = useState(false);
@@ -13,14 +15,14 @@ useEffect(() => {
   
   
   const starMidIcon = new L.Icon({
-    iconUrl: Star,
+    iconUrl: MidMarker,
     iconSize: [40, 40],
     className: 'leaflet-star-icon'
   });
 
   const starNearbyIcon = new L.Icon({
-    iconUrl: Star,
-    iconSize: [20, 20],
+    iconUrl: Pin,
+    iconSize: [30, 30],
     className: 'leaflet-star-icon'
   });
 
@@ -36,15 +38,17 @@ useEffect(() => {
   }
 
   if (map) {
-    map.flyTo(midpoint, 13, {
+    map.flyTo(midpoint, 13.5, {
       duration: 1
     });
   }
 
   
   return (
-    <div className='map-container'>
+    <div className='container'>
       {!user && <h5>To view more information, please <a href="/">login</a>.</h5>}
+
+
       {user && midpoint.lat && (<MapContainer
         center={[51.5168712, -0.1456173]}
         zoom={13}
