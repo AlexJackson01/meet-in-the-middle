@@ -237,7 +237,7 @@ export default function Favourites() {
                                     <li className='recommendations'><input type="checkbox" name="recommendations" value="vegan_and_veggie_options" onChange={(e) => handleOnChange(e)} /><label htmlFor="recommendation14">Vegan/veggie/dietary options</label></li>
                                     <button type="submit" className="ratings-btn" value="submit">Submit</button>
                                     {ratingPosted ? <p><em>Rating submitted!</em></p> : null}
-                                    {ratingPosted ? <p className='remove-link' onClick={() => removeRating(favourite)}>Undo?</p> : null}
+                                    {ratingPosted ? <p className='rating-link' onClick={() => removeRating(favourite)}>Undo?</p> : null}
                                 </div>
                             )}
                         </form>

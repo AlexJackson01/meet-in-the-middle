@@ -45,7 +45,7 @@ useEffect(() => {
 
   
   return (
-    <div className='container'>
+    <div className='map-container'>
       {!user && <h5 className='login-msg'>To view more information, please <a href="/login">login</a>.</h5>}
 
 

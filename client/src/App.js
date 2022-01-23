@@ -10,6 +10,8 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import LogoNav from "./components/LogoNav";
 import Map from "./components/Map";
 import NearbySearch from "./components/NearbySearch";
+import Fade from 'react-reveal/Fade';
+
 
 function App() {
   let [loading, setLoading] = useState(false);
@@ -184,9 +186,11 @@ function App() {
   }
 
   return (  
+    <body className="home-body">
     <div>
-      <LogoNav />
-      <div className="container">
+        <LogoNav />
+        <Fade bottom>
+        <div className="container">
 
       {/* STYLED FORM */}
       <form className="input-form" align="center" onSubmit={(e) => handleSubmit(e)}>
@@ -258,9 +262,13 @@ function App() {
       {liked && (<h1>{liked}</h1>)}
           <NearbySearch className="slide-in-bottom" nearby={nearby} errorMsg={errorMsg} images={image_data} user={user} liked={liked} />
           
-            
+
         </div>
-    </div>
+                                  </Fade>
+
+      </div>
+
+      </body>
   );
 }
 

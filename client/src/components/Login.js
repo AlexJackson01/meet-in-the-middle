@@ -93,7 +93,7 @@ export default function Login() {
             <button className="login-btn" onClick={register}>Register</button>
         </div>
     </div>
-        <div className='remove-link place-url' onClick={() => setShowLogin(true)}>Already have an account? Click here to login.</div>
+        <div className='rating-link place-url' onClick={() => setShowLogin(true)}>Already have an account? Click here to login.</div>
                 </form>       
       </Fade>          
                 
