@@ -497,6 +497,10 @@ html {
     border: 1px solid #62371C;
 }
 
+.intro-image {
+    height: 100px;
+}
+
 @media (min-aspect-ratio: 16/9) {
     .intro-video {
         width: 100%;
@@ -528,17 +532,21 @@ html {
     }
     .intro-text {
         bottom: 0;
-        padding: 50px;
+        padding: 55px;
     }
 }
 
 
 /* LOGIN PAGE STYLING */
 
+.login-body {
+    background: url('https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+}
+
 .login-container {
     margin-left: 50px;
     margin-right: 50px;
-    background-color: #f7f1d5;
+    background-color: rgba(247, 241, 213, 0.95);
     height: 1000px;
 }
 
@@ -643,6 +651,58 @@ ul {
 }
 
 
+/* CONTACT STYLING */
+
+.contact-body {
+    background: url('https://images.pexels.com/photos/2079438/pexels-photo-2079438.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+    height: 100vh;
+}
+
+@media (max-width: 770px) {
+    .contact-body {
+        background: url('https://images.pexels.com/photos/2079438/pexels-photo-2079438.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+        height: 100%;
+    }
+}
+
+.contact-icons {
+    height: 50px;
+    padding: 2px;
+    display: flex;
+    margin: 0 auto;
+}
+
+h6 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.icons {
+    padding-bottom: 50px;
+}
+
+.contact-form {
+    padding: 20px 0px 20px 0px;
+    background-color: rgba(247, 241, 213, 0.95);
+    /* position: absolute;
+    left: 10%;
+    right: 10%; */
+    box-shadow: 3px 3px #77C29E;
+}
+
+.contact-confirmation {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.contact-div {
+    color: #62371C;
+    text-align: center;
+    margin: 0 auto;
+}
+
+
 /* FAVOURITES STYLING */
 
 .ratings-list {
@@ -672,7 +732,7 @@ ul {
     display: block;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    margin: 10px;
+    /* margin: 10px; */
     text-align: center;
 }
 

@@ -2,15 +2,9 @@ import React from 'react';
 import DesktopIntro from '../videos/meet-desktop.mp4';
 import MobileIntro from '../videos/meet-mobile.mp4';
 import { useNavigate } from "react-router-dom";
-import { useEffect } from 'react';
 
 
 export default function Intro() {
-
-    let videos = [
-        DesktopIntro, MobileIntro
-    ];
-
     const navigate = useNavigate();
 
     const routeChange = () => {

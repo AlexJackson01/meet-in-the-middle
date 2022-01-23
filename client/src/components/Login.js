@@ -69,7 +69,7 @@ export default function Login() {
 
 
     return (
-       
+       <body className="login-body">
         <div className="login-container">
             <Fade bottom>
             <img src={Logo} className="login-logo" alt="" />
@@ -131,6 +131,7 @@ export default function Login() {
  : null
     }
             </div>
+            </body>
 
     )
 }
