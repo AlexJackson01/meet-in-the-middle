@@ -10,7 +10,6 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import LogoNav from "./components/LogoNav";
 import Map from "./components/Map";
 import NearbySearch from "./components/NearbySearch";
-import Footer from "./components/Footer";
 
 function App() {
   let [loading, setLoading] = useState(false);
@@ -257,11 +256,10 @@ function App() {
       
       <Map midpoint={midpoint} markers={markers} user={user} />  
       {liked && (<h1>{liked}</h1>)}
-      <NearbySearch className="slide-in-bottom" nearby={nearby} errorMsg={errorMsg} images={image_data} user={user} liked={liked} />
-        
-      <Footer />
-      
-</div>
+          <NearbySearch className="slide-in-bottom" nearby={nearby} errorMsg={errorMsg} images={image_data} user={user} liked={liked} />
+          
+            
+        </div>
     </div>
   );
 }

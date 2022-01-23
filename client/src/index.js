@@ -7,11 +7,13 @@ import Favourites from '../src/components/Favourites';
 import About from '../src/components/About';
 import Contact from '../src/components/Contact';
 import Login from '../src/components/Login';
+import Intro from '../src/components/Intro';
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<Intro />} />
+      <Route path="login" element={<Login />} />
       <Route path="home" element={<App />} />
       <Route path="favourites" element={<Favourites user={true}/>} />
       <Route path="about" element={<About />} />

@@ -36,10 +36,10 @@ export default function LogoNav() {
       </button>
       <div className={"collapse navbar-collapse " + show}>
         <div className="navbar-nav">
-          <a className="nav-item nav-link left-nav-link1 active" href="/">HOME <span className="sr-only">(current)</span></a>
-          <a className="nav-item nav-link left-nav-link2" href="/">FAVOURITES</a>
-          <a className="nav-item nav-link right-nav-link1" href="/">HOW IT WORKS</a>
-          <a className="nav-item nav-link right-nav-link2" href="/">CONTACT</a>
+          <a className="nav-item nav-link left-nav-link1" href="/home">HOME</a>
+          <a className="nav-item nav-link left-nav-link2" href="/favourites">FAVOURITES</a>
+          <a className="nav-item nav-link right-nav-link1" href="/about">HOW IT WORKS</a>
+          <a className="nav-item nav-link right-nav-link2" href="/contact">CONTACT</a>
         </div>
       </div>
     </nav>
