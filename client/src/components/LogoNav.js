@@ -28,24 +28,25 @@ export default function LogoNav() {
     let show = menu ? "show" : "";
 
     return (
-        <div className=''>
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <img src={Logo} className="logo-image" alt="" />
-      <button className="navbar-toggler" type="button" onClick={() => toggleMenu()}>
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className={"collapse navbar-collapse " + show}>
-        <div className="navbar-nav">
-          <a className="nav-item nav-link left-nav-link1" href="/home">HOME</a>
-          <a className="nav-item nav-link left-nav-link2" href="/favourites">FAVOURITES</a>
-          <a className="nav-item nav-link right-nav-link1" href="/about">HOW IT WORKS</a>
-          <a className="nav-item nav-link right-nav-link2" href="/contact">CONTACT</a>
-        </div>
-      </div>
-    </nav>
+      <div className=''>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="/home"><img src={Logo} alt="" className="logo-image" /></a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div className="navbar-nav">
+      <a className="nav-item nav-link active" href="/home">HOME</a>
+      <a className="nav-item nav-link" href="/favourites">FAVOURITES</a>
+      <a className="nav-item nav-link" href="/about">HOW IT WORKS</a>
+      <a className="nav-item nav-link" href="/contact">CONTACT</a>
+    </div>
+  </div>
+</nav>
+
             
             {/* The user will be greeted either by name (if logged in with Google) or by their email address */}
-            {user && <div className='user-greeting'>Hello, {user.displayName ? user.displayName : user?.email}!<br /><button className='logout-button' onClick={logOut}>LOG OUT</button></div>}
+            {user && <p className='user-greeting'>Hello, {user.displayName ? user.displayName : user?.email}!<button className='logout-button' onClick={logOut}>LOG OUT</button></p>}
         </div>
     )
 }
