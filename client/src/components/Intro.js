@@ -25,7 +25,7 @@ export default function Intro() {
             </div>
             
             <div className="intro-text">
-                <p>Meet in the middle and find your next favourite place</p>
+                <p>Meet in the middle and discover somewhere new</p>
                 <button className="intro-button" onClick={() => routeChange()}>Get started</button>
             </div>
             </div>
