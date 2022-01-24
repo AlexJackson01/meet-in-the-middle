@@ -167,6 +167,7 @@ Ideas for how I'd like to develop the project include:
 - Adding an option to find the midpoint by time as well as distance - currently it uses latitudes and longitudes, but this doesn't always guarantee an equal journey from both points to the middle
 - A 'Decide For Me' button which suggests the single place that is: in the middle, high rated and the most convenient to get to from both ends
 - A share function - the ability to share a place from the search results with someone via email, Whatsapp, Facebook, Instagram, etc.
+- Ability to leave comments during the nearby search - currently users can leave reviews once places are added to their favourites. However if they see a place they have been before, there could be a comments feature where they can tell other users if they should visit or avoid.
 - Calendar invitations - to organise a meetup time and date at a desired place in the middle
 - Table bookings within the app - something to investigate further via OpenTable etc.
 - Creating a mobile app that incorporates the full experience above!
