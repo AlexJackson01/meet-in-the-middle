@@ -244,7 +244,7 @@ export default function Favourites() {
                         </div>
                     </div>
                 </Fade>
-            )) : <h5>No favourites added!</h5>;
+            )) : <h6>No favourites added!</h6>;
         }
     }
     
@@ -269,7 +269,7 @@ export default function Favourites() {
 
                     </ul>
                 </div>
-            )) : <h5>No ratings added yet!</h5>;
+            )) : <h6 className='ratings-text'>No ratings added yet!</h6>;
         }
     }
             
