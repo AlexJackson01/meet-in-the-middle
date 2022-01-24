@@ -282,7 +282,7 @@ export default function Favourites() {
         <div className="col-md-12 col-sm-12 col-xs-12">
                 {renderFavourites()}
                 </div>
-            {DBRatings.length >= 1 && user && <h3>Recent Reviews</h3> }
+                <h3>Recent Reviews</h3>
             <div className="ratings-list col-md-12 col-sm-12 col-xs-12">
             
                 {renderRatings()}

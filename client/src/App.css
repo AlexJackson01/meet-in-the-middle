@@ -639,7 +639,7 @@ h6 {
 h3 {
     text-align: center;
     color: #62371C;
-    padding-top: 40px;
+    padding-top: 50px;
     padding-bottom: 30px;
 }
 
@@ -742,6 +742,6 @@ button {
 .ratings-text {
     text-align: center;
     margin: 0 auto;
-    margin-top: 100px;
+    /* margin-top: 0px; */
     margin-bottom: 50px;
 }
