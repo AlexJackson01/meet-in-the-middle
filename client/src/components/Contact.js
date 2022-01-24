@@ -33,7 +33,7 @@ export default function Contact() {
       <LogoNav />
               <Fade bottom>
 
-      <div className="container">
+      <div className="contact-container">
           <div className='row contact-form'>
             <div className='icons col-lg-6 col-md-6 col-sm-12 col-xs-12'>
               <h6>Connect with me:</h6>
