@@ -37,7 +37,7 @@ Run ```npm install``` to install packages. Navigate to the client folder with 
 
 The app will run on ```http://localhost:3000``` as the default port.
 
-The app is also available to view on Heroku - LINK HERE.
+The app is also available to view on [Netlify](https://meet-in-the-middle.netlify.app) @ meet-in-the-middle.netlify.app.
 
 &nbsp;
 # API keys
