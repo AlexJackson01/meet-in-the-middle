@@ -494,7 +494,7 @@ ul {
 .contact-body {
     background: url('https://images.pexels.com/photos/2079438/pexels-photo-2079438.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
     background-size: contain;
-    height: 100%;
+    height: 100vh;
 }
 
 @media (max-width: 770px) {
