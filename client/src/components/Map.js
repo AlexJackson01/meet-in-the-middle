@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import MidMarker from '../images/location-pin (2).png';
+import MidMarker from '../images/location.png';
 import Pin from '../images/pin.png';
 
 

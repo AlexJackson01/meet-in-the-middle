@@ -165,7 +165,7 @@ function App() {
     });
 
       if (searchTwo.length === 0) { // if there are no results found in either search, it will display an error message
-        setErrorMsg(<h6>No results found... please try more specific locations, an alternative radius or category.</h6>);
+        setErrorMsg(<h6>No results found... please add more detail to your locations or select an alternative radius / category.</h6>);
       }
 
       let top10 = searchTwo.slice(0, 10); // the joined results are sliced to only include a 'top 10'
@@ -259,7 +259,7 @@ function App() {
       {loading && (<FontAwesomeIcon icon={faEarthAmericas} size="2x" pulse className="loading-earth" />)}
       
             <Map midpoint={midpoint} markers={markers} user={user} />  
-            {errorMsg}
+            {!nearby && errorMsg}
       {liked && (<h1>{liked}</h1>)}
           <NearbySearch className="slide-in-bottom" nearby={nearby} images={image_data} user={user} liked={liked} />
           
