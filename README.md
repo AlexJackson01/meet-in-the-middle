@@ -19,7 +19,7 @@ After you’ve met in the middle, you can go to your Favourites page and rate th
 &nbsp;
 # Set up
 
-Run ```npm install``` to install packages. Navigate to the client folder with ```cd client``` and run ```npm start``` to start the development server.
+Run ```npm install``` to install packages. Navigate to the client folder with ```cd client```, run ```npm install``` again and ```npm start``` to start the development server.
 
 The app will run on ```http://localhost:3000``` as the default port.
 

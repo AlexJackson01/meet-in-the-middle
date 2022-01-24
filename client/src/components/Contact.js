@@ -29,7 +29,7 @@ export default function Contact() {
 
 
   return (
-      <body className="contact-body">
+      <div className="contact-body"> 
       <LogoNav />
               <Fade bottom>
 
@@ -74,7 +74,6 @@ export default function Contact() {
           </div>
         </div>
           </Fade>
-
-      </body>
+</div>
     )
 }

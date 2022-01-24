@@ -274,7 +274,7 @@ export default function Favourites() {
     }
             
     return (
-        <body className='favourites-body'>
+            <div className='favourites-body'>
             <LogoNav />
         <div className="favourites-container">
         <h3>Your Favourites</h3>
@@ -287,7 +287,7 @@ export default function Favourites() {
             
                 {renderRatings()}
                 </div>
-            </div>
-            </body>
+                </div>
+                </div>
     )
 }

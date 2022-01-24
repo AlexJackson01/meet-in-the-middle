@@ -9,8 +9,7 @@ import Rating from '../images/Ratings.gif';
 
 export default function About() {
     return (
-        <body className='about-body'>
-        <div>
+            <div className='about-body'>
             <LogoNav />
 
             <Fade bottom>
@@ -53,8 +52,8 @@ export default function About() {
                 </div>
                 </div>
                 </div>
-            </Fade>
-            </div>
-            </body>
+                </Fade>
+                 </div>
+
     )
 }
