@@ -5,13 +5,13 @@ import "firebase/firestore";
 import "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCGrW_BpgreIw_qTfkm5FdDxh2XaLStzvE",
-    authDomain: "meet-in-the-middle-b5bd8.firebaseapp.com",
-    projectId: "meet-in-the-middle-b5bd8",
-    storageBucket: "meet-in-the-middle-b5bd8.appspot.com",
-    messagingSenderId: "1051422626382",
-    appId: "1:1051422626382:web:76c40a1c6cc9af1442291f",
-    measurementId: "G-RQDHX5M1YZ"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
 firebase.initializeApp(firebaseConfig);

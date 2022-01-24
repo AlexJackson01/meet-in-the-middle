@@ -43,8 +43,8 @@ function App() {
     })
 
   // external API keys
-  const geoKey = "5b3ce3597851110001cf6248d8248e64cce24e7bae3637d381b685f1";
-  const nearbyKey = "LGM32rZnrmDbAgGhjwXpqAbNNZ0HnhqV";
+  const geoKey = process.env.REACT_APP_GEO_API_KEY;
+  const nearbyKey = process.env.REACT_APP_TOMTOM_API_KEY;
 
   // defining arrays used in API search
   let nearbyDetails = [];
@@ -165,7 +165,7 @@ function App() {
     });
 
       if (searchTwo.length === 0) { // if there are no results found in either search, it will display an error message
-        setErrorMsg("No results found... please try an alternative radius or category.");
+        setErrorMsg(<h6>No results found... please try more specific locations, an alternative radius or category.</h6>);
       }
 
       let top10 = searchTwo.slice(0, 10); // the joined results are sliced to only include a 'top 10'
@@ -258,9 +258,10 @@ function App() {
 
       {loading && (<FontAwesomeIcon icon={faEarthAmericas} size="2x" pulse className="loading-earth" />)}
       
-      <Map midpoint={midpoint} markers={markers} user={user} />  
+            <Map midpoint={midpoint} markers={markers} user={user} />  
+            {errorMsg}
       {liked && (<h1>{liked}</h1>)}
-          <NearbySearch className="slide-in-bottom" nearby={nearby} errorMsg={errorMsg} images={image_data} user={user} liked={liked} />
+          <NearbySearch className="slide-in-bottom" nearby={nearby} images={image_data} user={user} liked={liked} />
           
 
         </div>

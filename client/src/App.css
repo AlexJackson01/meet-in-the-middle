@@ -451,10 +451,41 @@ ul {
     /* width: auto; */
 }
 
-.about-background {
+
+/* .about-background {
     background-color: rgba(119, 194, 158, 0.95);
     margin: 50px 50px 0px 50px;
     padding: 90px;
+} */
+
+.about-container {
+    background-color: rgba(119, 194, 158, 0.95);
+    margin: 50px 50px 0px 50px;
+    padding: 90px;
+    text-align: center;
+}
+
+.about-title {
+    margin-top: 20px;
+    font-size: 25px;
+}
+
+.me-photo {
+    height: 200px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.about-gifs {
+    height: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.about-text {
+    font-size: 13px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 
@@ -487,15 +518,16 @@ h6 {
     padding: 5px;
 }
 
-.icons {
-    padding-bottom: 50px;
-}
-
 .contact-form {
     padding: 20px 20px 20px 0px;
     margin-top: 50px;
     background-color: rgba(247, 241, 213, 0.95);
     box-shadow: 3px 3px #77C29E;
+    display: flex;
+}
+
+.icons {
+    padding-bottom: 50px;
 }
 
 .contact-confirmation {

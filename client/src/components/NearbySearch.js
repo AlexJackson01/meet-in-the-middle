@@ -6,7 +6,7 @@ import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 
 
-export default function NearbySearch({ nearby, errorMsg, user }) {
+export default function NearbySearch({ nearby, user }) {
 
     let [liked, setLiked] = useState(false);
     let [favourite, setFavourite] = useState({
@@ -65,9 +65,7 @@ export default function NearbySearch({ nearby, errorMsg, user }) {
                 })
         }
 
-        if (errorMsg) {
-            return (<h5>{errorMsg}</h5>) // displays error message if no results are found - passed down as a prop from App.js
-        } else if (!user) {
+        if (!user) {
             return null;
         } else
             {
