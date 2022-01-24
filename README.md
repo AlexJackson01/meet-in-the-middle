@@ -6,15 +6,29 @@ If you’re looking to go **somewhere new**, if you’re meeting someone who *
 
 _Meet in the Middle_ is an app that does what it says on the tin… simply type in two locations, select a place category and radius, and hit Search. The app will calculate the midpoint of the two locations by distance and show you the top-rated places near that midpoint. Details of your midpoint and each nearby place will be marked on a map as well as displayed on screen.
 
-[gif of search to go here]
-
-If you like the look of a place, you can click the heart icon on each card and the place will be added to your Favourites. Or if you don’t find a place that appeals to you, you can clear the Search and begin again / you can select an alternative category or radius and Search again.
-
-[gif of favourites to go here]
+If you like the look of a place, you can click the heart icon on each card and the place will be added to your Favourites. Or if you don’t find a place that appeals to you, you can clear the Search, select an alternative category or radius and Search again.
 
 After you’ve met in the middle, you can go to your Favourites page and rate the place you visited. You can give it an overall star rating out of 5, rate it on its price range and also recommend it based on different categories by ticking the corresponding boxes. Submit your rating by clicking the ‘Submit’ button and you will see all your recent reviews displayed at the bottom of your Favourites page.
 
-[gif of ratings to go here]
+I created this app not only because I'm always wanting to try new things and places. Also, now that I live in a different area to my loved ones, it's always helpful to meet at a convenient place in the middle when we reunite. I recognised that although there are similar websites out there, I hadn't come across a service that made it user-friendly and visually simple to find a place and save it for later. I know that many others will find it just as useful.
+
+&nbsp;
+# Technologies used
+Front end:
+
+- React
+- CSS/Bootstrap
+- Figma for design mockup
+- Canva for logo and intro videos
+- TomTom and Open Route Service APIs for the location search
+- FontAwesome for the icons
+- React Router
+- Google Maps - initially for its API but now for directions links
+
+Backend:
+
+- Firebase/Cloud Firestore 
+- EmailJS - technically did the backend for me
 
 &nbsp;
 # Set up
