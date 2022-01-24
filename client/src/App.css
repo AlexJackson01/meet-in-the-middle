@@ -61,8 +61,8 @@ body {
 
 .home-body {
     background: url('https://images.pexels.com/photos/2303337/pexels-photo-2303337.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
-    background-size: cover;
-    height: 100vh;
+    background-size: contain;
+    height: 100%;
     width: 100%;
     background-repeat: initial;
     /* height: 2700px; */
@@ -142,6 +142,16 @@ a {
     margin-top: 20px;
 }
 
+@media (min-width: 575px) and (max-width: 970px) {
+    .home-body {
+        background: url('https://images.pexels.com/photos/2303337/pexels-photo-2303337.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+        /* background-size: contain; */
+        height: 100%;
+        width: 100vw;
+        /* height: 2700px; */
+    }
+}
+
 @media (max-width: 575px) {
     .home-body {
         background: url('https://images.pexels.com/photos/2303337/pexels-photo-2303337.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
@@ -198,7 +208,7 @@ a {
     background-color: #f7f1d5;
     padding: 20px;
     width: 250px;
-    height: 500px;
+    height: 600px;
     margin: 2px;
     text-align: center;
     display: block;
@@ -208,6 +218,7 @@ a {
 
 .place-url {
     font-size: 11px;
+    margin-bottom: 10px;
 }
 
 a {

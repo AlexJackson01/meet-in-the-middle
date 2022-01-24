@@ -111,7 +111,7 @@ export default function NearbySearch({ nearby, user }) {
  
 
     return (
-        <div className=''>
+        <div className='nearby-body'>
             <div className="places-list">
                 {renderNearby()} 
             </div>
