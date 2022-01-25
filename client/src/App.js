@@ -86,7 +86,7 @@ function App() {
     setLoading(false);
 }
 
-  // if statements that take the selected category and radius. and assigns an ID/value - this ID/value feeds into the API calls
+  // if statements that take the selected category and radius, and assigns an ID/value - this ID/value feeds into the API calls. the ternery operators wouldn't work without using a random object.key at the end?
   if (category.category) {
     category.category === "Restaurant" ? category.categoryID = 7315 : category.place = "";
     category.category === "Cafe" ? category.categoryID = 9376002 : category.place = "";
@@ -265,7 +265,7 @@ function App() {
           
 
         </div>
-                                  </Fade>
+        </Fade>
 
       </div>
 

@@ -187,10 +187,10 @@ export default function Favourites() {
                 <Fade bottom>
                 <div className="favourites-list" key={favourite.id}>
                     <ul className='favourites-card'>
-                        <li className='favourites-search'><p>{favourite.pointOne.toUpperCase()}<br />and<br />{favourite.pointTwo.toUpperCase()}</p></li>
-                        <li className='favourites-info'>{favourite.name}</li>
-                        <li className='favourites-info'>{favourite.address}</li>
-                        <li className='favourites-info remove-link' onClick={() => removeFavourite(favourite)}>Remove from Favourites</li>
+                        <li className='favourites-info'><h6>{favourite.pointOne.toUpperCase()}<br />and<br />{favourite.pointTwo.toUpperCase()}</h6></li>
+                        <li className='favourites-info'><h6>{favourite.name}</h6></li>
+                        <li className='favourites-info'><h6>{favourite.address}</h6></li>
+                        <li className='favourites-info remove-link' onClick={() => removeFavourite(favourite)}><h6>Remove from Favourites</h6></li>
                     </ul>
                         <div className='ratings'>
                         {!favourite.favourite && <li className='favourites-info'>Rate this place<p><FontAwesomeIcon icon={faChevronDown} className='rating-arrow' size='2x' onClick={() => toggleRatings(favourite)} /></p></li>}

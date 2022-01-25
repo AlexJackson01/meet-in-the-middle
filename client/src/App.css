@@ -616,6 +616,7 @@ h6 {
     width: 1000px;
     justify-content: space-between;
     align-items: center;
+    text-align: center;
     padding: 4px;
     margin: 0 auto;
     padding-bottom: 20px;
@@ -698,7 +699,6 @@ h3 {
     padding: 20px;
     list-style-type: none;
     text-align: center;
-    font-size: 13px;
     /* padding-left: 50px; */
 }
 
@@ -706,7 +706,6 @@ h3 {
     padding: 20px;
     list-style-type: none;
     text-align: center;
-    font-size: 10px;
     /* padding-left: 50px; */
 }
 
@@ -782,4 +781,8 @@ button {
     margin: 0 auto;
     /* margin-top: 0px; */
     margin-bottom: 50px;
+}
+
+.favourites-remove {
+    font-size: 11px;
 }
