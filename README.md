@@ -124,7 +124,7 @@ const firebaseConfig = {
 | user_id   | String        | bvGzUG2yWjZGxKXKwQsAUuyWlkw1
 
 &nbsp;
-## Collection 2: ratings:
+## Collection 2: ratings
 
 | Field      | Type | Example |
 | -------- | ------ | ------------ |
