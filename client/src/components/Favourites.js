@@ -259,7 +259,8 @@ export default function Favourites() {
                             <h6>{rating.name}</h6>
                             <h6>{rating.rating}/5</h6>  
                             <h6>{rating.priceRange}</h6></li>
-                        {rating.recommendations && <p>You recommended this place for:{Object.entries(rating.recommendations).map(([key, value]) => { // this code basically looks at the recommendations object and returns the keys where the values are 1. the values are set to 1 above if the user has ticked the boxes - i searched high and low for this solution                            return (
+                        {rating.recommendations && <p>You recommended this place for:{Object.entries(rating.recommendations).map(([key, value]) => { // this code basically looks at the recommendations object and returns the keys where the values are 1. the values are set to 1 above if the user has ticked the boxes - i searched high and low for this solution                            
+                            return (
                                 <div>
                                     <b>{value === 1 && key.split('_').join(' ')}</b> 
                                 </div>)
