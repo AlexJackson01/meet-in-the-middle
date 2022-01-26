@@ -55,16 +55,16 @@ export default function Favourites() {
     console.log(ref);
     console.log(ref2);
 
-    const getFavourites = async () => {
+    const getFavourites = async () => { // this function pulls the Favourites data from Firebase
         setLoading(true);
         // location.reload();  
         try {
-            ref.where("user_id", "==", user.uid).onSnapshot((querySnapshot) => {
+            ref.where("user_id", "==", user.uid).onSnapshot((querySnapshot) => { // it filters the data pulled from Firebase where the user_id on the entry matches the id of the user currently logged in
                 const items = [];
                 querySnapshot.forEach((doc) => {
                     items.push(doc.data());
                 })
-                setFavourites(items);
+                setFavourites(items); // the returned Favourites are added to the favourites to display on screen
                 setLoading(false);
             })
 
@@ -77,7 +77,7 @@ export default function Favourites() {
         }
         
         try {
-            ref2.where("user_id", "==", user.uid).onSnapshot((querySnapshot) => {
+            ref2.where("user_id", "==", user.uid).onSnapshot((querySnapshot) => { // same as the above but for the ratings table/collection on Firebase
                 const items = [];
                 querySnapshot.forEach((doc) => {
                     items.push(doc.data());
@@ -102,7 +102,7 @@ export default function Favourites() {
         //     setFavourites(items);
         // })
 
-    const removeFavourite = (favourite) => {
+    const removeFavourite = (favourite) => { // a DELETE method which removes the entry from the Firebase database by its id
             ref
                 .doc(favourite.id)
                 .delete()
@@ -111,7 +111,7 @@ export default function Favourites() {
             })
     }
 
-    const removeRating = (favourite) => {
+    const removeRating = (favourite) => { // same as the above but this basically 'undos' a rating just posted directly on a Favourite
         console.log(userRating);
             ref2
                 .doc(favourite.id)
@@ -122,7 +122,7 @@ export default function Favourites() {
         setRatingPosted(false);
     }
 
-        const removeDBRating = (rating) => {
+        const removeDBRating = (rating) => { // this one removes existing ratings that were posted in the past - favourite doesn't need to exist anymore. same idea as above but slightly different code needed
         console.log(userRating);
             ref2
                 .doc(rating.place_id)
@@ -133,7 +133,7 @@ export default function Favourites() {
         setRatingPosted(false);
     }
 
-    const handleOnChange = (e) => {
+    const handleOnChange = (e) => { // this checks whether the checkboxes have been ticked for each rating/review
         const isChecked = e.target.checked;
         const value = e.target.value;
         if (isChecked) {
@@ -147,7 +147,7 @@ export default function Favourites() {
             }))}
     }
 
-    const handleOnSubmit = (e) => {
+    const handleOnSubmit = (e) => { // uses the rating info and sets it to the rating state. rating posted state set to true which triggers a POST method to the Firebase backend
         e.preventDefault();
         // console.log(ratingValue, priceRange, recommendations);
         setUserRating({ place_id: ratingValue.place_id, user_id: user.uid, name: ratingValue.name, rating: ratingValue.rating, timeDate: new Date().toLocaleString(), priceRange: priceRange.selectedPrice, recommendations: recommendations });
@@ -155,7 +155,7 @@ export default function Favourites() {
         setRatingPosted(true);
     }
 
-    const ratePlace = (favourite) => {
+    const ratePlace = (favourite) => { // this toggles the state of the coloured rating stars
         favourite.stars = true;
         setStarRating(!starRating)
                 // e.preventDefault();
@@ -163,13 +163,13 @@ export default function Favourites() {
 
     }
 
-    const toggleRatings = (favourite) => {
+    const toggleRatings = (favourite) => { // toggles the appearance of the ratings form and changes the chevron icon
         favourite.favourite = true; 
         setShowRatings(!showRatings);
     }
 
     
-    const renderFavourites = () => {
+    const renderFavourites = () => { // this function maps the favourites on screen and also the ratings form when the arrow is clicked
         if (ratingPosted) {
             ref2
                 .doc(userRating.place_id)
@@ -198,7 +198,7 @@ export default function Favourites() {
                         <form className="ratings-show" onSubmit={(e) => handleOnSubmit(e)}>
                             
                             {favourite.favourite && (
-                                [...Array(5)].map((star, i) => {
+                                [...Array(5)].map((star, i) => { // displays the ratings system - class changes and fills the star with colour when clicked
                                     i += 1;
                                     return (
                                         <button type="button" key={i} className={favourite.stars && i <= ratingValue.rating ? "on" : "off"} onClick={(e) => { setRatingValue({ place_id: favourite.id, name: favourite.name, rating: i }); ratePlace(favourite); }} required>
@@ -244,13 +244,13 @@ export default function Favourites() {
                         </div>
                     </div>
                 </Fade>
-            )) : <h6>No favourites added!</h6>;
-        }
+            )) : <h6>No favourites added!</h6>; 
+        } // this message is displayed when no favourites from the user can be found on the db
     }
     
-    const renderRatings = () => {
+    const renderRatings = () => { // this one displays the ratings on screen
         if (!user) {
-            return (<h5>To view more information, please <a href="/">login</a>.</h5>)
+            return (<h5>To view more information, please <a href="/">login</a>.</h5>) // if no one is logged in, it will display this message
         } else {
             return DBRatings.length >= 1 ? DBRatings.map((rating) => (
                 <div className="ratings-list" key={rating.place_id}>
@@ -259,18 +259,17 @@ export default function Favourites() {
                             <h6>{rating.name}</h6>
                             <h6>{rating.rating}/5</h6>  
                             <h6>{rating.priceRange}</h6></li>
-                        {rating.recommendations && <p>You recommended this place for:{Object.entries(rating.recommendations).map(([key, value]) => {
-                            return (
+                        {rating.recommendations && <p>You recommended this place for:{Object.entries(rating.recommendations).map(([key, value]) => { // this code basically looks at the recommendations object and returns the keys where the values are 1. the values are set to 1 above if the user has ticked the boxes - i searched high and low for this solution                            return (
                                 <div>
-                                    <b>{value === 1 && key.split('_').join(' ')}</b>
+                                    <b>{value === 1 && key.split('_').join(' ')}</b> 
                                 </div>)
                         })}</p>}
-                        <p className='remove-link' onClick={() => removeDBRating(rating)}>Remove review</p>
+                        <p className='remove-link' onClick={() => removeDBRating(rating)}>Remove review</p> 
 
                     </ul>
                 </div>
             )) : <h6 className='ratings-text'>No ratings added yet!</h6>;
-        }
+        } // this message is displayed when no ratings from the user can be found on the db
     }
             
     return (
