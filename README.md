@@ -44,9 +44,9 @@ The app is also available to view on [Netlify](https://meet-in-the-middle.netlif
 
 To run the location searches, you will need to sign up for accounts with [Open Route Service](https://openrouteservice.org/) and the [TomTom Developer Portal](https://developer.tomtom.com/). It is quick and easy to generate API keys on both sites. They offer free plans with a generous allowance of API requests per day.
 
-_Open Route Service_ – you can login easily with your Github account. Once logged in, under your ‘Dashboard’, request a free token and give it a nickname of your choice. Copy this token and assign it to the ```geoKey``` variable on **line 44** of ```App.js```.
+_Open Route Service_ – you can login easily with your Github account. Once logged in, under your ‘Dashboard’, request a free token and give it a nickname of your choice. Copy this token and assign it to the ```geoKey``` variable on **line 46** of ```App.js```.
 
-_TomTom_ – register for an account and on your user dashboard, add a new key for all APIs. Copy the key to the ```nearbyKey``` variable on **line 45** of ```App.js```.
+_TomTom_ – register for an account and on your user dashboard, add a new key for all APIs. Copy the key to the ```nearbyKey``` variable on **line 47** of ```App.js```.
 
 ### **The API calls should now work as expected!**
 
