@@ -38,7 +38,6 @@ export default function Favourites() {
     let [userRating, setUserRating] = useState({});
     let [ratingPosted, setRatingPosted] = useState(false);
     let [DBRatings, setDBRatings] = useState({});
-    let [DBRecommendations, setDBRecommendations] = useState("");
 
     useEffect(() => {
         getFavourites();
