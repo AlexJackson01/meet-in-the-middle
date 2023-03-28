@@ -1,34 +1,32 @@
-import React from 'react';
-import DesktopIntro from '../videos/meet-desktop.mp4';
-import MobileIntro from '../videos/meet-mobile.mp4';
-import { useNavigate } from "react-router-dom";
+import React from 'react'
+import DesktopIntro from '../videos/meet-desktop.mp4'
+import MobileIntro from '../videos/meet-mobile.mp4'
+import { useNavigate } from 'react-router-dom'
 
+export default function Intro () {
+  const navigate = useNavigate()
 
-export default function Intro() {
-    const navigate = useNavigate();
+  const routeChange = () => {
+    navigate('/login') // using React Router, once login is successful, the page will redirect to the home page
+  }
 
-    const routeChange = () => {
-        navigate('/login'); // using React Router, once login is successful, the page will redirect to the home page
-    }
+  return (
+    <div>
+      <div className='intro-container'>
+        <video loop autoPlay muted className='intro-video'>
+          <source src={DesktopIntro} type='video/mp4' />
+        </video>
+        <video loop autoPlay muted className='mobile-video'>
+          <source src={MobileIntro} type='video/mp4' />
+        </video>
+      </div>
 
-
-
-    return (
-        <div>
-            <div className="intro-container">
-            <video loop autoPlay muted className="intro-video">
-                    <source src={DesktopIntro} type="video/mp4" />
-            </video>
-            <video loop autoPlay muted className="mobile-video">
-                    <source src={MobileIntro} type="video/mp4" />
-            </video>
-            </div>
-            
-            <div className="intro-text">
-                <p>Meet in the middle and discover somewhere new</p>
-                <button className="intro-button" onClick={() => routeChange()}>Get started</button>
-            </div>
-            </div>
-            )
-;
+      <div className='intro-text'>
+        <p>Meet in the middle and discover somewhere new</p>
+        <button className='intro-button' onClick={() => routeChange()}>
+          Get started
+        </button>
+      </div>
+    </div>
+  )
 }
