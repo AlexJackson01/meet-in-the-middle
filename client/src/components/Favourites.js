@@ -130,7 +130,7 @@ export default function Favourites () {
     // this one removes existing ratings that were posted in the past - favourite doesn't need to exist anymore. same idea as above but slightly different code needed
     console.log(userRating)
     ref2
-      .doc(rating.place_id)
+      .doc(rating.user_id)
       .delete()
       .catch(err => {
         console.log(err)
@@ -161,7 +161,6 @@ export default function Favourites () {
     e.preventDefault()
     // console.log(ratingValue, priceRange, recommendations);
     setUserRating({
-      place_id: ratingValue.place_id,
       user_id: user.uid,
       name: ratingValue.name,
       rating: ratingValue.rating,
@@ -267,7 +266,6 @@ export default function Favourites () {
                           }
                           onClick={e => {
                             setRatingValue({
-                              place_id: favourite.id,
                               name: favourite.name,
                               rating: i
                             })
